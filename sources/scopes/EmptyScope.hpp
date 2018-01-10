@@ -1,34 +1,30 @@
 
 #pragma once
 
-#include "services/GameService.hpp"
-#include "scopes/BaseScope.hpp"
+#include "engine/ForwardDeclaration.hpp"
+#include "engine/service/GameService.hpp"
 
 namespace Scopes {
-    class EmptyScope : public Scopes::BaseScope {
+    class EmptyScope : public SCOPE {
     public:
-        explicit EmptyScope(Services::GameService *gameService) : BaseScope(gameService) {}
+        explicit EmptyScope(GAME_SERVICE *gameService) : SCOPE(gameService) {}
 
         ~EmptyScope() override = default;
 
         void initialize() override {
-            std::cout << "EmptyScope: initialize." << std::endl;
+            //entityManager.add<Entities::PlayerShip>(0, "resources/sprites/ships/player/ship1/base.png");
         }
 
         void pause() override {
-            std::cout << "EmptyScope: pause." << std::endl;
         }
 
         void resume() override {
-            std::cout << "EmptyScope: resume." << std::endl;
         }
 
         void shutdown() override {
-            std::cout << "EmptyScope: shutdown." << std::endl;
         }
 
         void update() override {
-            std::cout << "EmptyScope: update." << std::endl;
         }
     };
 }
