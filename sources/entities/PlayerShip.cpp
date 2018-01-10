@@ -9,7 +9,8 @@
 Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled)
         : BaseEntity(scope, id, isEnabled) {
     this->setTexture(texturePath);
-    this->registerCallback(sf::Keyboard::Z, std::bind(&PlayerShip::moveUp, this));
+    std::function<void(void)> f = std::bind(&PlayerShip::moveUp, this);
+    this->registerCallback(sf::Keyboard::Z, f);
 }
 
 void Entities::PlayerShip::update() {

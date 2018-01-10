@@ -39,7 +39,7 @@ namespace Engine {
                 this->texture = std::make_unique<SFML_TEXTURE>(std::forward<Args>(args)...);
             }
 
-            void registerCallback(sf::Keyboard::Key key, std::function<void(void)> f);
+            void registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f);
 
         protected:
             virtual void update() = 0;
