@@ -26,12 +26,6 @@ EngineStatus GAME_SERVICE::earlyUpdate() {
         this->scopeToAdd = nullptr;
     }
 
-    for (const auto &item: this->events) {
-        for (const auto &event: item.second) {
-            (event.first->*event.second)();
-        }
-    }
-
     return EngineStatus::Continue;
 }
 

@@ -20,7 +20,6 @@ namespace Engine {
             SCOPE *scopeToAdd = nullptr;
 
             std::stack<SCOPE *> scopes;
-            std::map<sf::Keyboard::Key, std::list<std::pair<ENTITY *, void (ENTITY::*)()>>> events;
 
         public:
             template<typename T>
