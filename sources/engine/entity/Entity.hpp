@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <utility>
 #include <unordered_map>
+#include <functional>
 #include <SFML/System/Vector2.hpp>
 
 #include "engine/ForwardDeclaration.hpp"
@@ -14,6 +15,9 @@ namespace Engine {
 
         class BaseEntity {
             friend ENTITY_MANAGER;
+        protected:
+            std::map<int, std::function<void(void)>> callbacks;
+            SCOPE *scope;
 
         public:
             uint64_t id;
@@ -21,8 +25,8 @@ namespace Engine {
             sf::Vector2f position;
             std::unique_ptr<SFML_TEXTURE> texture;
 
-            explicit BaseEntity(uint64_t id, const std::string &texturePath, bool isEnabled = true)
-                    : id(id), isEnabled(isEnabled), position{0, 0} {}
+            explicit BaseEntity(SCOPE *scope, uint64_t id, bool isEnabled = true)
+                    : scope(scope), id(id), isEnabled(isEnabled), position{0, 0} {}
 
             virtual ~BaseEntity() = default;
 
@@ -34,6 +38,8 @@ namespace Engine {
             void setTexture(Args&&...args) {
                 this->texture = std::make_unique<SFML_TEXTURE>(std::forward<Args>(args)...);
             }
+
+            void registerCallback(sf::Keyboard::Key key, std::function<void(void)> f);
 
         protected:
             virtual void update() = 0;

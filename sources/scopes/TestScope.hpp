@@ -13,7 +13,7 @@ namespace Scopes {
         ~TestScope() override = default;
 
         void initialize() override {
-            this->entityManager.add<Entities::PlayerShip>(LAYER::Layer1, 0, "resources/sprites/ships/player/ship1/base.png");
+            this->entityManager.add<Entities::PlayerShip>(LAYER::Layer1, this, 0, "resources/sprites/ships/player/ship1/base.png");
         }
 
         void pause() override {

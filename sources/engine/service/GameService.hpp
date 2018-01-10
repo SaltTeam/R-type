@@ -12,6 +12,7 @@ namespace Engine {
         class GameService : public SERVICE {
             friend ENGINE;
             friend SERVICE_MANAGER;
+            friend GRAPHICAL_SERVICE;
 
         private:
             bool removeScope = false;
@@ -19,6 +20,7 @@ namespace Engine {
             SCOPE *scopeToAdd = nullptr;
 
             std::stack<SCOPE *> scopes;
+            std::map<sf::Keyboard::Key, std::list<std::pair<ENTITY *, void (ENTITY::*)()>>> events;
 
         public:
             template<typename T>
@@ -55,6 +57,8 @@ namespace Engine {
             EngineStatus update() override;
 
             EngineStatus lateUpdate() override;
+
+            void execCallbacks(sf::Keyboard::Key key);
         };
     };
 }

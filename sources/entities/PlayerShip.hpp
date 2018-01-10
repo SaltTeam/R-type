@@ -3,12 +3,15 @@
 
 #include "engine/entity/Entity.hpp"
 
-namespace Entities{
+namespace Entities {
     class PlayerShip : public ENTITY {
     public:
-        PlayerShip(uint64_t id, const std::string &texturePath, bool isEnabled = true);
+        PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true);
 
     protected:
         void update() override;
+
+    public:
+        void moveUp();
     };
 }

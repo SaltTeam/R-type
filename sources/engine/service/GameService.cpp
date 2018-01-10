@@ -26,6 +26,12 @@ EngineStatus GAME_SERVICE::earlyUpdate() {
         this->scopeToAdd = nullptr;
     }
 
+    for (const auto &item: this->events) {
+        for (const auto &event: item.second) {
+            (event.first->*event.second)();
+        }
+    }
+
     return EngineStatus::Continue;
 }
 
@@ -44,4 +50,8 @@ EngineStatus GAME_SERVICE::lateUpdate() {
         this->scopes.pop();
     }
     return EngineStatus::Continue;
+}
+
+void GAME_SERVICE::execCallbacks(sf::Keyboard::Key key) {
+    this->scopes.top()->execCallbacks(key);
 }

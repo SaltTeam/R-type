@@ -14,8 +14,8 @@ add_executable(${EXECUTABLE_NAME}
         sources/engine/EngineStop.cpp sources/engine/EngineStop.hpp
         sources/engine/EngineStatus.hpp
         sources/engine/service/Service.hpp
-        sources/engine/entity/Entity.hpp
-        sources/engine/scope/Scope.hpp
+        sources/engine/entity/Entity.cpp sources/engine/entity/Entity.hpp
+        sources/engine/scope/Scope.cpp sources/engine/scope/Scope.hpp
         sources/engine/service/GraphicalService.cpp sources/engine/service/GraphicalService.hpp
         sources/engine/display/Texture.hpp
         sources/engine/display/Window.hpp
@@ -31,9 +31,9 @@ add_executable(${EXECUTABLE_NAME}
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 find_package(SFML 2 REQUIRED audio graphics window system)
-if(SFML_FOUND)
+if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
-endif()
+endif ()
 
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)

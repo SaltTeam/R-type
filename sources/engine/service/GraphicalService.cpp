@@ -16,6 +16,8 @@ EngineStatus GRAPHICAL_SERVICE::earlyUpdate() {
         if (event.type == sf::Event::Closed) {
             this->window->close();
             return EngineStatus::Stop;
+        } else if (event.type == sf::Event::KeyPressed) {
+            this->engine->findService<GAME_SERVICE>()->execCallbacks(event.key.code);
         }
     }
     return EngineStatus::Continue;
