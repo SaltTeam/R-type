@@ -23,6 +23,10 @@ namespace Engine {
         class BaseScope;
         class ScopeManager;
     }
+
+    namespace Display {
+        class Texture;
+    }
 }
 
 #define ENGINE Engine::Runner
@@ -37,3 +41,5 @@ namespace Engine {
 
 #define SCOPE Engine::Scopes::BaseScope
 #define SCOPE_MANAGER Engine::Scopes::ScopeManager
+
+#define TEXTURE Engine::Display::Texture
