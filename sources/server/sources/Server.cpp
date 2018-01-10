@@ -9,3 +9,9 @@
 */
 
 
+#include "server/includes/Server.hpp"
+#include "server/includes/Protocol.hpp"
+
+void server::Server::start() {
+
+}
