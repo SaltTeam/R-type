@@ -2,6 +2,8 @@
 #pragma once
 
 #include <string>
+
+#include "engine/EngineStatus.hpp"
 #include "engine/Manager.hpp"
 
 class Engine;
@@ -19,14 +21,14 @@ namespace Services {
         virtual ~BaseService() = default;
 
     private:
-        virtual void initialize() = 0;
+        virtual EngineStatus initialize() = 0;
 
-        virtual void earlyUpdate() = 0;
+        virtual EngineStatus earlyUpdate() = 0;
 
-        virtual void update() = 0;
+        virtual EngineStatus update() = 0;
 
-        virtual void lateUpdate() = 0;
+        virtual EngineStatus lateUpdate() = 0;
 
-        virtual void shutdown() = 0;
+        virtual EngineStatus shutdown() = 0;
     };
 }

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <memory>
 #include <future>
+#include "EngineStatus.hpp"
 
 template<typename T>
 class Manager {
@@ -18,9 +19,19 @@ public:
     }
 
     template<typename RetType, typename... Args>
-    void execute(RetType (T::*f)(Args...), Args&...args) {
+    std::list<RetType> execute(RetType (T::*f)(Args...), Args &...args) {
+        std::list<RetType> ret;
         std::for_each(this->elements.begin(), this->elements.end(),
-                      [&](auto &elem) -> void {
+                      [&, args...](auto &elem) -> void {
+                          ret.push_back((elem->*f)(args...));
+                      });
+        return ret;
+    };
+
+    template<typename... Args>
+    void execute(void (T::*f)(Args...), Args &...args) {
+        std::for_each(this->elements.begin(), this->elements.end(),
+                      [&, args...](auto &elem) -> void {
                           (elem->*f)(args...);
                       });
     };

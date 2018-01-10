@@ -24,11 +24,9 @@ namespace Scopes {
 
         virtual void pause() = 0;
 
-        virtual void earlyUpdate() {}
+        virtual void resume() = 0;
 
         virtual void update() = 0;
-
-        virtual void lateUpdate() {}
 
         virtual void shutdown() = 0;
     };

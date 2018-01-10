@@ -21,27 +21,32 @@ namespace Services {
             std::cout << "Test Service: destructor." << std::endl;
         };
 
-        void initialize() override {
+        EngineStatus initialize() override {
             std::cout << "Test Service: initialize." << std::endl;
+            return EngineStatus::Continue;
         }
 
-        void shutdown() override {
+        EngineStatus shutdown() override {
             std::cout << "Test Service: shutdown." << std::endl;
+            return EngineStatus::Continue;
         }
 
-        void earlyUpdate() override {
+        EngineStatus earlyUpdate() override {
             std::cout << "Test Service: earlyUpdate." << std::endl;
+            return EngineStatus::Continue;
         }
 
-        void update() override {
+        EngineStatus update() override {
             std::cout << "Test Service: update." << std::endl;
             ++this->end;
             if (this->end >= 0)
-                throw CriticalEngineError(EngineErrorReason("Just stop", EngineErrorCode::UNKONWN));
+                throw CriticalEngineError(EngineErrorReason("Just stop", EngineErrorCode::UNKONWN_UPDATE_FAILED));
+            return EngineStatus::Continue;
         }
 
-        void lateUpdate() override {
+        EngineStatus lateUpdate() override {
             std::cout << "Test Service: lateUpdate." << std::endl;
+            return EngineStatus::Continue;
         }
 
         void test() {

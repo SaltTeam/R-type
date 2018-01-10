@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#include <list>
 #include <algorithm>
 #include <exception>
 
@@ -14,6 +14,12 @@
 #define SERVICE Services::BaseService
 
 class Engine {
+public:
+    enum class Status {
+        Continue = 0,
+        Stop = 1
+    };
+
 private:
     bool running = false;
 
@@ -56,6 +62,20 @@ private:
     void execute(Manager<T> &manager, RetType (T::*f)(Args...), Args &&...args) {
         try {
             manager.execute<RetType, Args...>(f, args...);
+        } catch (CriticalEngineError &e) {
+            std::cout << std::hex << std::showbase;
+            std::cout << "Critical Error detected: message: " << e.reason.msg << ", code: " << e.reason.code << " ("
+                      << (unsigned int) e.reason.code << ")" << std::endl;
+            std::cout << std::dec << std::noshowbase;
+            running = false;
+        };
+    }
+
+    template<typename... Args>
+    void execute(Manager<SERVICE> &manager, EngineStatus (SERVICE::*f)(Args...), Args &&...args) {
+        try {
+            std::list<EngineStatus> ret = manager.execute<EngineStatus, Args...>(f, args...);
+            std::for_each(ret.begin(), ret.end(), [&](auto &elem) { if (elem == EngineStatus::Stop) running = false; });
         } catch (CriticalEngineError &e) {
             std::cout << std::hex << std::showbase;
             std::cout << "Critical Error detected: message: " << e.reason.msg << ", code: " << e.reason.code << " ("

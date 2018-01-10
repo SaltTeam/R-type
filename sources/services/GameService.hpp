@@ -40,15 +40,15 @@ namespace Services {
 
         ~GameService() override;
 
-        void initialize() override;
+        EngineStatus initialize() override;
 
-        void shutdown() override;
+        EngineStatus shutdown() override;
 
-        void earlyUpdate() override;
+        EngineStatus earlyUpdate() override;
 
-        void update() override;
+        EngineStatus update() override;
 
-        void lateUpdate() override;
+        EngineStatus lateUpdate() override;
     };
 };
 

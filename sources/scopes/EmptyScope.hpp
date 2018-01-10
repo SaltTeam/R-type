@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "services/GameService.hpp"
 #include "scopes/BaseScope.hpp"
 
 namespace Scopes {
@@ -18,20 +19,16 @@ namespace Scopes {
             std::cout << "EmptyScope: pause." << std::endl;
         }
 
+        void resume() override {
+            std::cout << "EmptyScope: resume." << std::endl;
+        }
+
         void shutdown() override {
             std::cout << "EmptyScope: shutdown." << std::endl;
         }
 
-        void earlyUpdate() override {
-            std::cout << "EmptyScope: earlyUpdate." << std::endl;
-        }
-
         void update() override {
             std::cout << "EmptyScope: update." << std::endl;
-        }
-
-        void lateUpdate() override {
-            std::cout << "EmptyScope: lateUpdate." << std::endl;
         }
     };
 }

@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <exception>
 #include <string>
 
 enum EngineErrorCode : unsigned int {
@@ -14,6 +15,8 @@ enum EngineErrorCode : unsigned int {
     /// 0x1? Memory errors
     MEMORY_ALLOCATION_FAILED = 0x10
 };
+
+std::ostream &operator<<(std::ostream &out, const EngineErrorCode value);
 
 class EngineErrorReason {
 public:
