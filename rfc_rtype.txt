@@ -1,0 +1,298 @@
+Request for Comments : 1432							      Maxime Pillon
+										      Grégoire Loens
+					 				              Maxence Delacroix
+										      Hugo Soszynski
+										      Jérémy Thoveron
+										      Sylvain Corsini
+Category : Experimental							              R-TYPE SaltTeam
+							       			      January 2018
+															
+															
+															
+			R-TYPE Client Server Protocol Transport over TCP / UDP
+			
+Abstract
+
+	This document describes how a R-TYPE Client Server Protocol (RCSP) communication is
+	set onto a single Transmission Control Protocol (TCP) for connection and a User
+	Datagram Protocol (UDP) for game communication. (see FRC 768 [6])
+	
+Status of this memo
+
+	This memo defines an experimental Protocol for the developper community. This memo does
+	not define an Internet standard, just a protocol , in order to communicate between R-TYPE
+	client and R-TYPE server. Discussion and suggestions for improvement are requested.
+	Distribution of this memo is unlimited.
+
+Copyright Notice
+
+   Copyright (c) R-Type SaltTeam (2018) and the persons identified as the
+   document authors.  All rights reserved.
+ 
+ 
+Maxime                      Experimental                      [Page 1]
+
+
+
+RFC 1432          R-Type Client Server Protocol           January 2018
+
+Table of Contents
+
+   1.   Introduction . . . . . . . . . . . . . . . . . . . . . . . . 2
+   2.   Interest . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+   3.   Status Report  . . . . . . . . . . . . . . . . . . . . . . . 2
+   4.   Message Format . . . . . . . . . . . . . . . . . . . . . . . 2
+   5.   Communication Protocol . . . . . . . . . . . . . . . . . . . 3
+      5.1  Client to Server . . . . . . . . . . . . . . . . . . . .  3
+      	   5.1.1 TCP . . . . . . . . . . . . . . . . . . . . . . . . 4
+	   5.1.2 UDP . . . . . . . . . . . . . . . . . . . . . . . . 4
+      5.2  Server to Client  . . . . . . . . . . . . . . . . . . . . 5
+           5.2.1 TCP . . . . . . . . . . . . . . . . . . . . . . . . 4
+      	   5.2.2 UPD . . . . . . . . . . . . . . . . . . . . . . . . 4
+      5.3  Enum  . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+   6.   References . . . . . . . . . . . . . . . . . . . . . . . . . 8
+   7.   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . 8
+  
+    
+Hugo                        Experimental                      	[Page 2]
+
+
+
+
+RFC 1432          R-Type Client Server Protocol           January 2018
+
+1.  Introduction
+
+   This protocol is intended to provide the R-Type service, and be used
+   between clients and servers on host computers.
+   
+2.  Interest
+
+   This RFC is being distributed to members of the Internet community and
+   developpers to explain the R-Type networking protocol contained in it. 
+
+3.  Status Report
+    
+   In response to the need for maintenance of current information about
+   the status and progress of various projects in the Internet 
+   community, this RFC is issued for the benefit of community members. 
+   The information contained in this document is accurate as of the 
+   date of publication, but is subject to change.  Subsequent RFCs will
+   reflect such changes.
+
+4. Message format
+
+   The protocol message format is very simple. It start always with the
+   same header, followed by the content associated to the header :
+
+   		       TYPE	     SIZE	   PACKET
+   		|___(4 bytes)___|__(8 bytes)__|__(? bytes)__|
+		|-------------HEADER----------|-----BODY----|
+
+   The Type field corresponds to type of the packet body.
+   The ID are:
+		- 0 (UNKNOW)
+		- 1 (CONNEXION)
+		- 2 (LIST)
+		- 3 (CONNEXION_RESPONSE)
+		- 4 (LIST_RESPONSE)
+   The SIZE corresponds to the packet body size.
+   The PACKET corresponds to the data being transmitted.
+
+Maxime                      Experimental                      	[Page 3]
+
+
+
+
+RFC 1432          R-Type Client Server Protocol             January 2018
+
+5. Communication Protocol
+
+
+5.1. Client to Server
+
+5.1.1 TCP
+
+   The CMD (commands) are (.ref Page 3):
+			   - 1 CONNEXION
+			   - 2 LIST
+
+    The attributes for each commands are:
+    +----------------------------------+
+    |	field	|  size  | description |
+    +----------------------------------+
+    
+    +----------------------------------+
+    |	CMD	| HEADER |   Connect   |
+    +----------------------------------+
+    |   NAME    |   256  |  GAME_NAME  |
+    | PASSWORD  |   256  |  GAME_PASS  |
+    +----------------------------------+
+
+    +----------------------------------+
+    |	CMD	| HEADER |    List     |
+    +----------------------------------+
+    |  Pattern  |   256  | KEYS (*ar*) |
+    +----------------------------------+
+
+Maxime                      Experimental                      	[Page 4]
+
+
+
+
+RFC 1432          R-Type Client Server Protocol             January 2018
+
+5.1.2 UDP
+
+   The CMD (commands) are (.ref Page 3):
+			   - 1 OBJECT
+
+    The attributes for each commands are:
+    +-----------------------------------+
+    |	field	|  size  |  description |
+    +-----------------------------------+
+
+    +-----------------------------------+
+    |	CMD	| HEADER |    Object    |
+    +-----------------------------------+
+    |   UPDATE  |    1   | ObjectStatus |
+    |    TYPE   |    4   |  ObjectType  |
+    |  REFRESH  |    2   | RefreshTime  |
+    |     ID    |    8   |   EntityID   |
+    |  ACTION   |    2   |  StateChange |
+    +-----------------------------------+
+    |  Entity   | (SIZE) |  ObjectData  |
+    +-----------------------------------+
+
+Hugo                      Experimental                      	[Page 4]
+
+
+
+RFC 1432          R-Type Client Server Protocol             January 2018
+
+5.2. Server to Client
+
+5.2.1 TCP
+
+   The CMD (commands) are (.ref Page 3):
+			   - 1 CONNEXION_RESPONSE
+			   - 2 LIST_RESPONSE
+
+    The attributes for each commands are:
+    +--------------------------------------+
+    |	field	|  size  |   description   |
+    +--------------------------------------+
+
+    +--------------------------------------+
+    |	CMD	| HEADER | ConnectResponse |
+    +--------------------------------------+
+    |  STATUS   |    4   | response-status |
+    |   COLOR   |    4   |   player-color  |
+    +--------------------------------------+
+
+    +--------------------------------------+
+    |	CMD	| HEADER |  ListResponse   |
+    +--------------------------------------+
+    |  STATUS   |    4   | response-status |
+    |   NELTS   |    8   |    Nb_element   |
+    |   SELTS   |    8   |   Size_element  |
+    |  RESULTS  |    ?   |    Game_list    |
+    +--------------------------------------+
+
+Maxime                      Experimental                      	[Page 6]
+
+
+
+
+RFC 4242          R-Type Client Server Protocol           December 2010
+
+5.2.2 UDP
+
+   The CMD (commands) are (.ref Page 3):
+			   - 1 OBJECT
+
+    The attributes for each commands are:
+    +-----------------------------------+
+    |	field	|  size  |  description |
+    +-----------------------------------+
+
+    +-----------------------------------+
+    |	CMD	| HEADER |    Object    |
+    +-----------------------------------+
+    |   UPDATE  |    1   | ObjectStatus |
+    |    TYPE   |    4   |  ObjectType  |
+    |  REFRESH  |    2   | RefreshTime  |
+    |     ID    |    8   |   EntityID   |
+    |  ACTION   |    2   |  StateChange |
+    +-----------------------------------+
+    |  Entity   | (SIZE) |  ObjectData  |
+    +-----------------------------------+
+
+5.3. Enum
+
+   Here is a little explanation about enums that we are using:
+     Who is in charge of updating the object.
+	UPDATE {
+	  MASTER = 0,
+	  INSTANCIATED = 1,
+	  REPLICA = 2
+	}
+
+     The entity type, implementation define.
+	TYPE {
+	?
+	}
+
+     The action to perform on the entity.
+	ACTION {
+	  UPDATE = 0,
+	  DELETE = 1
+	}
+
+Maxime                      Experimental                      	[Page 6]
+
+
+
+
+RFC 4242          R-Type Client Server Protocol           December 2010
+
+6. References
+
+    [1]  Postel, J., Editor, "Internet Official Protocol Standards", STD
+         1, RFC 2200, June 1997.
+
+    [2]  Bradner, S., "The Internet Standards Process -- Revision 3", BCP
+         9, RFC 2026, October 1996.
+
+    [3]  Bradner, S., "Key words for use in RFCs to Indicate Requirement
+         Levels", BCP 14, RFC 2119, March 1997.
+
+    [4]  Malkin, G., and J. Reynolds, "F.Y.I. on F.Y.I Introduction to
+         the F.Y.I. Notes", FYI 1, RFC 1150, March 1990.
+
+    [5]  Postel, J., Li, T., and Y. Rekhter, "Best Current Practices",
+         BCP 1, RFC 1818, August 1995.
+
+    [6]  Postel, J., Editor, "Introduction to the STD Notes", RFC 1311,
+         March 1992.
+
+
+7. Authors' Addresses
+
+    Maxime Pillon
+    EMail: maxime.pillon@epitech.eu
+
+    Soszynski Hugo
+    EMail: hugo.soszynski@epitech.eu
+
+    Loens Grégoire
+    EMail: gregoire.loens@epitech.eu
+
+    Corsini Sylvain
+    EMail: sylvain.corsini@epitech.eu
+
+    Thoveron Jeremy
+    EMail: jeremy.thoveron-@epitech.eu
+
+    Delacroix Maxence
+    EMail: maxence.delacroix@epitech.eu
