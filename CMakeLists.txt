@@ -24,6 +24,7 @@ add_executable(${EXECUTABLE_NAME}
         sources/engine/service/NetService.cpp sources/engine/service/NetService.hpp
 
         sources/scopes/EmptyScope.hpp
+        sources/engine/display/Window.hpp
 
         )
 
