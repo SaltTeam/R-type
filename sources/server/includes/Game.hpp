@@ -16,6 +16,6 @@ namespace server {
   protected:
 
   public:
-
+    Game() = default;
   };
 }

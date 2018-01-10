@@ -11,12 +11,13 @@
 
 #include <iostream>
 
+#include "server/includes/Server.hpp"
 #include "engine/Runner.hpp"
 #include "services/TestService.hpp"
 #include "engine/service/NetService.hpp"
 
 int main() {
-  Server server;
+  server::Server server;
 
   try {
     server.start();

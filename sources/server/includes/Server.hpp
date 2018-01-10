@@ -10,13 +10,19 @@
 
 #pragma once
 
+#include <list>
+#include "Game.hpp"
+#include "Protocol.hpp"
+
 namespace server {
 
   class Server {
   protected:
-
+    std::list<server::Game> _games;
 
   public:
+    Server() = default;
 
+    void start();
   };
 }
