@@ -238,6 +238,14 @@ RFC 4242          R-Type Client Server Protocol           December 2010
 	  REPLICA = 2
 	}
 
+     The player color. Used for IDs (ref. object)
+	PlayerColor {
+	  BLUE = 0,
+	  GREEN,
+	  RED,
+	  YELLOW
+	}
+
      The entity type, implementation define.
 	TYPE {
 	?
