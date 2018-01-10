@@ -37,6 +37,10 @@ namespace Engine {
                 this->removeScope = true;
             }
 
+            SCOPE *currentScope() {
+                return this->scopes.top();
+            }
+
         private:
             explicit GameService(ENGINE *e) : SERVICE(e) {}
 

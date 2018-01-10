@@ -1,9 +1,12 @@
 
 #include "engine/ForwardDeclaration.hpp"
 #include "GraphicalService.hpp"
+#include "engine/Runner.hpp"
+#include "engine/service/GameService.hpp"
+#include "engine/scope/Scope.hpp"
 
 EngineStatus GRAPHICAL_SERVICE::initialize() {
-    this->window = std::make_unique<sf::Window>(sf::VideoMode(800, 600), "R-type");
+    this->window = std::make_unique<sf::RenderWindow>(sf::VideoMode(800, 600), "R-type");
     return EngineStatus::Continue;
 }
 
@@ -23,6 +26,17 @@ EngineStatus GRAPHICAL_SERVICE::update() {
 }
 
 EngineStatus GRAPHICAL_SERVICE::lateUpdate() {
+    GAME_SERVICE *game = this->engine->findService<GAME_SERVICE>();
+    SCOPE *scope = game->currentScope();
+    this->window->clear();
+    for (const auto &layer : scope->entityManager.entities) {
+        for (const auto &entity : layer.second) {
+            if (entity->texture) {
+                entity->texture->sprite.setPosition(entity->position);
+                this->window->draw(entity->texture->sprite);
+            }
+        }
+    }
     this->window->display();
     return EngineStatus::Continue;
 }
