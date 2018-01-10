@@ -1,16 +1,13 @@
 
+#include "engine/ForwardDeclaration.hpp"
 #include "GraphicalService.hpp"
 
-#include "engine/EngineStop.hpp"
-
-Services::GraphicalService::GraphicalService(Engine *engine) : BaseService(engine) {}
-
-EngineStatus Services::GraphicalService::initialize() {
+EngineStatus GRAPHICAL_SERVICE::initialize() {
     this->window = std::make_unique<sf::Window>(sf::VideoMode(800, 600), "R-type");
     return EngineStatus::Continue;
 }
 
-EngineStatus Services::GraphicalService::earlyUpdate() {
+EngineStatus GRAPHICAL_SERVICE::earlyUpdate() {
     sf::Event event{};
     while (this->window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
@@ -21,15 +18,17 @@ EngineStatus Services::GraphicalService::earlyUpdate() {
     return EngineStatus::Continue;
 }
 
-EngineStatus Services::GraphicalService::update() {
+EngineStatus GRAPHICAL_SERVICE::update() {
     return EngineStatus::Continue;
 }
 
-EngineStatus Services::GraphicalService::lateUpdate() {
+EngineStatus GRAPHICAL_SERVICE::lateUpdate() {
     this->window->display();
     return EngineStatus::Continue;
 }
 
-EngineStatus Services::GraphicalService::shutdown() {
+EngineStatus GRAPHICAL_SERVICE::shutdown() {
+    if (this->window->isOpen())
+        this->window->close();
     return EngineStatus::Continue;
 }

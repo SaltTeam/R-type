@@ -8,17 +8,25 @@ include_directories(sources/)
 
 add_executable(${EXECUTABLE_NAME}
         sources/main.cpp
-        sources/engine/Engine.cpp sources/engine/Engine.hpp
-        sources/engine/EngineStop.cpp sources/engine/EngineStop.hpp
+
+        sources/engine/ForwardDeclaration.hpp
+        sources/engine/Runner.hpp
+        sources/engine/EngineStop.hpp
         sources/engine/EngineStatus.hpp
-        sources/engine/Manager.hpp
+        sources/engine/service/Service.hpp
+        sources/engine/entity/Entity.hpp
+        sources/engine/scope/Scope.hpp
+        sources/engine/service/GraphicalService.cpp sources/engine/service/GraphicalService.hpp
+
         sources/services/TestService.hpp
-        sources/services/BaseService.cpp sources/services/BaseService.hpp
-        sources/services/GameService.cpp sources/services/GameService.hpp
-        sources/services/GraphicalService.cpp sources/services/GraphicalService.hpp
-        sources/scopes/BaseScope.cpp sources/scopes/BaseScope.hpp
+        sources/engine/service/GameService.cpp sources/engine/service/GameService.hpp
+        sources/engine/service/NetService.cpp sources/engine/service/NetService.hpp
+
         sources/scopes/EmptyScope.hpp
-        sources/entities/BaseEntity.hpp
+
+        sources/entities/GraphicalEntity.cpp sources/entities/GraphicalEntity.hpp
+        sources/entities/NetEntity.hpp
+        sources/entities/PlayerShip.cpp sources/entities/PlayerShip.hpp
         )
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

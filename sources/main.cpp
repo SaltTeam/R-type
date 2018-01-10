@@ -1,22 +1,19 @@
-//
-// Created by sylva on 08/01/2018.
-//
 
 #include <iostream>
 
-#include "engine/Engine.hpp"
-#include "scopes/EmptyScope.hpp"
+#include "engine/Runner.hpp"
 #include "services/TestService.hpp"
-#include "services/GameService.hpp"
-#include "services/GraphicalService.hpp"
+#include "engine/service/NetService.hpp"
+#include "engine/service/GameService.hpp"
+#include "engine/service/GraphicalService.hpp"
+#include "scopes/EmptyScope.hpp"
 
 int main() {
-    auto e = Engine();
+    auto e = ENGINE();
 
-    e.addService<Services::GameService>();
-    e.findService<Services::GameService>()->registerBaseScope<Scopes::EmptyScope>();
-
-    e.addService<Services::GraphicalService>();
+    e.addService<GAME_SERVICE>();
+    e.findService<GAME_SERVICE>()->registerBaseScope<Scopes::EmptyScope>();
+    e.addService<GRAPHICAL_SERVICE>();
 
     e.run();
 }
