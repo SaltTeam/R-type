@@ -27,6 +27,8 @@ namespace Engine {
 
             void close() { window.close(); }
 
+            void clear() {window.clear();}
+
         public:
             Window() = delete;
         };
