@@ -17,6 +17,7 @@ add_executable(${EXECUTABLE_NAME}
         sources/engine/entity/Entity.hpp
         sources/engine/scope/Scope.hpp
         sources/engine/service/GraphicalService.cpp sources/engine/service/GraphicalService.hpp
+        sources/engine/display/Texture.hpp
 
         sources/services/TestService.hpp
         sources/engine/service/GameService.cpp sources/engine/service/GameService.hpp
@@ -24,9 +25,6 @@ add_executable(${EXECUTABLE_NAME}
 
         sources/scopes/EmptyScope.hpp
 
-        sources/entities/GraphicalEntity.cpp sources/entities/GraphicalEntity.hpp
-        sources/entities/NetEntity.hpp
-        sources/entities/PlayerShip.cpp sources/entities/PlayerShip.hpp
         )
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
