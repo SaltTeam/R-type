@@ -25,8 +25,8 @@ namespace Engine {
             sf::Vector2f position;
             std::unique_ptr<SFML_TEXTURE> texture;
 
-            explicit BaseEntity(SCOPE *scope, uint64_t id, bool isEnabled = true)
-                    : scope(scope), id(id), isEnabled(isEnabled), position{0, 0} {}
+            explicit BaseEntity(SCOPE *scope, uint64_t id, bool isEnabled = true, float const &x = 0, float const &y = 0)
+                    : scope(scope), id(id), isEnabled(isEnabled), position{x, y} {}
 
             virtual ~BaseEntity() = default;
 

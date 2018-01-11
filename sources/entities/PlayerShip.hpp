@@ -1,17 +1,17 @@
 
 #pragma once
 
-#include "engine/entity/Entity.hpp"
+#include "engine/entity/MovableEntity.hpp"
 
 namespace Entities {
-    class PlayerShip : public ENTITY {
-    public:
-        PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true);
+  class PlayerShip : public MOVABLE_ENTITY {
+  public:
+    PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true,
+	       float const &x = 0, float const &y = 0);
 
-    protected:
-        void update() override;
+  protected:
+    void update() override;
 
-    public:
-        void moveUp();
-    };
+    void registerBindings();
+  };
 }

@@ -57,7 +57,7 @@ namespace Engine {
 
             EngineStatus lateUpdate() override;
 
-            void execCallbacks(sf::Keyboard::Key key);
+            void execCallbacks();
         };
     };
 }

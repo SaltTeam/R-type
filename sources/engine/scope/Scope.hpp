@@ -31,7 +31,7 @@ namespace Engine {
 
             virtual void update() = 0;
 
-            void execCallbacks(sf::Keyboard::Key key);
+            void execCallbacks();
 
             virtual void shutdown() = 0;
 

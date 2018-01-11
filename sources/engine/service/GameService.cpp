@@ -46,6 +46,6 @@ EngineStatus GAME_SERVICE::lateUpdate() {
     return EngineStatus::Continue;
 }
 
-void GAME_SERVICE::execCallbacks(sf::Keyboard::Key key) {
-    this->scopes.top()->execCallbacks(key);
+void GAME_SERVICE::execCallbacks() {
+    this->scopes.top()->execCallbacks();
 }
