@@ -39,6 +39,10 @@ namespace Engine {
                 this->texture = std::make_unique<SFML_TEXTURE>(std::forward<Args>(args)...);
             }
 
+            void setPosition(float const &x, float const &y);
+            void setPosition(float const &xy);
+            void setPosition(sf::Vector2f const &xy);
+
             void registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f);
 
         protected:
