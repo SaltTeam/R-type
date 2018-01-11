@@ -8,7 +8,7 @@
 
 Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
 				 float const &x, float const &y)
-  : MovableEntity(scope, id, isEnabled, x, y) {
+  : MovableEntity(scope, id, isEnabled, x, y, 0.2, 0.2) {
   this->setTexture(texturePath);
   this->registerBindings();
 }
