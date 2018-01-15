@@ -16,6 +16,9 @@ namespace server {
 
   class Game {
   protected:
+
+  public:
+    Game() = default;
     std::string& _name;
 
   public:

@@ -25,6 +25,17 @@ add_executable(${EXECUTABLE_NAME}
         sources/engine/service/GameService.cpp sources/engine/service/GameService.hpp
         sources/engine/service/NetService.cpp sources/engine/service/NetService.hpp
 
+        sources/scopes/EmptyScope.hpp
+
+        includes/network/Addr.hpp
+        includes/network/Select.hpp
+        includes/network/SocketException.hpp
+        includes/network/Socket.hpp
+
+        sources/network/Addr.cpp
+        sources/network/Select.cpp
+        sources/network/SocketException.cpp
+        sources/network/Socket.cpp
         sources/scopes/TestScope.hpp
         sources/entities/PlayerShip.cpp sources/entities/PlayerShip.hpp
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp

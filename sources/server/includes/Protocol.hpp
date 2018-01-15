@@ -52,12 +52,12 @@ namespace network {
     } __attribute__((packed));
 
     struct Connexion {
-      char name[256];
-      char pass[256];
+      const char name[256];
+      const char pass[256];
     } __attribute__((packed));
 
     struct List {
-      char pattern[256];
+      const char pattern[256];
     } __attribute__((packed));
 
     struct ConnexionResponse {
