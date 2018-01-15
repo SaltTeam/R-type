@@ -25,7 +25,8 @@ namespace Engine {
             sf::Vector2f position;
             std::unique_ptr<SFML_TEXTURE> texture;
 
-            explicit BaseEntity(SCOPE *scope, uint64_t id, bool isEnabled = true, float const &x = 0, float const &y = 0)
+            explicit BaseEntity(SCOPE *scope, uint64_t id, bool isEnabled = true, float const &x = 0,
+                                float const &y = 0)
                     : scope(scope), id(id), isEnabled(isEnabled), position{x, y} {}
 
             virtual ~BaseEntity() = default;
@@ -35,12 +36,14 @@ namespace Engine {
             }
 
             template<typename... Args>
-            void setTexture(Args&&...args) {
+            void setTexture(Args &&...args) {
                 this->texture = std::make_unique<SFML_TEXTURE>(std::forward<Args>(args)...);
             }
 
             void setPosition(float const &x, float const &y);
+
             void setPosition(float const &xy);
+
             void setPosition(sf::Vector2f const &xy);
 
             void registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f);
@@ -62,9 +65,18 @@ namespace Engine {
             friend GRAPHICAL_SERVICE;
 
         private:
-            std::unordered_map<Layer, std::vector<ENTITY *>> entities;
+            std::unordered_map<Layer, std::list<ENTITY *>> entities;
+            std::list<ENTITY *> removedEntities;
 
         public:
+            ~EntityManager() {
+                std::for_each(this->entities.begin(), this->entities.end(),
+                              [&](auto &layer) {
+                                  std::for_each(layer.second.begin(), layer.second.end(),
+                                                [&](auto &entity) -> void { delete entity; });
+                              });
+            }
+
             template<typename T, typename... Args>
             void add(Layer layer, Args &&...args) {
                 this->entities[layer].push_back(new T(std::forward<Args>(args)...));
@@ -74,12 +86,12 @@ namespace Engine {
             T *find(uint64_t id) {
                 for (auto &layer: this->entities) {
                     auto ptr = std::find_if(layer.second.begin(), layer.second.end(),
-                                                               [&, id](const auto &item) -> bool {
-                                                                   if (item->id == id) {
-                                                                       return dynamic_cast<T *>(item) != nullptr;
-                                                                   }
-                                                                   return false;
-                                                               });
+                                            [&, id](const auto &item) -> bool {
+                                                if (item->id == id) {
+                                                    return dynamic_cast<T *>(item) != nullptr;
+                                                }
+                                                return false;
+                                            });
                     if (ptr != nullptr)
                         return ptr;
                 }
@@ -87,9 +99,34 @@ namespace Engine {
             }
 
             void update() {
+                // REMOVE WAITING ENTITY
+                this->_removeWaitingEntities();
+                // UPDATE
                 for (auto &layer: this->entities) {
                     for (auto &entity: layer.second) {
-                        entity->update();
+                        if (entity->isEnabled) entity->update();
+                    }
+                }
+            }
+
+            void remove(ENTITY *entity) {
+                this->removedEntities.push_back(entity);
+            }
+
+        private:
+            void _removeWaitingEntities() {
+                if (this->removedEntities.empty()) return;
+                for (auto &layer: this->entities) {
+                    for (auto &entity: layer.second) {
+                        for (auto &deleteEntity: this->removedEntities) {
+                            if (entity == deleteEntity) {
+                                delete entity;
+                                this->entities[layer.first].remove(entity);
+                                this->removedEntities.remove(deleteEntity);
+                                this->_removeWaitingEntities(); // Recursive
+                                return;
+                            }
+                        }
                     }
                 }
             }
