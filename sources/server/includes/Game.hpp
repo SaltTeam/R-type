@@ -10,12 +10,15 @@
 
 #pragma once
 
+#include <string>
+
 namespace server {
 
   class Game {
   protected:
+    std::string& _name;
 
   public:
-    Game() = default;
+    explicit Game(std::string& name) : _name(name) {}
   };
 }

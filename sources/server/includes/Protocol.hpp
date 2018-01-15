@@ -45,18 +45,19 @@ namespace network {
 
     };
 
+    extern "C" {
     struct Header {
       HeaderType type;
       uint64_t size;
     } __attribute__((packed));
 
     struct Connexion {
-      const char name[256];
-      const char pass[256];
+      char name[256];
+      char pass[256];
     } __attribute__((packed));
 
     struct List {
-      const char pattern[256];
+      char pattern[256];
     } __attribute__((packed));
 
     struct ConnexionResponse {
@@ -79,5 +80,6 @@ namespace network {
       Action action;
     } __attribute__((packed));
 
+    }
   }
 }
