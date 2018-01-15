@@ -10,19 +10,29 @@
 
 #pragma once
 
-#include <list>
+#include <map>
 #include "Game.hpp"
 #include "Protocol.hpp"
+#include "network/Socket.hpp"
+#include "network/Select.hpp"
 
 namespace server {
 
-  class Server {
-  protected:
-    std::list<server::Game> _games;
+    class Server {
+    protected:
+        std::map<std::string, server::Game> _games;
+        mysocket::Socket _socket;
+        mysocket::Select _select;
 
-  public:
-    Server() = default;
+    public:
+        Server();
 
-    void start();
-  };
+        void start();
+
+    protected:
+        void setSelect();
+        void handleConnection();
+        void commandConnect(std::unique_ptr<mysocket::Socket>& client);
+        void commandList(std::unique_ptr<mysocket::Socket>& client);
+    };
 }

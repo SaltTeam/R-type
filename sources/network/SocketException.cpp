@@ -9,7 +9,7 @@
 */
 
 #include <string>
-#include "SocketException.hpp"
+#include "network/SocketException.hpp"
 
 namespace mysocket
 {

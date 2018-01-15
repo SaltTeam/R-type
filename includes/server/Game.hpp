@@ -20,8 +20,10 @@ namespace server {
   public:
     Game() = default;
     std::string& _name;
+    std::string& _passwd;
 
   public:
-    explicit Game(std::string& name) : _name(name) {}
+    explicit Game(std::string& name) : _name(name), _passwd() {}
+    explicit Game(std::string& name, std::string& passwd) : _name(name), _passwd(passwd) {}
   };
 }

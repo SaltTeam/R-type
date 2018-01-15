@@ -10,7 +10,7 @@
 
 #include <cerrno>
 #include <iostream>
-#include "Socket.hpp"
+#include "network/Socket.hpp"
 
 namespace mysocket {
 
