@@ -4,23 +4,24 @@
 
 #pragma once
 
-#include <bits/types/time_t.h>
 #include "engine/ForwardDeclaration.hpp"
 
 namespace Entities {
-  class Weapon {
-  public:
-    Weapon(SCOPE *scope, float const &cd = 1, int const &damage = 10);
+    class Weapon {
+    public:
+	Weapon(SCOPE *scope, float const &cd = 1, int const &damage = 10);
 
-    void shoot(sf::Vector2f const &position);
+	void shoot(sf::Vector2f const &position);
 
-    void shoot(std::vector<sf::Vector2f> const &positions);
+	void shoot(std::vector<sf::Vector2f> const &positions);
 
-  protected:
-    SCOPE *scope;
-    float cd;
-    int damage;
-    time_t lastUse;
+    protected:
+	SCOPE *scope;
+	float cd;
+	int damage;
+	std::chrono::time_point<std::chrono::system_clock> lastUse;
 
-  };
+    private:
+	void spawnLasers(sf::Vector2f const &position);
+    };
 }
