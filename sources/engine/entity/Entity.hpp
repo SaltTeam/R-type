@@ -70,10 +70,10 @@ namespace Engine {
             friend GRAPHICAL_SERVICE;
 
         private:
+            std::unordered_map<Layer, std::list<ENTITY *>> entities;
             std::list<ENTITY *> removedEntities;
 
         public:
-            std::unordered_map<Layer, std::list<ENTITY *>> entities;
             ~EntityManager() {
                 std::for_each(this->entities.begin(), this->entities.end(),
                               [&](auto &layer) {
