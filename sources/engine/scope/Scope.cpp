@@ -8,7 +8,7 @@ void SCOPE::registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f
 void SCOPE::execCallbacks() {
   for (const auto &registered : this->callbacks) {
     if (sf::Keyboard::isKeyPressed(registered.first))
-      for (auto callback : registered.second)
+      for (auto &callback : registered.second)
 	callback();
   }
 }

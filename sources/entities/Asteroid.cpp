@@ -2,7 +2,6 @@
 // Created by delacr_a on 11/01/18.
 //
 
-#include <iostream>
 #include "Asteroid.hpp"
 
 Entities::Asteroid::Asteroid(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
