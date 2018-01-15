@@ -2,7 +2,6 @@
 // Created by sylva on 10/01/2018.
 //
 
-#include <iostream>
 #include "engine/scope/Scope.hpp"
 #include "engine/service/GameService.hpp"
 #include "PlayerShip.hpp"
