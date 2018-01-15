@@ -9,7 +9,7 @@ void COLLISION_MANAGER::registerCollision(ENTITY *ref, const Engine::Entities::C
 }
 
 void COLLISION_MANAGER::checkCollision(ENTITY *entity) {
-    auto collisionBoxes = this->collisions[entity];
+    auto &collisionBoxes = this->collisions[entity];
     for (auto &oEntity: this->collisions) {
         if (oEntity.first == entity) continue;
         for (auto &oCollision: oEntity.second) {
