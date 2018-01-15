@@ -2,6 +2,7 @@
 #pragma once
 
 #include <stack>
+#include <random>
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/scope/Scope.hpp"
@@ -12,6 +13,7 @@ namespace Engine {
         class GameService : public SERVICE {
             friend ENGINE;
             friend SERVICE_MANAGER;
+            friend GRAPHICAL_SERVICE;
 
         private:
             bool removeScope = false;
@@ -37,6 +39,10 @@ namespace Engine {
                 this->removeScope = true;
             }
 
+            SCOPE *currentScope() {
+                return this->scopes.top();
+            }
+
         private:
             explicit GameService(ENGINE *e) : SERVICE(e) {}
 
@@ -51,6 +57,8 @@ namespace Engine {
             EngineStatus update() override;
 
             EngineStatus lateUpdate() override;
+
+            void execCallbacks();
         };
     };
 }

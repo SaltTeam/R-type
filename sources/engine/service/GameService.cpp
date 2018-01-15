@@ -30,6 +30,7 @@ EngineStatus GAME_SERVICE::earlyUpdate() {
 }
 
 EngineStatus GAME_SERVICE::update() {
+    scopes.top()->entityManager.update();
     scopes.top()->update();
     return EngineStatus::Continue;
 }
@@ -43,4 +44,8 @@ EngineStatus GAME_SERVICE::lateUpdate() {
         this->scopes.pop();
     }
     return EngineStatus::Continue;
+}
+
+void GAME_SERVICE::execCallbacks() {
+    this->scopes.top()->execCallbacks();
 }

@@ -13,7 +13,7 @@ namespace Engine {
             friend SERVICE_MANAGER;
 
         private:
-            std::unique_ptr<sf::Window> window = nullptr;
+            std::unique_ptr<sf::RenderWindow> window = nullptr;
 
         public:
             explicit GraphicalService(ENGINE *engine) : SERVICE(engine) {}

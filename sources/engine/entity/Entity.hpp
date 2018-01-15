@@ -2,7 +2,9 @@
 #pragma once
 
 #include <cstdint>
-#include <map>
+#include <utility>
+#include <unordered_map>
+#include <functional>
 #include <SFML/System/Vector2.hpp>
 
 #include "engine/ForwardDeclaration.hpp"
@@ -13,21 +15,35 @@ namespace Engine {
 
         class BaseEntity {
             friend ENTITY_MANAGER;
+        protected:
+            std::map<int, std::function<void(void)>> callbacks;
+            SCOPE *scope;
 
         public:
             uint64_t id;
             bool isEnabled;
-            sf::Vector2<double> position;
-            std::unique_ptr<TEXTURE> texture;
+            sf::Vector2f position;
+            std::unique_ptr<SFML_TEXTURE> texture;
 
-            explicit BaseEntity(uint64_t id, const std::string &texturePath, bool isEnabled = true)
-                    : id(id), isEnabled(isEnabled) {}
+            explicit BaseEntity(SCOPE *scope, uint64_t id, bool isEnabled = true, float const &x = 0, float const &y = 0)
+                    : scope(scope), id(id), isEnabled(isEnabled), position{x, y} {}
 
             virtual ~BaseEntity() = default;
 
-            void setTexture(std::unique_ptr<TEXTURE> &texture) {
+            void setTexture(std::unique_ptr<SFML_TEXTURE> &texture) {
                 this->texture = std::move(texture);
             }
+
+            template<typename... Args>
+            void setTexture(Args&&...args) {
+                this->texture = std::make_unique<SFML_TEXTURE>(std::forward<Args>(args)...);
+            }
+
+            void setPosition(float const &x, float const &y);
+            void setPosition(float const &xy);
+            void setPosition(sf::Vector2f const &xy);
+
+            void registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f);
 
         protected:
             virtual void update() = 0;
@@ -43,11 +59,40 @@ namespace Engine {
         };
 
         class EntityManager {
+            friend GRAPHICAL_SERVICE;
+
         private:
-            std::map<Layer, ENTITY *> entities;
+            std::unordered_map<Layer, std::vector<ENTITY *>> entities;
 
         public:
+            template<typename T, typename... Args>
+            void add(Layer layer, Args &&...args) {
+                this->entities[layer].push_back(new T(std::forward<Args>(args)...));
+            }
 
+            template<typename T>
+            T *find(uint64_t id) {
+                for (auto &layer: this->entities) {
+                    auto ptr = std::find_if(layer.second.begin(), layer.second.end(),
+                                                               [&, id](const auto &item) -> bool {
+                                                                   if (item->id == id) {
+                                                                       return dynamic_cast<T *>(item) != nullptr;
+                                                                   }
+                                                                   return false;
+                                                               });
+                    if (ptr != nullptr)
+                        return ptr;
+                }
+                return nullptr;
+            }
+
+            void update() {
+                for (auto &layer: this->entities) {
+                    for (auto &entity: layer.second) {
+                        entity->update();
+                    }
+                }
+            }
         };
 
     }

@@ -45,6 +45,7 @@ namespace network {
 
     };
 
+    extern "C" {
     struct Header {
       HeaderType type;
       uint64_t size;
@@ -79,5 +80,6 @@ namespace network {
       Action action;
     } __attribute__((packed));
 
+    }
   }
 }

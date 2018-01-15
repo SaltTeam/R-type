@@ -17,11 +17,13 @@ namespace Engine {
     namespace Entities {
         class BaseEntity;
         class EntityManager;
+
+        enum class Layer : unsigned int;
     }
 
     namespace Scopes {
         class BaseScope;
-        class ScopeManager;
+        class ScopeManager; // TODO
     }
 
     namespace Display {
@@ -37,9 +39,13 @@ namespace Engine {
 #define GAME_SERVICE Engine::Services::GameService
 
 #define ENTITY Engine::Entities::BaseEntity
+#define MOVABLE_ENTITY Engine::Entities::MovableEntity
 #define ENTITY_MANAGER Engine::Entities::EntityManager
+
+#define LAYER Engine::Entities::Layer
 
 #define SCOPE Engine::Scopes::BaseScope
 #define SCOPE_MANAGER Engine::Scopes::ScopeManager
 
 #define TEXTURE Engine::Display::Texture
+#define SFML_TEXTURE Engine::Display::SFMLTexture

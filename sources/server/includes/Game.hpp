@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <string>
+
 namespace server {
 
   class Game {
@@ -17,5 +19,9 @@ namespace server {
 
   public:
     Game() = default;
+    std::string& _name;
+
+  public:
+    explicit Game(std::string& name) : _name(name) {}
   };
 }
