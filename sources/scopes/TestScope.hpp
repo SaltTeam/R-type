@@ -1,7 +1,11 @@
 
 #pragma once
 
-#include "entities/PlayerShip.hpp"
+#include "entities/ships/YWing.hpp"
+#include "entities/ships/XWing.hpp"
+#include "entities/ships/_Wing.hpp"
+#include "entities/ships/Arc.hpp"
+#include "entities/ships/Intercepteur.hpp"
 #include "entities/Asteroid.hpp"
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/service/GameService.hpp"
@@ -14,8 +18,7 @@ namespace Scopes {
         ~TestScope() override = default;
 
         void initialize() override {
-            this->entityManager.add<Entities::PlayerShip>(LAYER::Layer1, this, 0, "resources/sprites/ships/player/ship1/base.png", true, 50, 50);
-            this->entityManager.add<Entities::Asteroid>(LAYER::Layer1, this, 0, "resources/sprites/Meteors/meteorGrey_big1.png", true, 50, 50);
+            this->entityManager.add<Entities::Intercepteur>(LAYER::Layer1, this, 0, true, 50, 50);
         }
 
         void pause() override {

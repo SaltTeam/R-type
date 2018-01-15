@@ -7,8 +7,8 @@
 #include "PlayerShip.hpp"
 
 Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
-				 float const &x, float const &y)
-  : MovableEntity(scope, id, isEnabled, x, y, 0.2, 0.2), weapon(scope, 0.5)
+				 float const &x, float const &y, const float &xSpeed, const float &ySpeed)
+  : MovableEntity(scope, id, isEnabled, x, y, xSpeed, ySpeed), weapon(scope)
 {
   this->setTexture(texturePath);
   this->registerBindings();

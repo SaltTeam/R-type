@@ -9,7 +9,7 @@
 namespace Entities {
     class Weapon {
     public:
-	Weapon(SCOPE *scope, float const &cd = 1, int const &damage = 10);
+	Weapon(SCOPE *scope, float const &cd = 0.5, int const &damage = 10);
 
 	void shoot(sf::Vector2f const &position);
 
@@ -23,5 +23,6 @@ namespace Entities {
 
     private:
 	void spawnLasers(sf::Vector2f const &position);
+	void spawnAsteroids(sf::Vector2f const &position);
     };
 }

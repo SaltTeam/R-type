@@ -11,13 +11,16 @@
 #include "engine/entity/MovableEntity.hpp"
 
 namespace Entities {
-  class Asteroid : public MOVABLE_ENTITY{
-  public:
-    Asteroid(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true,
-	     float const &x = 0, float const &y = 0);
+    class Asteroid : public MOVABLE_ENTITY {
+    public:
+	Asteroid(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true,
+		 float const &x = 0, float const &y = 0);
 
-  protected:
-    void update() override;
+	Asteroid(SCOPE *scope, uint64_t id, bool isEnabled = true,
+		 float const &x = 0, float const &y = 0);
 
-  };
+    protected:
+	void update() override;
+
+    };
 }
