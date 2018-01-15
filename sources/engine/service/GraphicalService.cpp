@@ -6,7 +6,7 @@
 #include "engine/scope/Scope.hpp"
 
 EngineStatus GRAPHICAL_SERVICE::initialize() {
-    this->window = std::make_unique<sf::RenderWindow>(sf::VideoMode(800, 600), "R-type");
+    this->window = std::make_unique<sf::RenderWindow>(sf::VideoMode(720, 980), "R-type");
     return EngineStatus::Continue;
 }
 

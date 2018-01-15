@@ -6,6 +6,7 @@
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/entity/Entity.hpp"
+#include "engine/entity/Collision.hpp"
 
 namespace Engine {
     namespace Scopes {
@@ -18,6 +19,8 @@ namespace Engine {
             GAME_SERVICE *gameService;
 
             ENTITY_MANAGER entityManager;
+
+            COLLISION_MANAGER collisionManager;
 
             explicit BaseScope(GAME_SERVICE *gameService) : gameService(gameService) {}
 
