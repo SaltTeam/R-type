@@ -6,19 +6,18 @@
 
 namespace Entities {
     class PlayerShip : public MOVABLE_ENTITY {
-    public:
-        PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true,
-                   float const &x = 0, float const &y = 0);
-
     protected:
-        void update() override;
+	PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true,
+		   float const &x = 0, float const &y = 0, float const &xSpeed = 0.2, float const &ySpeed = 0.2);
 
-        void shoot();
+	void update() override;
 
-        void registerBindings();
+	void shoot();
 
-        void onCollision(ENTITY *other);
+	void registerBindings();
 
-        Weapon weapon;
+	void onCollision(ENTITY *other);
+
+	Weapon weapon;
     };
 }
