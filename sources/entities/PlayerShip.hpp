@@ -2,6 +2,7 @@
 #pragma once
 
 #include "engine/entity/MovableEntity.hpp"
+#include "Weapon.hpp"
 
 namespace Entities {
   class PlayerShip : public MOVABLE_ENTITY {
@@ -12,6 +13,10 @@ namespace Entities {
   protected:
     void update() override;
 
+    void shoot();
+
     void registerBindings();
+
+    Weapon weapon;
   };
 }

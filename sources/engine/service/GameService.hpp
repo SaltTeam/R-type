@@ -2,6 +2,7 @@
 #pragma once
 
 #include <stack>
+#include <random>
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/scope/Scope.hpp"
