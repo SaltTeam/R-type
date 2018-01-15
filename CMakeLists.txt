@@ -25,6 +25,15 @@ add_executable(${EXECUTABLE_NAME}
 
         sources/scopes/EmptyScope.hpp
 
+        includes/network/Addr.hpp
+        includes/network/Select.hpp
+        includes/network/SocketException.hpp
+        includes/network/Socket.hpp
+
+        sources/network/Addr.cpp
+        sources/network/Select.cpp
+        sources/network/SocketException.cpp
+        sources/network/Socket.cpp
         )
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
