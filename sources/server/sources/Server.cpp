@@ -11,6 +11,7 @@
 
 #include "server/Server.hpp"
 #include "server/Protocol.hpp"
+#include "logger/Logger.hpp"
 
 server::Server::Server()
         : _games(), _socket(AF_INET, SOCK_STREAM, IPPROTO_TCP), _select() {
@@ -99,7 +100,7 @@ void server::Server::commandList(std::unique_ptr<mysocket::Socket> &client) {
 	return;
     if (strlen(con.pattern) > 0)
     {
-	
+
     } else {
 	res.status = network::protocol::Status::STATUS_OK;
 	res.nelts = this->_games.size();

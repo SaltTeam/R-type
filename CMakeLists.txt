@@ -41,6 +41,8 @@ add_executable(${EXECUTABLE_NAME}
         sources/server/sources/Server.cpp
         sources/server/main.cpp
 
+        sources/logger/Logger.cpp
+
         sources/scopes/TestScope.hpp
         sources/entities/PlayerShip.cpp sources/entities/PlayerShip.hpp
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
