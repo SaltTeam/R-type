@@ -56,24 +56,57 @@ void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
     network::protocol::Connexion con;
 
     std::memset(&con, 0, sizeof(con));
+    network::protocol::ConnexionResponse res;
+
     if (client->Recv(con, sizeof(con), 0) <= 0)
         return;
     if (_games.find(con.name) != _games.end()) {
-        if (_games[con.name]._passwd.length() > 0 && _games[con.name]._passwd == con.pass) {
-            // Add the player to the game and send response back
-            network::protocol::ConnexionResponse res;
-        }
-        else {
-            network::protocol::ConnexionResponse res;
-
+        if (strlen(_games[con.name]._passwd) > 0 && _games[con.name]._passwd == con.pass) {
+	    if (_games[con.name].nbPlayer == 4) {
+		res.color = network::protocol::PlayerColor::ERROR;
+		res.status = network::protocol::Status::STATUS_FULL;
+		client->Send(res, sizeof(res), 0);
+	    } else {
+		res.color = static_cast<network::protocol::PlayerColor>(_games[con.name].nbPlayer);
+		res.status = network::protocol::Status::STATUS_OK;
+		client->Send(res, sizeof(res), 0);
+		++_games[con.name].nbPlayer;
+	    }
+        } else {
             res.color = network::protocol::PlayerColor::ERROR;
-            res.status = network::protocol::Status::STATUS_ERROR;
+            res.status = network::protocol::Status::STATUS_PASSERROR;
             client->Send(res, sizeof(res), 0);
         }
     }
     else {
-        // Create a new game
-        // Add the player to the game and send response back
-        network::protocol::ConnexionResponse res;
+	server::Game game(con.name, con.pass);
+	this->_games.emplace(std::make_pair(con.name, game));
+	res.color = static_cast<network::protocol::PlayerColor>(game.nbPlayer);
+	res.status = network::protocol::Status::STATUS_OK;
+	client->Send(res, sizeof(res), 0);
+	++game.nbPlayer;
+	// need to set a data socket for udp protocol.
+    }
+}
+
+void server::Server::commandList(std::unique_ptr<mysocket::Socket> &client) {
+    network::protocol::List con;
+
+    std::memset(&con, 0, sizeof(con));
+    network::protocol::ListResponse res;
+
+    if (client->Recv(con, sizeof(con), 0) <= 0)
+	return;
+    if (strlen(con.pattern) > 0)
+    {
+	
+    } else {
+	res.status = network::protocol::Status::STATUS_OK;
+	res.nelts = this->_games.size();
+	std::list<std::string> results;
+	for (auto it : _games)
+	    results.push_back(it.first);
+	res.results = results;
+	client->Send(res, sizeof(res), 0);
     }
 }

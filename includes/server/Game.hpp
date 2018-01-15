@@ -14,16 +14,21 @@
 
 namespace server {
 
-  class Game {
-  protected:
+    class Game {
+    protected:
 
-  public:
-    Game() = default;
-    std::string& _name;
-    std::string& _passwd;
+    public:
+	Game(const char *name, const char *password) : _name(name), _passwd(password) {}
 
-  public:
-    explicit Game(std::string& name) : _name(name), _passwd() {}
-    explicit Game(std::string& name, std::string& passwd) : _name(name), _passwd(passwd) {}
-  };
+	const char *_name;
+	const char *_passwd;
+	int nbPlayer = 0;
+
+    public:
+	explicit Game(const char *name) : _name(name), _passwd() {}
+
+	explicit Game(const char *name, const char *passwd) : _name(name),
+								_passwd(
+								    passwd) {}
+    };
 }

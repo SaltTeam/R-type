@@ -39,7 +39,9 @@ namespace network {
 
         enum class Status {
             STATUS_OK = 200,
-            STATUS_ERROR = 500
+            STATUS_ERROR = 500,
+	    STATUS_PASSERROR = 501,
+	    STATUS_FULL = 502
         };
 
         enum class HeaderType {
