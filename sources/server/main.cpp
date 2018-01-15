@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-#include "server/includes/Server.hpp"
+#include "server/Server.hpp"
 #include "engine/Runner.hpp"
 #include "services/TestService.hpp"
 #include "engine/service/NetService.hpp"
