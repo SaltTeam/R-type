@@ -5,7 +5,6 @@
 #include <ctime>
 #include <engine/scope/Scope.hpp>
 #include <chrono>
-#include <iostream>
 #include "Weapon.hpp"
 #include "Projectile.hpp"
 #include "Asteroid.hpp"
@@ -16,19 +15,11 @@ Entities::Weapon::Weapon(SCOPE *scope, std::string const &projectilePath, float 
     this->lastUse = std::chrono::system_clock::from_time_t(0);
 }
 
-void Entities::Weapon::shoot(sf::Vector2f const &position) {
+void Entities::Weapon::shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position) {
     if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - this->lastUse).count() >=
 	this->cd) {
-	this->spawnLasers(position);
-	this->lastUse = std::chrono::system_clock::now();
-    }
-}
-
-void Entities::Weapon::shoot(std::vector<sf::Vector2f> const &positions) {
-    if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - this->lastUse).count() >=
-	this->cd) {
-	for (auto &it : positions)
-	    this->spawnLasers(it);
+		for (auto &it : canons)
+			this->spawnLasers(it + position);
 	this->lastUse = std::chrono::system_clock::now();
     }
 }

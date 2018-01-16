@@ -18,8 +18,8 @@ namespace Scopes {
         ~TestScope() override = default;
 
         void initialize() override {
-            this->entityManager.add<Entities::YWing>(LAYER::Layer1, this, 0, true, 350, 350);
-	    this->entityManager.add<Entities::XWing>(LAYER::Layer1, this, 1, true, 150, 150);
+            this->entityManager.add<Entities::Intercepteur>(LAYER::Layer1, this);
+            this->entityManager.add<Entities::YWing>(LAYER::Layer1, this, 1, true, 0, 100);
         }
 
         void pause() override {
