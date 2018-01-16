@@ -9,6 +9,7 @@
 */
 
 
+#include <functional>
 #include "server/Server.hpp"
 #include "server/Protocol.hpp"
 #include "logger/Logger.hpp"
@@ -18,6 +19,7 @@ server::Server::Server()
     _socket.setAddress(42000, "0.0.0.0");
     _socket.Bind();
     _socket.Listen(42);
+    _games_m.unlock();
 }
 
 void server::Server::start() {
@@ -46,68 +48,79 @@ void server::Server::handleConnection() {
             return;
         if (header.type == network::protocol::HeaderType::CONNECT) {
             commandConnect(client);
-        }
-        else if (header.type == network::protocol::HeaderType::LIST) {
+        } else if (header.type == network::protocol::HeaderType::LIST) {
             commandList(client);
         }
     }
 }
 
 void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
+    network::protocol::ConnexionResponse res = {network::protocol::Status::STATUS_ERROR, network::protocol::PlayerColor::ERROR, 0};
     network::protocol::Connexion con;
 
     std::memset(&con, 0, sizeof(con));
-    network::protocol::ConnexionResponse res;
 
     if (client->Recv(con, sizeof(con), 0) <= 0)
         return;
     if (_games.find(con.name) != _games.end()) {
-        if (strlen(_games[con.name]._passwd) > 0 && _games[con.name]._passwd == con.pass) {
-	    if (_games[con.name].nbPlayer == 4) {
-		res.color = network::protocol::PlayerColor::ERROR;
-		res.status = network::protocol::Status::STATUS_FULL;
-		client->Send(res, sizeof(res), 0);
-	    } else {
-		res.color = static_cast<network::protocol::PlayerColor>(_games[con.name].nbPlayer);
-		res.status = network::protocol::Status::STATUS_OK;
-		client->Send(res, sizeof(res), 0);
-		++_games[con.name].nbPlayer;
-	    }
+        _games_m.lock();
+        if (_games[con.name]->_passwd.length() > 0 && _games[con.name]->_passwd == con.pass) {
+            if (_games[con.name]->nbPlayer == 4) {
+                res.status = network::protocol::Status::STATUS_FULL;
+                sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
+            } else {
+                res.color = static_cast<network::protocol::PlayerColor>(_games[con.name]->nbPlayer);
+                res.status = network::protocol::Status::STATUS_OK;
+                res.port = _games[con.name]->getPort();
+                sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
+                ++_games[con.name]->nbPlayer;
+            }
         } else {
-            res.color = network::protocol::PlayerColor::ERROR;
-            res.status = network::protocol::Status::STATUS_PASSERROR;
-            client->Send(res, sizeof(res), 0);
+            sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
         }
-    }
-    else {
-	server::Game game(con.name, con.pass);
-	this->_games.emplace(std::make_pair(con.name, game));
-	res.color = static_cast<network::protocol::PlayerColor>(game.nbPlayer);
-	res.status = network::protocol::Status::STATUS_OK;
-	client->Send(res, sizeof(res), 0);
-	++game.nbPlayer;
-	// need to set a data socket for udp protocol.
+        _games_m.unlock();
+    } else {
+        try {
+            auto game = std::make_shared<server::Game>(con.name, con.pass, _port);
+            _games_m.lock();
+            this->_games.emplace(con.name, game);
+            _games_m.unlock();
+            res.color = static_cast<network::protocol::PlayerColor>(game->nbPlayer);
+            res.status = network::protocol::Status::STATUS_OK;
+            res.port = game->getPort();
+            sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
+            ++game->nbPlayer;
+            std::thread t(&Game::start, *game);
+            t.detach();
+        }
+        catch (mysocket::SocketException const& e) {
+            // LOG
+        }
+        catch (...) {
+            // LOG
+        }
+        ++_port;
     }
 }
 
-void server::Server::commandList(std::unique_ptr<mysocket::Socket> &client) {
+// TODO: This does not work !
+void server::Server::commandList(std::unique_ptr<mysocket::Socket>& client) {
     network::protocol::List con;
 
     std::memset(&con, 0, sizeof(con));
     network::protocol::ListResponse res;
 
     if (client->Recv(con, sizeof(con), 0) <= 0)
-	return;
-    if (strlen(con.pattern) > 0)
-    {
+        return;
+    if (strlen(con.pattern) > 0) {
 
     } else {
-	res.status = network::protocol::Status::STATUS_OK;
-	res.nelts = this->_games.size();
-	std::list<std::string> results;
-	for (auto it : _games)
-	    results.push_back(it.first);
-	res.results = results;
-	client->Send(res, sizeof(res), 0);
+        res.status = network::protocol::Status::STATUS_OK;
+        res.nelts = this->_games.size();
+        std::list<std::string> results;
+        for (auto it : _games)
+            results.push_back(it.first);
+        res.results = results;
+        sendTcpResponse(client, network::protocol::HeaderType::LIST, res);
     }
 }

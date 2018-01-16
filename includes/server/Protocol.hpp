@@ -68,8 +68,10 @@ namespace network {
         struct ConnexionResponse {
             Status status;
             PlayerColor color;
+            unsigned short port;
         };
 
+        // TODO: This does not work !
         struct ListResponse {
             Status status;
             uint64_t nelts;
