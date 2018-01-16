@@ -11,24 +11,30 @@
 #pragma once
 
 #include <string>
+#include <atomic>
+#include "network/Socket.hpp"
 
 namespace server {
 
     class Game {
     protected:
+        std::atomic_ushort _port;
+        mysocket::Socket _socket;
 
     public:
-	Game(const char *name, const char *password) : _name(name), _passwd(password) {}
-
-	const char *_name;
-	const char *_passwd;
-	int nbPlayer = 0;
+        std::string _name;
+        std::string _passwd;
+        std::atomic_int nbPlayer = 0;
 
     public:
-	explicit Game(const char *name) : _name(name), _passwd() {}
+        explicit Game(const char* name, unsigned short port);
 
-	explicit Game(const char *name, const char *passwd) : _name(name),
-								_passwd(
-								    passwd) {}
+        Game(const char* name, const char* passwd, unsigned short port);
+
+    public:
+        unsigned short getPort() const;
+
+    public:
+        void start();
     };
 }

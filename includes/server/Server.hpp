@@ -11,6 +11,9 @@
 #pragma once
 
 #include <map>
+#include <memory>
+#include <thread>
+#include <mutex>
 #include "Game.hpp"
 #include "Protocol.hpp"
 #include "network/Socket.hpp"
@@ -20,9 +23,11 @@ namespace server {
 
     class Server {
     protected:
-        std::map<std::string, server::Game> _games;
+        std::map<std::string, std::shared_ptr<server::Game>> _games;
         mysocket::Socket _socket;
         mysocket::Select _select;
+        unsigned short _port = 42001;
+        std::mutex _games_m;
 
     public:
         Server();
@@ -34,5 +39,20 @@ namespace server {
         void handleConnection();
         void commandConnect(std::unique_ptr<mysocket::Socket>& client);
         void commandList(std::unique_ptr<mysocket::Socket>& client);
+
+        template <class T>
+        void sendTcpResponse(std::unique_ptr<mysocket::Socket>& client, network::protocol::HeaderType type, T const& obj);
     };
+
+    template <class T>
+    void Server::sendTcpResponse(std::unique_ptr<mysocket::Socket>& client,
+                                 network::protocol::HeaderType type,
+                                 T const& obj) {
+        std::basic_string<unsigned char> msg;
+        network::protocol::Header header = {type, sizeof(T)};
+
+        msg.append(reinterpret_cast<unsigned char*>(&header), sizeof(network::protocol::Header));
+        msg.append(reinterpret_cast<unsigned char*>(&obj), sizeof(T));
+        client->Send(msg.data(), msg.length(), 0);
+    }
 }

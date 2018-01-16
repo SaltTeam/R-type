@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 project(r-type)
 
 set(EXECUTABLE_NAME "r-type")
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include_directories(sources/)
 include_directories(includes/)
@@ -47,7 +47,7 @@ add_executable(${EXECUTABLE_NAME}
         sources/scopes/TestScope.hpp
         sources/entities/PlayerShip.cpp sources/entities/PlayerShip.hpp
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
-        sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp)
+        sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp sources/server/sources/Game.cpp)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
