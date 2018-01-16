@@ -8,11 +8,11 @@
 #include "PlayerShip.hpp"
 
 Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
-				 float const &x, float const &y, const float &xSpeed, const float &ySpeed)
-  : MovableEntity(scope, id, isEnabled, x, y, xSpeed, ySpeed), weapon(scope)
-{
-  this->setTexture(texturePath);
-  this->registerBindings();
+				 float const &x, float const &y, const float &xSpeed, const float &ySpeed,
+				 Weapon const &weapon)
+    : MovableEntity(scope, id, isEnabled, x, y, xSpeed, ySpeed), weapon(weapon) {
+    this->setTexture(texturePath);
+    this->registerBindings();
 }
 
 void Entities::PlayerShip::registerBindings() {
@@ -28,7 +28,8 @@ void Entities::PlayerShip::registerBindings() {
     this->registerCallback(sf::Keyboard::Space, f4);
 
     std::function<void(ENTITY *)> f5 = std::bind(&PlayerShip::onCollision, this, std::placeholders::_1);
-    this->registerCollisionBox(this->texture->sprite.getScale(), f5);
+    std::cout << "playerShipScale: " << this->texture->sprite.getScale().x << "&" << this->texture->sprite.getScale().y << std::endl;
+    this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f5);
 }
 
 void Entities::PlayerShip::shoot() {
@@ -43,5 +44,4 @@ void Entities::PlayerShip::update() {
 }
 
 void Entities::PlayerShip::onCollision(ENTITY *other) {
-    std::cout << "PlayerShip collision" << std::endl;
 }

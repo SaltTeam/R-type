@@ -4,12 +4,14 @@
 
 #pragma once
 
+#include "entities/weapons/Laser1.hpp"
 #include "entities/PlayerShip.hpp"
 
 namespace Entities {
     class Arc : public PlayerShip {
     public:
-	Arc(SCOPE *scope, uint16_t id, bool isEnabled, const float &x, const float &y)
-	    : PlayerShip(scope, id, "resources/sprites/ships/player/ship3/base.png", isEnabled, x, y, 0.25, 0.25) {};
+	Arc(SCOPE *scope, uint64_t id, bool isEnabled, const float &x, const float &y)
+	    : PlayerShip(scope, id, "resources/sprites/ships/player/ship3/base.png", isEnabled, x, y, 0.25, 0.25,
+			 Entities::Laser1(scope, id)) {};
     };
 }

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 namespace Engine {
     namespace Display {
@@ -24,7 +25,7 @@ namespace Engine {
                 texture.loadFromFile(path);
                 texture.setSmooth(true);
                 sprite.setTexture(texture);
-                sprite.setScale(sprite.getScale().x * 0.5, sprite.getScale().y * 0.5);
+                sprite.setScale(sprite.getScale().x / 2, sprite.getScale().y / 2);
             }
 
             ~SFMLTexture() override = default;

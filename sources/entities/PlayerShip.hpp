@@ -7,8 +7,9 @@
 namespace Entities {
     class PlayerShip : public MOVABLE_ENTITY {
     protected:
-	PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true,
-		   float const &x = 0, float const &y = 0, float const &xSpeed = 0.2, float const &ySpeed = 0.2);
+	PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
+		   float const &x, float const &y, float const &xSpeed, float const &ySpeed,
+		   Weapon const &weapon);
 
 	void update() override;
 
@@ -19,5 +20,11 @@ namespace Entities {
 	void onCollision(ENTITY *other);
 
 	Weapon weapon;
+
+	std::vector<sf::Vector2f> canons;
+
+	int health;
+
+	int shield;
     };
 }

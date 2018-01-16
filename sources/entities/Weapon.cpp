@@ -10,9 +10,10 @@
 #include "Projectile.hpp"
 #include "Asteroid.hpp"
 
-Entities::Weapon::Weapon(SCOPE *scope, float const &cd, int const &damage)
-    : scope(scope), cd(cd), damage(damage) {
-    this->lastUse = std::chrono::system_clock::now();
+Entities::Weapon::Weapon(SCOPE *scope, std::string const &projectilePath, float const &cd, int const &damage,
+			 float const &xSpeed, float const &ySpeed, uint64_t const &originId)
+    : scope(scope), projectilePath(projectilePath), cd(cd), damage(damage), xSpeed(xSpeed), ySpeed(ySpeed), originId(originId) {
+    this->lastUse = std::chrono::system_clock::from_time_t(0);
 }
 
 void Entities::Weapon::shoot(sf::Vector2f const &position) {
@@ -38,7 +39,8 @@ void Entities::Weapon::spawnAsteroids(sf::Vector2f const &position) {
 }
 
 void Entities::Weapon::spawnLasers(sf::Vector2f const &position) {
-    this->scope->entityManager.add<Entities::Projectile>(LAYER::Layer1, this->scope, 0,
-							 "resources/sprites/Lasers/laserRed01.png", true,
-							 position.x, position.y);
+    this->scope->entityManager.add<Entities::Projectile>(LAYER::Layer1, this->scope, 2,
+							 this->projectilePath, true,
+							 position.x, position.y,
+							 this->xSpeed, this->ySpeed, 10, this->originId);
 }

@@ -20,12 +20,12 @@ void ENTITY::setPosition(sf::Vector2f const &xy) {
     this->position = xy;
 }
 
-void Engine::Entities::BaseEntity::registerCollisionBox(const sf::Vector2f &size, std::function<void(ENTITY *)> &f) {
+void Engine::Entities::BaseEntity::registerCollisionBox(const sf::FloatRect &size, std::function<void(ENTITY *)> &f) {
     COLLISION col{f, {0, 0}, size};
     this->scope->collisionManager.registerCollision(this, col);
 }
 
-void ENTITY::registerCollisionBox(const sf::Vector2f &origin, const sf::Vector2f &size, std::function<void(ENTITY *)> &f) {
+void ENTITY::registerCollisionBox(const sf::Vector2f &origin, const sf::FloatRect &size, std::function<void(ENTITY *)> &f) {
     COLLISION col{f, origin, size};
     this->scope->collisionManager.registerCollision(this, col);
 }

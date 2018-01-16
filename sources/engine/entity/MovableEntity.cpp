@@ -26,8 +26,7 @@ void MOVABLE_ENTITY::moveRight() {
 }
 
 void MOVABLE_ENTITY::move() {
-    this->position.x += this->speed.x;
-    this->position.y += this->speed.y;
+    this->position += this->speed;
 }
 //</editor-fold>
 
