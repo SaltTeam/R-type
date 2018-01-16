@@ -24,7 +24,7 @@ namespace server {
     public:
         std::string _name;
         std::string _passwd;
-        std::atomic_int nbPlayer = 0;
+        std::atomic_int nbPlayer;
 
     public:
         explicit Game(const char* name, unsigned short port);

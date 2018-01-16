@@ -27,21 +27,6 @@ add_executable(${EXECUTABLE_NAME}
         sources/engine/service/GameService.cpp sources/engine/service/GameService.hpp
         sources/engine/service/NetService.cpp sources/engine/service/NetService.hpp
 
-        includes/network/Addr.hpp
-        includes/network/Select.hpp
-        includes/network/SocketException.hpp
-        includes/network/Socket.hpp
-        includes/server/Protocol.hpp
-        includes/server/Game.hpp
-        includes/server/Server.hpp
-
-        sources/network/Addr.cpp
-        sources/network/Select.cpp
-        sources/network/SocketException.cpp
-        sources/network/Socket.cpp
-        sources/server/sources/Server.cpp
-        sources/server/main.cpp
-
         sources/logger/Logger.cpp
 
         sources/scopes/TestScope.hpp
@@ -56,5 +41,35 @@ if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif ()
+
+add_executable("server"
+        sources/server/sources/Server.cpp
+        sources/network/Addr.cpp
+        sources/network/Select.cpp
+        sources/network/SocketException.cpp
+        sources/network/Socket.cpp
+        sources/server/main.cpp
+        sources/server/sources/Game.cpp
+
+        sources/logger/Logger.cpp
+
+        includes/network/Addr.hpp
+        includes/network/Select.hpp
+        includes/network/SocketException.hpp
+        includes/network/Socket.hpp
+        includes/server/Protocol.hpp
+        includes/server/Game.hpp
+        includes/server/Server.hpp
+        )
+
+target_link_libraries(server pthread)
+
+add_executable("test_client"
+        sources/main.cpp
+        sources/network/Addr.cpp
+        sources/network/Select.cpp
+        sources/network/SocketException.cpp
+        sources/network/Socket.cpp
+        )
 
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)

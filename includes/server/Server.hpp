@@ -51,8 +51,8 @@ namespace server {
         std::basic_string<unsigned char> msg;
         network::protocol::Header header = {type, sizeof(T)};
 
-        msg.append(reinterpret_cast<unsigned char*>(&header), sizeof(network::protocol::Header));
-        msg.append(reinterpret_cast<unsigned char*>(&obj), sizeof(T));
+        msg.append(reinterpret_cast<const unsigned char*>(&header), sizeof(network::protocol::Header));
+        msg.append(reinterpret_cast<const unsigned char*>(&obj), sizeof(T));
         client->Send(msg.data(), msg.length(), 0);
     }
 }

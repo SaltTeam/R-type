@@ -69,7 +69,7 @@ void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
                 res.status = network::protocol::Status::STATUS_FULL;
                 sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
             } else {
-                res.color = static_cast<network::protocol::PlayerColor>(_games[con.name]->nbPlayer);
+                res.color = static_cast<network::protocol::PlayerColor>(_games[con.name]->nbPlayer.load());
                 res.status = network::protocol::Status::STATUS_OK;
                 res.port = _games[con.name]->getPort();
                 sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
@@ -81,16 +81,16 @@ void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
         _games_m.unlock();
     } else {
         try {
-            auto game = std::make_shared<server::Game>(con.name, con.pass, _port);
             _games_m.lock();
-            this->_games.emplace(con.name, game);
+            this->_games[con.name] = std::make_shared<server::Game>(con.name, con.pass, _port);
+	    auto game = this->_games[con.name];
             _games_m.unlock();
-            res.color = static_cast<network::protocol::PlayerColor>(game->nbPlayer);
+            res.color = static_cast<network::protocol::PlayerColor>(game->nbPlayer.load());
             res.status = network::protocol::Status::STATUS_OK;
             res.port = game->getPort();
             sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
             ++game->nbPlayer;
-            std::thread t(&Game::start, *game);
+            std::thread t(&Game::start, std::ref(*game));
             t.detach();
         }
         catch (mysocket::SocketException const& e) {
