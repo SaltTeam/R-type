@@ -10,7 +10,6 @@
 namespace Entities {
     class Weapon {
     public:
-
 	void shoot(sf::Vector2f const &position);
 
 	void shoot(std::vector<sf::Vector2f> const &positions);
