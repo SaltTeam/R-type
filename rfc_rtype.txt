@@ -188,6 +188,7 @@ RFC 1432          R-Type Client Server Protocol             January 2018
     +--------------------------------------+
     |  STATUS   |    4   | response-status |
     |   COLOR   |    4   |   player-color  |
+    |   PORT    |    2   | connection-port |
     +--------------------------------------+
 
     +--------------------------------------+
