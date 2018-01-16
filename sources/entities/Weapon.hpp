@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <bits/types/time_t.h>
+#include <ctime>
 #include "engine/ForwardDeclaration.hpp"
 
 namespace Entities {

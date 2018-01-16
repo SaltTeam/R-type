@@ -1,6 +1,7 @@
 
 #include "Entity.hpp"
 
+#include "engine/entity/Collision.hpp"
 #include "engine/service/GameService.hpp"
 
 void ENTITY::registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f) {
@@ -17,4 +18,14 @@ void ENTITY::setPosition(float const &xy) {
 
 void ENTITY::setPosition(sf::Vector2f const &xy) {
     this->position = xy;
+}
+
+void Engine::Entities::BaseEntity::registerCollisionBox(const sf::Vector2f &size, std::function<void(ENTITY *)> &f) {
+    COLLISION col{f, {0, 0}, size};
+    this->scope->collisionManager.registerCollision(this, col);
+}
+
+void ENTITY::registerCollisionBox(const sf::Vector2f &origin, const sf::Vector2f &size, std::function<void(ENTITY *)> &f) {
+    COLLISION col{f, origin, size};
+    this->scope->collisionManager.registerCollision(this, col);
 }

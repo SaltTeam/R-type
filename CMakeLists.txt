@@ -17,6 +17,7 @@ add_executable(${EXECUTABLE_NAME}
         sources/engine/service/Service.hpp
         sources/engine/entity/Entity.cpp sources/engine/entity/Entity.hpp
         sources/engine/entity/MovableEntity.cpp sources/engine/entity/MovableEntity.hpp
+        sources/engine/entity/Collision.cpp sources/engine/entity/Collision.hpp
         sources/engine/scope/Scope.cpp sources/engine/scope/Scope.hpp
         sources/engine/service/GraphicalService.cpp sources/engine/service/GraphicalService.hpp
         sources/engine/display/Texture.hpp

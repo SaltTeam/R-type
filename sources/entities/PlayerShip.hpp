@@ -5,18 +5,20 @@
 #include "Weapon.hpp"
 
 namespace Entities {
-  class PlayerShip : public MOVABLE_ENTITY {
-  public:
-    PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true,
-	       float const &x = 0, float const &y = 0);
+    class PlayerShip : public MOVABLE_ENTITY {
+    public:
+        PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true,
+                   float const &x = 0, float const &y = 0);
 
-  protected:
-    void update() override;
+    protected:
+        void update() override;
 
-    void shoot();
+        void shoot();
 
-    void registerBindings();
+        void registerBindings();
 
-    Weapon weapon;
-  };
+        void onCollision(ENTITY *other);
+
+        Weapon weapon;
+    };
 }
