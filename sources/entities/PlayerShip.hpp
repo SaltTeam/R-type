@@ -16,6 +16,9 @@ namespace Entities {
 
 	void registerBindings();
 
+	void onCollision(ENTITY *other);
+
 	Weapon weapon;
+
     };
 }

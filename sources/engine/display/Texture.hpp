@@ -24,6 +24,7 @@ namespace Engine {
                 texture.loadFromFile(path);
                 texture.setSmooth(true);
                 sprite.setTexture(texture);
+                sprite.setScale(sprite.getScale().x * 0.5, sprite.getScale().y * 0.5);
             }
 
             ~SFMLTexture() override = default;

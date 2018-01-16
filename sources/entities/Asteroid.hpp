@@ -1,6 +1,3 @@
-//
-// Created by delacr_a on 11/01/18.
-//
 
 #pragma once
 
@@ -22,5 +19,6 @@ namespace Entities {
     protected:
 	void update() override;
 
+	void onCollision(ENTITY *other);
     };
 }

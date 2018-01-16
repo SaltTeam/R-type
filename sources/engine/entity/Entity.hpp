@@ -49,6 +49,10 @@ namespace Engine {
 
             void registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f);
 
+            void registerCollisionBox(const sf::Vector2f &size, std::function<void(ENTITY *)> &f);
+
+            void registerCollisionBox(const sf::Vector2f &origin, const sf::Vector2f &size, std::function<void(ENTITY *)> &f);
+
         protected:
             virtual void update() = 0;
         };
