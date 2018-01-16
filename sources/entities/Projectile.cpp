@@ -2,7 +2,6 @@
 // Created by delacr_a on 12/01/18.
 //
 
-#include <iostream>
 #include "Projectile.hpp"
 #include "PlayerShip.hpp"
 #include "Asteroid.hpp"
