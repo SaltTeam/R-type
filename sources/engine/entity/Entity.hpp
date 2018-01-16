@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <functional>
 #include <SFML/System/Vector2.hpp>
+#include <list>
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/display/Texture.hpp"
