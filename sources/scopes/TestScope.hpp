@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <entities/ships/sub/Enemy1.hpp>
 #include "entities/ships/sub/YWing.hpp"
 #include "entities/ships/sub/XWing.hpp"
 #include "entities/ships/sub/_Wing.hpp"
@@ -18,7 +19,8 @@ namespace Scopes {
         ~TestScope() override = default;
 
         void initialize() override {
-            this->entityManager.add<Entities::Interceptor>(LAYER::Layer1, this);
+            this->entityManager.add<Entities::Arc>(LAYER::Layer1, this, 0, true, 0, 200);
+            this->entityManager.add<Entities::Enemy1>(LAYER::Layer1, this, 10);
         }
 
         void pause() override {

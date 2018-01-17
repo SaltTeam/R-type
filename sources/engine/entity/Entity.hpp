@@ -115,6 +115,7 @@ namespace Engine {
             }
 
             void remove(ENTITY *entity) {
+                entity->isEnabled = false;
                 this->removedEntities.push_back(entity);
             }
 

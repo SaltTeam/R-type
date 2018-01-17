@@ -14,6 +14,31 @@ namespace Entities {
     public:
         virtual void shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position) = 0;
 
+        void setSpeed(sf::Vector2f const &speed) {
+            this->xSpeed = speed.x;
+            this->ySpeed = speed.y;
+        };
+
+        void setXSpeed(float const &xSpeed) {
+            this->xSpeed = xSpeed;
+        }
+
+        void setYSpeed(float const &ySpeed) {
+            this->ySpeed = ySpeed;
+        }
+
+        virtual sf::Vector2f getSpeed() const {
+            return {this->xSpeed, this->ySpeed};
+        }
+
+        virtual float getXSpeed() const {
+            return this->xSpeed;
+        }
+
+        virtual float getYSpeed() const {
+            return this->ySpeed;
+        }
+
     protected:
         AWeapon(SCOPE *scope, std::string const &projectilePath, float const &cd, int const &damage,
                 float const &xSpeed, float const &ySpeed, uint64_t const &originId)
