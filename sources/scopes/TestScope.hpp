@@ -19,7 +19,7 @@ namespace Scopes {
         ~TestScope() override = default;
 
         void initialize() override {
-            this->entityManager.add<Entities::Interceptor>(LAYER::Layer1, this, 0, true, 0, 200);
+            this->entityManager.add<Entities::YWing>(LAYER::Layer1, this, 0, true, 0, 200);
             this->entityManager.add<Entities::Enemy1>(LAYER::Layer1, this, 10);
         }
 
