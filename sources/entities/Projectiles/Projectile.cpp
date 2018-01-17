@@ -3,14 +3,15 @@
 //
 
 #include "Projectile.hpp"
-#include "PlayerShip.hpp"
-#include "Asteroid.hpp"
+#include "entities/ships/PlayerShip.hpp"
+#include "entities/Asteroid.hpp"
 
 Entities::Projectile::Projectile(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
 								 float const &x, float const &y, float const &xSpeed, float const &ySpeed,
 								 int const &damage, uint64_t const &originId)
 		: MovableEntity(scope, id, isEnabled, x, y, xSpeed, ySpeed), damage(damage), originId(originId) {
     this->setTexture(texturePath);
+	this->position.x -= this->texture->sprite.getGlobalBounds().width / 2;
     std::function<void(ENTITY *)> f = std::bind(&Projectile::onCollision, this, std::placeholders::_1);
     this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f);
 }

@@ -1,11 +1,11 @@
 
 #pragma once
 
-#include "entities/ships/YWing.hpp"
-#include "entities/ships/XWing.hpp"
-#include "entities/ships/_Wing.hpp"
-#include "entities/ships/Arc.hpp"
-#include "entities/ships/Intercepteur.hpp"
+#include "entities/ships/sub/YWing.hpp"
+#include "entities/ships/sub/XWing.hpp"
+#include "entities/ships/sub/_Wing.hpp"
+#include "entities/ships/sub/Arc.hpp"
+#include "entities/ships/sub/Interceptor.hpp"
 #include "entities/Asteroid.hpp"
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/service/GameService.hpp"
@@ -18,8 +18,7 @@ namespace Scopes {
         ~TestScope() override = default;
 
         void initialize() override {
-            this->entityManager.add<Entities::Intercepteur>(LAYER::Layer1, this);
-            this->entityManager.add<Entities::YWing>(LAYER::Layer1, this, 1, true, 0, 100);
+            this->entityManager.add<Entities::Interceptor>(LAYER::Layer1, this);
         }
 
         void pause() override {
