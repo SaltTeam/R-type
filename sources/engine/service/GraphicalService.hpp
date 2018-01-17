@@ -14,11 +14,16 @@ namespace Engine {
 
         private:
             std::unique_ptr<sf::RenderWindow> window = nullptr;
+            sf::Clock deltaClock;
 
         public:
             explicit GraphicalService(ENGINE *engine) : SERVICE(engine) {}
 
             ~GraphicalService() override = default;
+
+            sf::Vector2u getWindowSize(){
+                return this->window->getSize();
+            };
 
         private:
             EngineStatus initialize() override;

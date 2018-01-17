@@ -1,4 +1,5 @@
 
+#include <imgui-SFML.h>
 #include "engine/ForwardDeclaration.hpp"
 #include "GraphicalService.hpp"
 #include "engine/Runner.hpp"
@@ -7,17 +8,22 @@
 
 EngineStatus GRAPHICAL_SERVICE::initialize() {
     this->window = std::make_unique<sf::RenderWindow>(sf::VideoMode(720, 980), "R-type");
+    this->window->setFramerateLimit(120);
+    ImGui::SFML::Init(*this->window);
     return EngineStatus::Continue;
 }
 
 EngineStatus GRAPHICAL_SERVICE::earlyUpdate() {
     sf::Event event{};
     while (this->window->pollEvent(event)) {
+        ImGui::SFML::ProcessEvent(event);
+
         if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
             this->window->close();
             return EngineStatus::Stop;
         }
     }
+    ImGui::SFML::Update(*this->window, this->deltaClock.restart());
     this->engine->findService<GAME_SERVICE>()->execCallbacks();
     return EngineStatus::Continue;
 }
@@ -38,6 +44,7 @@ EngineStatus GRAPHICAL_SERVICE::lateUpdate() {
             }
         }
     }
+    ImGui::SFML::Render(*this->window);
     this->window->display();
     return EngineStatus::Continue;
 }
@@ -45,5 +52,6 @@ EngineStatus GRAPHICAL_SERVICE::lateUpdate() {
 EngineStatus GRAPHICAL_SERVICE::shutdown() {
     if (this->window->isOpen())
         this->window->close();
+    ImGui::SFML::Shutdown();
     return EngineStatus::Continue;
 }

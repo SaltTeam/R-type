@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <imgui.h>
 #include "entities/PlayerShip.hpp"
 #include "entities/Asteroid.hpp"
 #include "engine/ForwardDeclaration.hpp"
@@ -28,6 +29,9 @@ namespace Scopes {
         }
 
         void update() override {
+            ImGui::Begin("Hello, world!");
+            ImGui::Button("Look at this pretty button");
+            ImGui::End();
         }
     };
 

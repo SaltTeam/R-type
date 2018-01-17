@@ -2,14 +2,15 @@
 // Created by sylva on 10/01/2018.
 //
 
-#include <iostream>
 #include "engine/scope/Scope.hpp"
 #include "engine/service/GameService.hpp"
 #include "PlayerShip.hpp"
 
 Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
-                                 float const &x, float const &y)
-        : MovableEntity(scope, id, isEnabled, x, y, 0.2, 0.2), weapon(scope, 0.5) {
+                                 float const &x, float const &y, const float &xSpeed, const float &ySpeed,
+                                 int const &health, int const &shield)
+        : MovableEntity(scope, id, isEnabled, x, y, xSpeed, ySpeed),
+          health(health), shield(shield) {
     this->setTexture(texturePath);
     this->registerBindings();
 }
@@ -27,20 +28,27 @@ void Entities::PlayerShip::registerBindings() {
     this->registerCallback(sf::Keyboard::Space, f4);
 
     std::function<void(ENTITY *)> f5 = std::bind(&PlayerShip::onCollision, this, std::placeholders::_1);
-    this->registerCollisionBox(this->texture->sprite.getScale(), f5);
+    this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f5);
 }
 
 void Entities::PlayerShip::shoot() {
-    std::vector<sf::Vector2f> vec = std::vector<sf::Vector2f>();
-    vec.push_back(this->position);
-    vec.push_back(sf::Vector2f(this->position.x + 150, this->position.y));
-    this->weapon.shoot(vec);
+    this->weapon->shoot(this->canons, this->position);
 }
 
 void Entities::PlayerShip::update() {
     MOVABLE_ENTITY::update();
+    if (this->health <= 0)
+        this->scope->entityManager.remove(this);
 }
 
 void Entities::PlayerShip::onCollision(ENTITY *other) {
-    std::cout << "PlayerShip collision" << std::endl;
+}
+
+void Entities::PlayerShip::takeDamage(int const &value) {
+    if (this->shield > value) {
+        this->shield -= value;
+    } else {
+        this->health -= (value - this->shield);
+        this->shield = 0;
+    }
 }

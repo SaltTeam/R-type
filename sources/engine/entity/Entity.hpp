@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <functional>
 #include <SFML/System/Vector2.hpp>
+#include <list>
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/display/Texture.hpp"
@@ -48,9 +49,9 @@ namespace Engine {
 
             void registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f);
 
-            void registerCollisionBox(const sf::Vector2f &size, std::function<void(ENTITY *)> &f);
+            void registerCollisionBox(const sf::FloatRect &size, std::function<void(ENTITY *)> &f);
 
-            void registerCollisionBox(const sf::Vector2f &origin, const sf::Vector2f &size, std::function<void(ENTITY *)> &f);
+            void registerCollisionBox(const sf::Vector2f &origin, const sf::FloatRect &size, std::function<void(ENTITY *)> &f);
 
         protected:
             virtual void update() = 0;
@@ -69,10 +70,10 @@ namespace Engine {
             friend GRAPHICAL_SERVICE;
 
         private:
-            std::unordered_map<Layer, std::list<ENTITY *>> entities;
             std::list<ENTITY *> removedEntities;
 
         public:
+            std::unordered_map<Layer, std::list<ENTITY *>> entities;
             ~EntityManager() {
                 std::for_each(this->entities.begin(), this->entities.end(),
                               [&](auto &layer) {

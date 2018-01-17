@@ -14,11 +14,11 @@ void COLLISION_MANAGER::checkCollision(ENTITY *entity) {
         if (oEntity.first == entity) continue;
         for (auto &oCollision: oEntity.second) {
             for (auto &collision: collisionBoxes) {
-                sf::Rect<float> oBox{{oCollision.origin + oEntity.first->position}, {oCollision.size + oEntity.first->position}};
-                sf::Rect<float> box{{collision.origin + entity->position}, {collision.size + entity->position}};
+                sf::Rect<float> oBox{{oCollision.origin + oEntity.first->position}, {oCollision.size.width, oCollision.size.height}};
+                sf::Rect<float> box{{collision.origin + entity->position}, {collision.size.width, collision.size.height}};
                 if (oBox.intersects(box)) {
-                    oCollision.callback(oEntity.first);
-                    collision.callback(entity);
+                    oCollision.callback(entity);
+                    collision.callback(oEntity.first);
                 }
             }
         }
