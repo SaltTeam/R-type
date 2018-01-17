@@ -14,6 +14,7 @@ namespace Engine {
 
         private:
             std::unique_ptr<sf::RenderWindow> window = nullptr;
+            sf::Clock deltaClock;
 
         public:
             explicit GraphicalService(ENGINE *engine) : SERVICE(engine) {}
