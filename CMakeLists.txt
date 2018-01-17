@@ -29,7 +29,8 @@ add_executable(${EXECUTABLE_NAME}
         sources/scopes/TestScope.hpp
         sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
-        sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp
+        sources/entities/Projectiles/Projectile.cpp sources/entities/Projectiles/Projectile.hpp sources/entities/Weapons/Weapon.cpp sources/entities/Weapons/Weapon.hpp
+        sources/scopes/MenuScope.hpp
 
         repos/imgui/imgui.cpp
         repos/imgui/imgui_draw.cpp
