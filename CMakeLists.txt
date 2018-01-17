@@ -27,7 +27,7 @@ add_executable(${EXECUTABLE_NAME}
         sources/engine/service/NetService.cpp sources/engine/service/NetService.hpp
 
         sources/scopes/TestScope.hpp
-        sources/entities/PlayerShip.cpp sources/entities/PlayerShip.hpp
+        sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
         sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp
 
@@ -36,7 +36,6 @@ add_executable(${EXECUTABLE_NAME}
         repos/imgui/imgui_demo.cpp
         repos/imgui/imgui-SFML.cpp
         )
-
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
