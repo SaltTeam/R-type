@@ -30,4 +30,16 @@ namespace Scopes {
         void update() override {
         }
     };
+
+    class MenuScope : public SCOPE {
+    public:
+        MenuScope(GAME_SERVICE *gameService) : SCOPE(gameService) {}
+        ~MenuScope() {}
+
+
+
+        void initialize() override {
+
+        }
+    };
 }
