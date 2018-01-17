@@ -48,5 +48,5 @@ void Entities::Asteroid::update() {
 }
 
 void Entities::Asteroid::onCollision(ENTITY *other) {
-    this->scope->entityManager.remove(this);
+    this->scope->removeEntity(this);
 }

@@ -21,7 +21,7 @@ void Entities::Ship::shoot() {
 void Entities::Ship::update() {
     MOVABLE_ENTITY::update();
     if (this->health <= 0)
-        this->scope->entityManager.remove(this);
+        this->scope->removeEntity(this);
 }
 
 void Entities::Ship::onCollision(ENTITY *other) {

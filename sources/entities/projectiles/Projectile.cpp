@@ -25,10 +25,10 @@ void Entities::Projectile::onCollision(ENTITY *other) {
     if (!other->isEnabled)
         return;
 	if (dynamic_cast<Entities::Asteroid *>(other) != nullptr)
-		this->scope->entityManager.remove(this);
+		this->scope->removeEntity(this);
 	else if (dynamic_cast<Entities::Ship *>(other) != nullptr)
 		if (other->id != this->originId && dynamic_cast<Entities::Ship *>(other)->getTeam() == Entities::Ship::GAME) {
 			dynamic_cast<Entities::Ship *>(other)->takeDamage(this->damage);
-			this->scope->entityManager.remove(this);
+			this->scope->removeEntity(this);
 		}
 }

@@ -28,7 +28,7 @@ namespace Entities {
              float const &x, float const &y, float const &xSpeed, float const &ySpeed,
              int const &health, int const &shield = 0);
 
-        virtual ~Ship() {
+        ~Ship() override {
             delete this->weapon;
         }
 

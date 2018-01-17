@@ -50,8 +50,8 @@ void MOVABLE_ENTITY::update() {
     sf::Vector2u borders = this->scope->gameService->getWindowSize();
     sf::FloatRect sides = this->texture->sprite.getGlobalBounds();
     if (this->position.x + sides.width < 0 || this->position.x > borders.x)
-        this->scope->entityManager.remove(this);
+        this->scope->removeEntity(this);
     else if (this->position.y + sides.height < 0 || this->position.y > borders.y)
-        this->scope->entityManager.remove(this);
+        this->scope->removeEntity(this);
 }
 //</editor-fold>

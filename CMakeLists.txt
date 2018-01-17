@@ -39,10 +39,10 @@ add_executable(${EXECUTABLE_NAME}
         sources/entities/ships/sub/Enemy1.hpp
         sources/entities/Asteroid.cpp
         sources/entities/Asteroid.hpp
-        sources/entities/Projectiles/Projectile.cpp
-        sources/entities/Projectiles/Projectile.hpp
-        sources/entities/Projectiles/sub/SinusProjectile.cpp
-        sources/entities/Projectiles/sub/SinusProjectile.hpp
+        sources/entities/projectiles/Projectile.cpp
+        sources/entities/projectiles/Projectile.hpp
+        sources/entities/projectiles/sub/SinusProjectile.cpp
+        sources/entities/projectiles/sub/SinusProjectile.hpp
         sources/entities/weapons/Weapon.cpp
         sources/entities/weapons/Weapon.hpp
         sources/entities/weapons/AWeapon.hpp
