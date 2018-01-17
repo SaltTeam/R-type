@@ -5,7 +5,7 @@
 #pragma once
 
 #include <chrono>
-#include "entities/Projectiles/Projectile.hpp"
+#include "entities/projectiles/Projectile.hpp"
 
 namespace Entities {
     class SinusProjectile : public Projectile {
@@ -13,8 +13,8 @@ namespace Entities {
 
         SinusProjectile(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
                         float const &x, float const &y, float const &xSpeed, float const &ySpeed,
-                        int const &damage, uint64_t const &originId)
-                : Projectile(scope, id, texturePath, isEnabled, x, y, xSpeed, ySpeed, damage, originId),
+                        int const &damage, Entities::Ship::TEAM originTeam)
+                : Projectile(scope, id, texturePath, isEnabled, x, y, xSpeed, ySpeed, damage, originTeam),
                   add(true), first(true) {
             this->lastTurn = std::chrono::system_clock::now();
         };

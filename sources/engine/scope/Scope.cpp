@@ -20,12 +20,12 @@ void SCOPE::execCallbacks() {
 void SCOPE::earlyUpdate() {
     for (const auto &entity: this->removeList) {
         {
-            auto &erase = this->collisionManager.collisions.find(entity);
+            auto erase = this->collisionManager.collisions.find(entity);
             if (erase != this->collisionManager.collisions.end())
                 this->collisionManager.collisions.erase(erase);
         }
         for (auto &elem: this->callbacks) {
-            auto &erase = elem.second.find(entity);
+            auto erase = elem.second.find(entity);
             if (erase != elem.second.end())
                 elem.second.erase(erase);
         }
