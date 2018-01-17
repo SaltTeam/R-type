@@ -11,6 +11,18 @@ namespace Entities {
     public:
         virtual void shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position) = 0;
 
+        virtual void setSpeed(sf::Vector2f const &speed) = 0;
+
+        virtual void setXSpeed(float const &xSpeed) = 0;
+
+        virtual void setYSpeed(float const &ySpeed) = 0;
+
+        virtual sf::Vector2f getSpeed() const = 0;
+
+        virtual float getXSpeed() const = 0;
+
+        virtual float getYSpeed() const = 0;
+
     protected:
         virtual void spawnLasers(sf::Vector2f const &position) = 0;
     };
