@@ -30,9 +30,9 @@ add_executable(${EXECUTABLE_NAME}
         sources/logger/Logger.cpp
 
         sources/scopes/TestScope.hpp
-        sources/entities/PlayerShip.cpp sources/entities/PlayerShip.hpp
+        sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
-        sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp sources/server/sources/Game.cpp)
+        sources/entities/Projectiles/Projectile.cpp sources/entities/Projectiles/Projectile.hpp sources/entities/weapons/Weapon.cpp sources/entities/weapons/Weapon.hpp sources/entities/ships/sub/XWing.hpp sources/entities/ships/sub/YWing.hpp sources/entities/ships/sub/Arc.hpp sources/entities/ships/sub/Interceptor.hpp sources/entities/ships/sub/_Wing.hpp sources/entities/weapons/sub/Laser1.hpp sources/entities/weapons/sub/Laser2.hpp sources/entities/weapons/sub/Laser3.hpp sources/entities/weapons/sub/Laser4.hpp sources/entities/weapons/sub/Laser4.cpp sources/entities/Projectiles/sub/SinusProjectile.cpp sources/entities/Projectiles/sub/SinusProjectile.hpp sources/entities/weapons/IWeapon.hpp sources/entities/weapons/AWeapon.hpp)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 

@@ -12,7 +12,7 @@ namespace Engine {
         struct Collision {
             std::function<void(ENTITY *)> callback;
             sf::Vector2f origin; // Will be added to the entity position
-            sf::Vector2f size;
+            sf::FloatRect size;
         };
 
         class CollisionManager {
