@@ -7,6 +7,9 @@
 namespace Scopes {
 
     class MenuScope : public SCOPE {
+    private:
+        bool setting = false;
+
     public:
         MenuScope(GAME_SERVICE *gameService) : SCOPE(gameService) {}
 
@@ -26,11 +29,30 @@ namespace Scopes {
         }
 
         void update() override {
+
             ImGui::Begin("R-type");
-            //ImGui::SetWindowSize(ImVec2(this->gameService->getWindowSize().x, this->gameService->getWindowSize().y));
-            ImGui::SetWindowPos(ImVec2(0, 30));
-            if (ImGui::Button("Play")) {
+            ImGui::SetWindowPos(ImVec2(500, 700));
+            if (ImGui::Button("Play", ImVec2(100, 50))) {
                 std::cout << "Play" << std::endl;
+            }
+            if (ImGui::Button("Settings", ImVec2(100, 50))) {
+               if (!setting)
+                   setting = true;
+               else
+                   setting = false;
+            }
+            if (ImGui::Button("Quit",  ImVec2(100, 50))) {
+                std::cout << "Quit" << std::endl;
+                this->gameService->popScope();
+            }
+            if (setting) {
+                ImGui::Begin("Settings");
+                ImGui::SetWindowPos(ImVec2(300, 700));
+                ImGui::SetWindowSize(ImVec2(150, 200));
+                ImGui::Button("Sound", ImVec2(100, 50));
+                ImGui::Button("Graphics", ImVec2(100, 50));
+                ImGui::Button("Difficulty", ImVec2(100, 50));
+                ImGui::End();
             }
             ImGui::End();
         }
