@@ -29,7 +29,14 @@ add_executable(${EXECUTABLE_NAME}
         sources/scopes/TestScope.hpp
         sources/entities/PlayerShip.cpp sources/entities/PlayerShip.hpp
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
-        sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp)
+        sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp
+        sources/imgui/imgui.cpp
+        sources/imgui/imgui_draw.cpp
+        sources/imgui/imgui_demo.cpp
+        sources/imgui/imgui-SFML.cpp
+)
+
+include_directories(includes)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
