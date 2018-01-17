@@ -17,6 +17,8 @@ namespace Entities {
 
         virtual void setYSpeed(float const &ySpeed) = 0;
 
+        virtual void setCd(float const &value) = 0;
+
         virtual sf::Vector2f getSpeed() const = 0;
 
         virtual float getXSpeed() const = 0;

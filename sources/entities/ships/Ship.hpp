@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "entities/powerups/grade.hpp"
 #include "engine/service/GameService.hpp"
 #include "engine/entity/MovableEntity.hpp"
 #include "entities/weapons/IWeapon.hpp"
@@ -19,7 +20,15 @@ namespace Entities {
     public:
         void shoot();
 
-        void takeDamage(int const &value);
+        void takeDamage(int value);
+
+        void gainHealth(GRADE grade);
+
+        void gainShield(GRADE grade);
+
+        void upgradeWeapon(GRADE grade);
+
+        void gainSpeed(GRADE grade);
 
         TEAM getTeam();
 
@@ -49,6 +58,8 @@ namespace Entities {
         std::vector<sf::Vector2f> canons;
 
         int health;
+
+        int maxHealth;
 
         int shield;
 

@@ -2,6 +2,8 @@
 #pragma once
 
 #include <entities/ships/sub/Enemy1.hpp>
+#include <entities/powerups/sub/HealPowerUp.hpp>
+#include <entities/powerups/sub/SpeedPowerUp.hpp>
 #include "entities/ships/sub/YWing.hpp"
 #include "entities/ships/sub/XWing.hpp"
 #include "entities/ships/sub/_Wing.hpp"
@@ -21,6 +23,7 @@ namespace Scopes {
         void initialize() override {
             this->entityManager.add<Entities::YWing>(LAYER::Layer1, this, 0, true, 0, 200);
             this->entityManager.add<Entities::Enemy1>(LAYER::Layer1, this, 10);
+            this->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1, this, 9, GOLD, 100, 0);
         }
 
         void pause() override {

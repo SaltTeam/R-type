@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <entities/ships/Ship.hpp>
 #include "engine/ForwardDeclaration.hpp"
+#include "entities/ships/Ship.hpp"
 #include "engine/scope/Scope.hpp"
 #include "engine/entity/Entity.hpp"
 #include "engine/entity/MovableEntity.hpp"
@@ -17,7 +17,7 @@ namespace Entities {
                    float const &x, float const &y, float const &xSpeed, float const &ySpeed,
                    int const &damage, Entities::Ship::TEAM originTeam);
 
-        virtual void update() override;
+        void update() override;
 
         void onCollision(ENTITY *other);
 
