@@ -29,6 +29,7 @@ namespace Engine {
 
             void clear() {window.clear();}
 
+		    sf::Vector2u getSize() {return window.getSize();}
         public:
             Window() = delete;
         };
