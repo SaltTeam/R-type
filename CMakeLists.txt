@@ -4,7 +4,7 @@ project(r-type)
 set(EXECUTABLE_NAME "r-type")
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(sources/)
+include_directories(sources/ repos/imgui/)
 
 add_executable(${EXECUTABLE_NAME}
         sources/main.cpp
@@ -29,7 +29,13 @@ add_executable(${EXECUTABLE_NAME}
         sources/scopes/TestScope.hpp
         sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
-        sources/entities/Projectiles/Projectile.cpp sources/entities/Projectiles/Projectile.hpp sources/entities/weapons/Weapon.cpp sources/entities/weapons/Weapon.hpp sources/entities/ships/sub/XWing.hpp sources/entities/ships/sub/YWing.hpp sources/entities/ships/sub/Arc.hpp sources/entities/ships/sub/Interceptor.hpp sources/entities/ships/sub/_Wing.hpp sources/entities/weapons/sub/Laser1.hpp sources/entities/weapons/sub/Laser2.hpp sources/entities/weapons/sub/Laser3.hpp sources/entities/weapons/sub/Laser4.hpp sources/entities/weapons/sub/Laser4.cpp sources/entities/Projectiles/sub/SinusProjectile.cpp sources/entities/Projectiles/sub/SinusProjectile.hpp sources/entities/weapons/IWeapon.hpp sources/entities/weapons/AWeapon.hpp)
+        sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp
+
+        repos/imgui/imgui.cpp
+        repos/imgui/imgui_draw.cpp
+        repos/imgui/imgui_demo.cpp
+        repos/imgui/imgui-SFML.cpp
+        )
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
@@ -37,6 +43,12 @@ find_package(SFML 2 REQUIRED audio graphics window system)
 if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+endif ()
+
+find_package(OPENGL)
+if (OPENGL_FOUND)
+    include_directories(${OPENGL_INCLUDE_DIR})
+    target_link_libraries(${EXECUTABLE_NAME} ${OPENGL_LIBRARIES})
 endif ()
 
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
