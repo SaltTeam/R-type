@@ -40,3 +40,25 @@ void Entities::Ship::takeDamage(int const &value) {
 Entities::Ship::TEAM Entities::Ship::getTeam() {
     return this->team;
 }
+
+void Entities::Ship::moveUp() {
+    if (this->position.y - this->speed.y > 0)
+        MovableEntity::moveUp();
+}
+
+void Entities::Ship::moveDown() {
+    if (this->position.y + this->speed.y + this->texture->sprite.getGlobalBounds().height <
+        this->scope->gameService->getWindowSize().y)
+        MovableEntity::moveDown();
+}
+
+void Entities::Ship::moveRight() {
+    if (this->position.x + this->speed.x + this->texture->sprite.getGlobalBounds().width <
+        this->scope->gameService->getWindowSize().x)
+        MovableEntity::moveRight();
+}
+
+void Entities::Ship::moveLeft() {
+    if (this->position.x - this->speed.x > 0)
+        MovableEntity::moveLeft();
+}

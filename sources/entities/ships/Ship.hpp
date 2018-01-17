@@ -34,6 +34,13 @@ namespace Entities {
 
         void update() override;
 
+        void moveUp() override;
+
+        void moveDown() override;
+
+        void moveRight() override;
+
+        void moveLeft() override;
 
         void onCollision(ENTITY *other);
 
