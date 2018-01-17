@@ -6,6 +6,7 @@
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/scope/Scope.hpp"
+#include "engine/service/GraphicalService.hpp"
 #include "engine/service/Service.hpp"
 
 namespace Engine {
@@ -42,6 +43,8 @@ namespace Engine {
             SCOPE *currentScope() {
                 return this->scopes.top();
             }
+
+            sf::Vector2u getWindowSize();
 
         private:
             explicit GameService(ENGINE *e) : SERVICE(e) {}
