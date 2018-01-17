@@ -6,20 +6,19 @@
 #include "engine/scope/Scope.hpp"
 
 EngineStatus GRAPHICAL_SERVICE::initialize() {
-    this->window = std::make_unique<sf::RenderWindow>(sf::VideoMode(800, 600), "R-type");
+    this->window = std::make_unique<sf::RenderWindow>(sf::VideoMode(720, 980), "R-type");
     return EngineStatus::Continue;
 }
 
 EngineStatus GRAPHICAL_SERVICE::earlyUpdate() {
     sf::Event event{};
     while (this->window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
+        if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
             this->window->close();
             return EngineStatus::Stop;
-        } else if (event.type == sf::Event::KeyPressed) {
-            this->engine->findService<GAME_SERVICE>()->execCallbacks(event.key.code);
         }
     }
+    this->engine->findService<GAME_SERVICE>()->execCallbacks();
     return EngineStatus::Continue;
 }
 

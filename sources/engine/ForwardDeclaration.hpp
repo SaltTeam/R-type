@@ -19,6 +19,9 @@ namespace Engine {
         class EntityManager;
 
         enum class Layer : unsigned int;
+
+        struct Collision;
+        class CollisionManager;
     }
 
     namespace Scopes {
@@ -39,7 +42,10 @@ namespace Engine {
 #define GAME_SERVICE Engine::Services::GameService
 
 #define ENTITY Engine::Entities::BaseEntity
+#define MOVABLE_ENTITY Engine::Entities::MovableEntity
 #define ENTITY_MANAGER Engine::Entities::EntityManager
+#define COLLISION Engine::Entities::Collision
+#define COLLISION_MANAGER Engine::Entities::CollisionManager
 
 #define LAYER Engine::Entities::Layer
 

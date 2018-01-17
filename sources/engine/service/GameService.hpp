@@ -2,6 +2,7 @@
 #pragma once
 
 #include <stack>
+#include <random>
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/scope/Scope.hpp"
@@ -57,7 +58,7 @@ namespace Engine {
 
             EngineStatus lateUpdate() override;
 
-            void execCallbacks(sf::Keyboard::Key key);
+            void execCallbacks();
         };
     };
 }

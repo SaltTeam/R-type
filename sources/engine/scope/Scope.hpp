@@ -6,6 +6,7 @@
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/entity/Entity.hpp"
+#include "engine/entity/Collision.hpp"
 
 namespace Engine {
     namespace Scopes {
@@ -19,6 +20,8 @@ namespace Engine {
 
             ENTITY_MANAGER entityManager;
 
+            COLLISION_MANAGER collisionManager;
+
             explicit BaseScope(GAME_SERVICE *gameService) : gameService(gameService) {}
 
             virtual ~BaseScope() = default;
@@ -31,7 +34,7 @@ namespace Engine {
 
             virtual void update() = 0;
 
-            void execCallbacks(sf::Keyboard::Key key);
+            void execCallbacks();
 
             virtual void shutdown() = 0;
 
