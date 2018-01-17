@@ -4,7 +4,7 @@ project(r-type)
 set(EXECUTABLE_NAME "r-type")
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(sources/)
+include_directories(sources/ repos/imgui/)
 
 add_executable(${EXECUTABLE_NAME}
         sources/main.cpp
@@ -31,13 +31,12 @@ add_executable(${EXECUTABLE_NAME}
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
         sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp
 
-        sources/imgui/imgui.cpp
-        sources/imgui/imgui_draw.cpp
-        sources/imgui/imgui_demo.cpp
-        sources/imgui/imgui-SFML.cpp
+        repos/imgui/imgui.cpp
+        repos/imgui/imgui_draw.cpp
+        repos/imgui/imgui_demo.cpp
+        repos/imgui/imgui-SFML.cpp
         )
 
-include_directories(includes)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
