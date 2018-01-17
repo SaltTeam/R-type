@@ -42,21 +42,6 @@ Entities::Asteroid::Asteroid(SCOPE *scope, uint64_t id, bool isEnabled,
     this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f);
 }
 
-Entities::Asteroid::Asteroid(SCOPE *scope, uint64_t id, bool isEnabled,
-			     const float &x, const float &y)
-    : MovableEntity(scope, id, isEnabled, x, y) {
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_real_distribution<float> dist_speed(-0.2, 0.2);
-    std::uniform_real_distribution<float> dist_path(0, 9);
-
-    this->setTexture(paths[dist_path(mt)]);
-    this->setSpeed(dist_speed(mt), dist_speed(mt));
-
-    std::function<void(ENTITY *)> f = std::bind(&Asteroid::onCollision, this, std::placeholders::_1);
-    this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f);
-}
-
 void Entities::Asteroid::update() {
     this->move();
     MOVABLE_ENTITY::update();
