@@ -30,11 +30,12 @@ add_executable(${EXECUTABLE_NAME}
         sources/entities/PlayerShip.cpp sources/entities/PlayerShip.hpp
         sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
         sources/entities/Projectile.cpp sources/entities/Projectile.hpp sources/entities/Weapon.cpp sources/entities/Weapon.hpp
+
         sources/imgui/imgui.cpp
         sources/imgui/imgui_draw.cpp
         sources/imgui/imgui_demo.cpp
         sources/imgui/imgui-SFML.cpp
-)
+        )
 
 include_directories(includes)
 
@@ -44,6 +45,12 @@ find_package(SFML 2 REQUIRED audio graphics window system)
 if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+endif ()
+
+find_package(OPENGL)
+if (OPENGL_FOUND)
+    include_directories(${OPENGL_INCLUDE_DIR})
+    target_link_libraries(${EXECUTABLE_NAME} ${OPENGL_LIBRARIES})
 endif ()
 
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
