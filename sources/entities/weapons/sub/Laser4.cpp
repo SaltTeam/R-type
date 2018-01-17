@@ -2,7 +2,7 @@
 // Created by delacr_a on 16/01/18.
 //
 
-#include "entities/Projectiles/sub/SinusProjectile.hpp"
+#include "entities/projectiles/sub/SinusProjectile.hpp"
 #include "Laser4.hpp"
 
 
@@ -19,5 +19,5 @@ void Entities::Laser4::spawnLasers(sf::Vector2f const &position) {
     this->scope->entityManager.add<Entities::SinusProjectile>(LAYER::Layer1, this->scope, 2,
                                                               this->projectilePath, true,
                                                               position.x, position.y,
-                                                              this->xSpeed, this->ySpeed, this->damage, this->originId);
+                                                              this->xSpeed, this->ySpeed, this->damage, this->originTeam);
 }

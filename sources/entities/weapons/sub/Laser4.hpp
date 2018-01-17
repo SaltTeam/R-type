@@ -10,8 +10,8 @@
 namespace Entities {
     class Laser4 : public AWeapon {
     public:
-        Laser4(SCOPE *scope, uint64_t const &originId)
-                : AWeapon(scope, "resources/sprites/Lasers/laserRed11.png", 0.25, 5, 0, -0.3, originId) {}
+        Laser4(SCOPE *scope, Entities::Ship::TEAM originTeam)
+                : AWeapon(scope, "resources/sprites/Lasers/laserRed11.png", 0.25, 5, 0, -0.3, originTeam) {}
 
         virtual void shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position);
 

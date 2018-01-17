@@ -7,6 +7,7 @@
 #include <SFML/Window.hpp>
 #include <engine/ForwardDeclaration.hpp>
 #include <chrono>
+#include "entities/ships/Ship.hpp"
 #include "IWeapon.hpp"
 
 namespace Entities {
@@ -41,9 +42,9 @@ namespace Entities {
 
     protected:
         AWeapon(SCOPE *scope, std::string const &projectilePath, float const &cd, int const &damage,
-                float const &xSpeed, float const &ySpeed, uint64_t const &originId)
+                float const &xSpeed, float const &ySpeed, Entities::Ship::TEAM const &originTeam)
                 : scope(scope), projectilePath(projectilePath), cd(cd), damage(damage), xSpeed(xSpeed), ySpeed(ySpeed),
-                  originId(originId) {
+                  originTeam(originTeam) {
             this->lastUse = std::chrono::system_clock::from_time_t(0);
         };
 
@@ -56,6 +57,6 @@ namespace Entities {
         std::string projectilePath;
         float xSpeed;
         float ySpeed;
-        uint64_t originId;
+        Entities::Ship::TEAM originTeam;
     };
 }
