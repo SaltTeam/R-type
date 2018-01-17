@@ -16,12 +16,32 @@
 #include "services/TestService.hpp"
 #include "engine/service/NetService.hpp"
 
-int main() {
-  server::Server server;
+static void init(void) {
+#ifdef WIN32
+    WSADATA wsa;
+    int err = WSAStartup(MAKEWORD(2, 2), &wsa);
+    if(err < 0)
+    {
+        puts("WSAStartup failed !");
+        exit(EXIT_FAILURE);
+    }
+#endif
+}
 
-  try {
-    server.start();
-  } catch (std::exception &exception) {
-    std::cout << exception.what();
-  }
+static void end(void) {
+#ifdef WIN32
+    WSACleanup();
+#endif
+}
+
+int main() {
+    server::Server server;
+
+    init();
+    try {
+        server.start();
+    } catch (std::exception& exception) {
+        std::cout << exception.what();
+    }
+    end();
 }

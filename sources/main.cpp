@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <iomanip>
 
 #include "engine/Runner.hpp"
 #include "services/TestService.hpp"
@@ -10,15 +11,36 @@
 #include "network/Socket.hpp"
 #include "server/Protocol.hpp"
 
+static void init(void)
+{
+#ifdef WIN32
+    WSADATA wsa;
+    int err = WSAStartup(MAKEWORD(2, 2), &wsa);
+    if(err < 0)
+    {
+        puts("WSAStartup failed !");
+        exit(EXIT_FAILURE);
+    }
+#endif
+}
+
+static void end(void)
+{
+#ifdef WIN32
+    WSACleanup();
+#endif
+}
 
 int main() {
+    init();
+    
     mysocket::Socket ud{AF_INET, SOCK_DGRAM, IPPROTO_UDP};
     mysocket::Socket tc{AF_INET, SOCK_STREAM, IPPROTO_TCP};
     network::protocol::Header hdr;
     network::protocol::Connexion connect;
 
 
-    hdr.type = (network::protocol::HeaderType::CONNECT);
+    hdr.type = network::protocol::HeaderType::CONNECT;
     hdr.size = sizeof(network::protocol::Connexion);
     std::strncpy(connect.name, "zerzerzer", 256);
     std::strncpy(connect.pass, "titi", 256);
@@ -53,5 +75,6 @@ int main() {
     ud.RecvFrom(buf, 1024, 0, addr);
     std::cout << "recv from server: " << buf << std::endl;
 
+    end();
     return 0;
 }

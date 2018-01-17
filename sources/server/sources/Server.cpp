@@ -44,8 +44,9 @@ void server::Server::handleConnection() {
             return;
         network::protocol::Header header =
                 {network::protocol::HeaderType::ERROR, 0};
-        if (client->Recv(header, sizeof(header), 0) <= 0)
+        if (client->Recv(header, sizeof(header), MSG_WAITALL) <= 0)
             return;
+        std::clog << "RECV HDR: " << (int)header.type << std::endl;
         if (header.type == network::protocol::HeaderType::CONNECT) {
             commandConnect(client);
         } else if (header.type == network::protocol::HeaderType::LIST) {
@@ -107,22 +108,22 @@ void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
 
 // TODO: This does not work !
 void server::Server::commandList(std::unique_ptr<mysocket::Socket>& client) {
-    network::protocol::List con;
-
-    std::memset(&con, 0, sizeof(con));
-    network::protocol::ListResponse res;
-
-    if (client->Recv(con, sizeof(con), 0) <= 0)
-        return;
-    if (strlen(con.pattern) > 0) {
-
-    } else {
-        res.status = network::protocol::Status::STATUS_OK;
-        res.nelts = this->_games.size();
-        std::list<std::string> results;
-        for (auto it : _games)
-            results.push_back(it.first);
-        res.results = results;
-        sendTcpResponse(client, network::protocol::HeaderType::LIST, res);
-    }
+//    network::protocol::List con;
+//
+//    std::memset(&con, 0, sizeof(con));
+//    network::protocol::ListResponse res;
+//
+//    if (client->Recv(con, sizeof(con), 0) <= 0)
+//        return;
+//    if (strlen(con.pattern) > 0) {
+//
+//    } else {
+//        res.status = network::protocol::Status::STATUS_OK;
+//        res.nelts = this->_games.size();
+//        std::list<std::string> results;
+//        for (auto it : _games)
+//            results.push_back(it.first);
+//        res.results = results;
+//        sendTcpResponse(client, network::protocol::HeaderType::LIST, res);
+//    }
 }
