@@ -12,6 +12,7 @@
 
 #include <string>
 #include <atomic>
+#include <mutex>
 #include "network/Socket.hpp"
 
 namespace server {
@@ -20,6 +21,8 @@ namespace server {
     protected:
         std::atomic_ushort _port;
         mysocket::Socket _socket;
+        std::array<unsigned long, 4> _ips;
+        std::mutex _ips_mutex;
 
     public:
         std::string _name;
@@ -33,6 +36,12 @@ namespace server {
 
     public:
         unsigned short getPort() const;
+        void setIP(unsigned long addr, int idx);
+        void unsetIP(int idx);
+        unsigned long getIP(int idx);
+
+    protected:
+        bool checkIP(unsigned long addr);
 
     public:
         void start();

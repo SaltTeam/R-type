@@ -25,7 +25,6 @@ typedef int ssize_t;
 #  include <sys/un.h>
 #  include <arpa/inet.h>
 #  include <unistd.h>
-#include <bits/unique_ptr.h>
 
 #  define INVALID_SOCKET (-1)
 #  define SOCKET_ERROR (-1)
@@ -35,6 +34,7 @@ typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr_un SOCKADDR_UN;
 typedef struct sockaddr SOCKADDR;
 typedef in_addr_t IN_ADDR;
+typedef sockaddr_storage SOCKADDR_STORAGE;
 
 # else /* sinon vous êtes sur une plateforme non supportée */
 

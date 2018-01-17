@@ -65,13 +65,14 @@ void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
     if (_games.find(con.name) != _games.end()) {
         _games_m.lock();
         if (_games[con.name]->_passwd.length() > 0 && _games[con.name]->_passwd == con.pass) {
-            if (_games[con.name]->nbPlayer == 4) {
+            if (_games[con.name]->nbPlayer >= 4) {
                 res.status = network::protocol::Status::STATUS_FULL;
                 sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
             } else {
                 res.color = static_cast<network::protocol::PlayerColor>(_games[con.name]->nbPlayer.load());
                 res.status = network::protocol::Status::STATUS_OK;
                 res.port = _games[con.name]->getPort();
+                _games[con.name]->setIP(client->GetPeerRawAddress(), _games[con.name]->nbPlayer.load());
                 sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
                 ++_games[con.name]->nbPlayer;
             }
@@ -82,12 +83,13 @@ void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
     } else {
         try {
             _games_m.lock();
-            this->_games[con.name] = std::make_shared<server::Game>(con.name, con.pass, _port);
-	    auto game = this->_games[con.name];
+            _games[con.name] = std::make_shared<server::Game>(con.name, con.pass, _port);
+            auto game = _games[con.name];
             _games_m.unlock();
             res.color = static_cast<network::protocol::PlayerColor>(game->nbPlayer.load());
             res.status = network::protocol::Status::STATUS_OK;
             res.port = game->getPort();
+            _games[con.name]->setIP(client->GetPeerRawAddress(), _games[con.name]->nbPlayer.load());
             sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
             ++game->nbPlayer;
             std::thread t(&Game::start, std::ref(*game));

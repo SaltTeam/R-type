@@ -11,6 +11,7 @@
 #ifndef SOCKET_HPP
 # define SOCKET_HPP
 
+#include <memory>
 #include "Addr.hpp"
 
 /// \namespace mysocket
@@ -69,6 +70,10 @@ namespace mysocket {
         /// \brief Extract the first connection on the queue of pending connections and allocate a new file descriptor for that socket (here the clientSocket of the class).
         /// \return Upon successful completion, the method shall return the newed socket that must be deleted. Rturn nullptr on error.
         Socket *Accept();
+
+        /// \brief Get the raw IPv4 peer address from a CONNECTED socket.
+        /// \return The raw IPv4 peer address.
+        unsigned long GetPeerRawAddress();
 
         /// \brief Initiate transmission of a message from the socket to its peer.
         /// \tparam T The type of data to send.

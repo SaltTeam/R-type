@@ -79,4 +79,13 @@ namespace mysocket {
                                   sock, ptr);
         return client;
     }
+
+    unsigned long Socket::GetPeerRawAddress() {
+        SOCKADDR_STORAGE addr;
+        socklen_t len{sizeof(addr)};
+
+        getpeername(_socket, (struct sockaddr*)&addr, &len);
+        auto *s = (SOCKADDR_IN*)&addr;
+        return s->sin_addr.s_addr;
+    }
 }
