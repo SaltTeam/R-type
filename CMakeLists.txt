@@ -67,7 +67,7 @@ if (SFML_FOUND)
     target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif ()
 
-find_package(OPENGL)
+find_package(OpenGL)
 if (OPENGL_FOUND)
     include_directories(${OPENGL_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${OPENGL_LIBRARIES})
