@@ -11,7 +11,7 @@
 #include "network/Socket.hpp"
 #include "server/Protocol.hpp"
 
-static void init(void)
+static void init()
 {
 #ifdef WIN32
     WSADATA wsa;
@@ -24,7 +24,7 @@ static void init(void)
 #endif
 }
 
-static void end(void)
+static void end()
 {
 #ifdef WIN32
     WSACleanup();
@@ -36,11 +36,11 @@ int main() {
     
     mysocket::Socket ud{AF_INET, SOCK_DGRAM, IPPROTO_UDP};
     mysocket::Socket tc{AF_INET, SOCK_STREAM, IPPROTO_TCP};
-    network::protocol::Header hdr;
-    network::protocol::Connexion connect;
+    network::protocol::Header hdr{};
+    network::protocol::Connexion connect{};
 
 
-    hdr.type = network::protocol::HeaderType::CONNECT;
+    hdr.type = network::protocol::HeaderType::Connect;
     hdr.size = sizeof(network::protocol::Connexion);
     std::strncpy(connect.name, "zerzerzer", 256);
     std::strncpy(connect.pass, "titi", 256);
@@ -55,11 +55,11 @@ int main() {
     msg.append(reinterpret_cast<unsigned char*>(&connect), hdr.size);
     tc.Send(msg.data(), msg.length(), 0);
 
-    network::protocol::Header mdr;
-    network::protocol::ConnexionResponse resp;
-    tc.Recv(mdr, sizeof(mdr));
+    network::protocol::Header mdr{};
+    network::protocol::ConnexionResponse resp{};
+    tc.Recv(&mdr, sizeof(mdr));
     std::cout << "header type response: " << (int)mdr.type << std::endl;
-    tc.Recv(resp, sizeof(resp));
+    tc.Recv(&resp, sizeof(resp));
     std::cout << "color response: " << (int)resp.color << std::endl;
     std::cout << "status response: " << (int) resp.status << std::endl;
     std::cout << "port: " << resp.port << std::endl;

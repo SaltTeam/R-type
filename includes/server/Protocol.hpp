@@ -16,77 +16,151 @@
 namespace network {
     namespace protocol {
         enum class PlayerColor {
-            ERROR = -1,
-            BLUE = 0,
-            GREEN,
-            RED,
-            YELLOW
+            Error = -1,
+            Blue = 0,
+            Green,
+            Red,
+            Yellow
         };
 
         enum class Update {
-            MASTER = 0,
-            INSTANCIATED,
-            REPLICA
+            Master = 0,
+            Instanciated,
+            Replica
         };
 
         enum class Type {
         };
 
         enum class Action {
-            UPDATE = 0,
-            DELETE = 1,
+            Update = 0,
+            Delete = 1,
         };
 
         enum class Status {
-            STATUS_OK = 200,
-            STATUS_ERROR = 500,
-	    STATUS_PASSERROR = 501,
-	    STATUS_FULL = 502
+            Ok = 200,
+            Error = 500,
+            PassError = 501,
+            GameFull = 502
         };
 
         enum class HeaderType {
-            ERROR = 0,
-            CONNECT = 1,
-            LIST = 2
+            Error = 0,
+            Connect = 1,
+            List = 2
         };
 
         extern "C" {
+
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct Header {
             HeaderType type;
             uint64_t size;
-        } __attribute__((packed));
+        } PACKED;
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
 
+
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct Connexion {
             char name[256];
             char pass[256];
-        } __attribute__((packed));
+        } PACKED;
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
 
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct List {
             char pattern[256];
-        } __attribute__((packed));
+        } PACKED;
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
 
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct ConnexionResponse {
             Status status;
             PlayerColor color;
             unsigned short port;
-        };
+        } PACKED;
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
+        
+// TODO: This does not work !
+//#ifdef WIN32
+//        #define PACKED
+//#pragma pack(push,1)
+//#else
+//#define PACKED __attribute__((packed))
+//#endif
+//        struct ListResponse {
+//            Status status;
+//            uint64_t nelts;
+//            uint64_t selts;
+//            std::list<std::string> results;
+//        } PACKED;
+//#ifdef WIN32
+//        #pragma pack(pop)
+//#undef PACKED
+//#else
+//#undef PACKED
+//#endif
 
-        // TODO: This does not work !
-        struct ListResponse {
-            Status status;
-            uint64_t nelts;
-            uint64_t selts;
-            std::list<std::string> results;
-        } __attribute__((packed));
 
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct ObjectHeader {
             Update update;
             Type type;
             uint16_t refresh;
             uint64_t id;
             Action action;
-        } __attribute__((packed));
-
+        } PACKED;
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
         }
     }
 }

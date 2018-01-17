@@ -16,7 +16,7 @@
 #include "services/TestService.hpp"
 #include "engine/service/NetService.hpp"
 
-static void init(void) {
+static void init() {
 #ifdef WIN32
     WSADATA wsa;
     int err = WSAStartup(MAKEWORD(2, 2), &wsa);
@@ -28,7 +28,7 @@ static void init(void) {
 #endif
 }
 
-static void end(void) {
+static void end() {
 #ifdef WIN32
     WSACleanup();
 #endif

@@ -76,55 +76,34 @@ namespace mysocket {
         unsigned long GetPeerRawAddress();
 
         /// \brief Initiate transmission of a message from the socket to its peer.
-        /// \tparam T The type of data to send.
         /// \param buf Point to the buffer containing the message to send.
         /// \param length The length of the message in bytes.
         /// \param flags Specifies the type of message transmission.
         /// \return Upon successful completion, return the number of bytes sent, otherwise return -1.
-        template <typename T>
-        ssize_t Send(T const& buf, size_t length, int flags = 0);
-
-        template <typename T>
-        ssize_t Send(T const* buf, size_t length, int flags = 0);
-
+        ssize_t Send(const void* buf, size_t length, int flags = 0);
 
         /// \brief Initiate reception of a message from the socket to its peer.
-        /// \tparam T The type of data to receive.
         /// \param buf Points to the buffer where the message should be stored.
         /// \param maxLen The length of the buffer pointed by the buf argument.
         /// \param flags Specifies the type of message transmission.
         /// \return The length of the received message of successful completion, otherwise return -1.
-        template <typename T>
-        ssize_t Recv(T& buf, size_t maxLen, int flags = 0);
-
-        template <typename T>
-        ssize_t Recv(T* buf, size_t maxLen, int flags = 0);
+        ssize_t Recv(void* buf, size_t maxLen, int flags = 0);
 
         /// \brief Used to send data over UNCONNECTED datagram sockets.
-        /// \tparam T The type of data to send.
         /// \param msg The data to send.
         /// \param len The length of the data to send.
         /// \param flags Specifies the type of message transmission.
         /// \param to An InetAddr object containing the info of the receiver.
         /// \return The number of bytes sent, otherwise it returns -1 on error.
-        template <typename T>
-        ssize_t SendTo(T const& msg, size_t len, unsigned int flags, InetAddr& to);
-
-        template <typename T>
-        ssize_t SendTo(T const* msg, size_t len, unsigned int flags, InetAddr& to);
+        ssize_t SendTo(const void* msg, size_t len, unsigned int flags, InetAddr& to);
 
         /// \brief Used to receive data from UNCONNECTED datagram sockets.
-        /// \tparam T The type of data to receive.
         /// \param buf Points to the buffer where the message should be stored.
         /// \param maxLen The length of the buffer pointed by the buf argument.
         /// \param flags Specifies the type of message transmission.
         /// \param from An empty InetAddr object to be filled with the sender info upon successful completion.
         /// \return The length of the received message of successful completion, otherwise return -1.
-        template <typename T>
-        ssize_t RecvFrom(T& buf, size_t maxLen, unsigned int flags, InetAddr& from);
-
-        template <typename T>
-        ssize_t RecvFrom(T* buf, size_t maxLen, unsigned int flags, InetAddr& from);
+        ssize_t RecvFrom(void* buf, size_t maxLen, unsigned int flags, InetAddr& from);
 
     public:
 
@@ -138,48 +117,6 @@ namespace mysocket {
 
         Socket &operator=(Socket const &&other) = delete;
     };
-
-    template <typename T>
-    ssize_t Socket::Send(T const &buf, size_t length, int flags) {
-        return send(this->_socket, &buf, length, flags);
-    }
-
-    template <typename T>
-    ssize_t Socket::Send(T const* buf, size_t length, int flags) {
-        return send(this->_socket, buf, length, flags);
-    }
-
-    template <typename T>
-    ssize_t Socket::Recv(T &buf, size_t maxLen, int flags) {
-        return recv(this->_socket, &buf, maxLen, flags);
-    }
-
-    template <typename T>
-    ssize_t Socket::Recv(T* buf, size_t maxLen, int flags) {
-        return recv(this->_socket, buf, maxLen, flags);
-    }
-
-    template <typename T>
-    ssize_t Socket::SendTo(T const& msg, size_t len, unsigned int flags, InetAddr& to) {
-        return sendto(_socket, &msg, len, flags, reinterpret_cast<SOCKADDR*>(&to.GetStruct()), InetAddr::Size);
-    }
-
-    template <typename T>
-    ssize_t Socket::SendTo(T const* msg, size_t len, unsigned int flags, InetAddr& to) {
-        return sendto(_socket, msg, len, flags, reinterpret_cast<SOCKADDR*>(&to.GetStruct()), InetAddr::Size);
-    }
-
-    template <typename T>
-    ssize_t Socket::RecvFrom(T& buf, size_t maxLen, unsigned int flags, InetAddr& from) {
-        socklen_t len {InetAddr::Size};
-        return recvfrom(_socket, &buf, maxLen, flags, reinterpret_cast<SOCKADDR*>(&from.GetStruct()), &len);
-    }
-
-    template <typename T>
-    ssize_t Socket::RecvFrom(T* buf, size_t maxLen, unsigned int flags, InetAddr& from) {
-        socklen_t len {InetAddr::Size};
-        return recvfrom(_socket, buf, maxLen, flags, reinterpret_cast<SOCKADDR*>(&from.GetStruct()), &len);
-    }
 }
 
 #endif // !SOCKET_HPP

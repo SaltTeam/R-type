@@ -68,7 +68,7 @@ namespace mysocket {
 
     Socket* Socket::Accept() {
         SOCKET sock;
-        SOCKADDR_IN addr;
+        SOCKADDR_IN addr{};
         socklen_t len = sizeof(addr);
 
         sock = accept(this->_socket, reinterpret_cast<SOCKADDR*>(&addr), &len);
@@ -81,11 +81,28 @@ namespace mysocket {
     }
 
     unsigned long Socket::GetPeerRawAddress() {
-        SOCKADDR_STORAGE addr;
+        SOCKADDR_STORAGE addr{};
         socklen_t len{sizeof(addr)};
 
         getpeername(_socket, (struct sockaddr*)&addr, &len);
         auto *s = (SOCKADDR_IN*)&addr;
         return s->sin_addr.s_addr;
+    }
+
+    ssize_t Socket::Send(const void* buf, size_t length, int flags) {
+        return send(_socket, buf, length, flags);
+    }
+
+    ssize_t Socket::Recv(void* buf, size_t maxLen, int flags) {
+        return recv(_socket, buf, maxLen, flags);
+    }
+
+    ssize_t Socket::SendTo(const void* msg, size_t len, unsigned int flags, InetAddr& to) {
+        return sendto(_socket, msg, len, flags, reinterpret_cast<SOCKADDR*>(&to.GetStruct()), InetAddr::Size);
+    }
+
+    ssize_t Socket::RecvFrom(void* buf, size_t maxLen, unsigned int flags, InetAddr& from) {
+        socklen_t len {InetAddr::Size};
+        return recvfrom(_socket, buf, maxLen, flags, reinterpret_cast<SOCKADDR*>(&from.GetStruct()), &len);
     }
 }

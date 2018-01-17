@@ -43,42 +43,42 @@ void server::Server::handleConnection() {
         if (client == nullptr)
             return;
         network::protocol::Header header =
-                {network::protocol::HeaderType::ERROR, 0};
-        if (client->Recv(header, sizeof(header), MSG_WAITALL) <= 0)
+                {network::protocol::HeaderType::Error, 0};
+        if (client->Recv(&header, sizeof(header), MSG_WAITALL) <= 0)
             return;
         std::clog << "RECV HDR: " << (int)header.type << std::endl;
-        if (header.type == network::protocol::HeaderType::CONNECT) {
+        if (header.type == network::protocol::HeaderType::Connect) {
             commandConnect(client);
-        } else if (header.type == network::protocol::HeaderType::LIST) {
+        } else if (header.type == network::protocol::HeaderType::List) {
             commandList(client);
         }
     }
 }
 
 void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
-    network::protocol::ConnexionResponse res = {network::protocol::Status::STATUS_ERROR, network::protocol::PlayerColor::ERROR, 0};
+    network::protocol::ConnexionResponse res = {network::protocol::Status::Error, network::protocol::PlayerColor::Error, 0};
     network::protocol::Connexion con;
 
     std::memset(&con, 0, sizeof(con));
 
-    if (client->Recv(con, sizeof(con), 0) <= 0)
+    if (client->Recv(&con, sizeof(con), 0) <= 0)
         return;
     if (_games.find(con.name) != _games.end()) {
         _games_m.lock();
         if (_games[con.name]->_passwd.length() > 0 && _games[con.name]->_passwd == con.pass) {
             if (_games[con.name]->nbPlayer >= 4) {
-                res.status = network::protocol::Status::STATUS_FULL;
-                sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
+                res.status = network::protocol::Status::GameFull;
+                sendTcpResponse(client, network::protocol::HeaderType::Connect, res);
             } else {
                 res.color = static_cast<network::protocol::PlayerColor>(_games[con.name]->nbPlayer.load());
-                res.status = network::protocol::Status::STATUS_OK;
+                res.status = network::protocol::Status::Ok;
                 res.port = _games[con.name]->getPort();
                 _games[con.name]->setIP(client->GetPeerRawAddress(), _games[con.name]->nbPlayer.load());
-                sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
+                sendTcpResponse(client, network::protocol::HeaderType::Connect, res);
                 ++_games[con.name]->nbPlayer;
             }
         } else {
-            sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
+            sendTcpResponse(client, network::protocol::HeaderType::Connect, res);
         }
         _games_m.unlock();
     } else {
@@ -88,10 +88,10 @@ void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
             auto game = _games[con.name];
             _games_m.unlock();
             res.color = static_cast<network::protocol::PlayerColor>(game->nbPlayer.load());
-            res.status = network::protocol::Status::STATUS_OK;
+            res.status = network::protocol::Status::Ok;
             res.port = game->getPort();
             _games[con.name]->setIP(client->GetPeerRawAddress(), _games[con.name]->nbPlayer.load());
-            sendTcpResponse(client, network::protocol::HeaderType::CONNECT, res);
+            sendTcpResponse(client, network::protocol::HeaderType::Connect, res);
             ++game->nbPlayer;
             std::thread t(&Game::start, std::ref(*game));
             t.detach();
