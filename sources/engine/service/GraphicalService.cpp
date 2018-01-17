@@ -35,6 +35,8 @@ EngineStatus GRAPHICAL_SERVICE::update() {
 EngineStatus GRAPHICAL_SERVICE::lateUpdate() {
     GAME_SERVICE *game = this->engine->findService<GAME_SERVICE>();
     SCOPE *scope = game->currentScope();
+    if (scope == nullptr)
+        return EngineStatus::Stop;
     this->window->clear();
     for (const auto &layer : scope->entityManager.entities) {
         for (const auto &entity : layer.second) {
@@ -50,8 +52,8 @@ EngineStatus GRAPHICAL_SERVICE::lateUpdate() {
 }
 
 EngineStatus GRAPHICAL_SERVICE::shutdown() {
+    ImGui::SFML::Shutdown();
     if (this->window->isOpen())
         this->window->close();
-    ImGui::SFML::Shutdown();
     return EngineStatus::Continue;
 }
