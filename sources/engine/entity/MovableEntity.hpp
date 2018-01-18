@@ -22,15 +22,15 @@ namespace Engine {
 
             void update() override;
 
-            void moveUp();
+            virtual void moveUp();
 
-            void moveDown();
+            virtual void moveDown();
 
-            void moveRight();
+            virtual void moveRight();
 
-            void moveLeft();
+            virtual void moveLeft();
 
-            void move();
+            virtual void move();
 
             void setSpeed(sf::Vector2f const &speed);
 

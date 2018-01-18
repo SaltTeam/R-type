@@ -2,7 +2,6 @@
 #pragma once
 
 #include "engine/entity/MovableEntity.hpp"
-#include "entities/weapons/Weapon.hpp"
 #include "Ship.hpp"
 
 namespace Entities {

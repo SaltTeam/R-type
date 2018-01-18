@@ -16,6 +16,7 @@ namespace Entities {
                        y, 0.25, 0.01, 50) {
             this->weapon = new Entities::Laser4(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
+            this->weapon->setCd(1);
             this->canons.push_back({14, 10});
             this->canons.push_back({28, 10});
         }
