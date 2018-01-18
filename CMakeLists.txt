@@ -40,6 +40,7 @@ add_executable(${EXECUTABLE_NAME}
         sources/entities/ships/sub/Enemy2.hpp
         sources/entities/ships/sub/Enemy3.hpp
         sources/entities/ships/sub/Enemy4.hpp
+        sources/entities/ships/sub/Enemy5.hpp
         sources/entities/Asteroid.cpp
         sources/entities/Asteroid.hpp
         sources/entities/projectiles/Projectile.cpp
