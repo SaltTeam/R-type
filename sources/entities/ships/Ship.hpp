@@ -51,7 +51,7 @@ namespace Entities {
 
         void moveLeft() override;
 
-        void onCollision(ENTITY *other);
+        virtual void onCollision(ENTITY *other);
 
         IWeapon *weapon;
 
