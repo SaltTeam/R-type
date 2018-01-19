@@ -31,11 +31,17 @@ void Entities::PlayerShip::onCollision(ENTITY *other) {
     if (!other->isEnabled)
         return;
     if (dynamic_cast<Entities::Asteroid *>(other) != nullptr)
-        this->scope->removeEntity(this);
+        if (this->shield == 0)
+            this->scope->removeEntity(this);
+        else
+            this->shield = 0;
     else if (dynamic_cast<Entities::Ship *>(other) != nullptr)
         if (dynamic_cast<Entities::Ship *>(other)->getTeam() != this->team) {
             this->scope->removeEntity(other);
-            this->scope->removeEntity(this);
+            if (this->shield == 0)
+                this->scope->removeEntity(this);
+            else
+                this->shield = 0;
         }
 
 }
