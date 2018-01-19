@@ -11,9 +11,9 @@ namespace Scopes {
         bool setting = false;
 
     public:
-        MenuScope(GAME_SERVICE *gameService) : SCOPE(gameService) {}
+        explicit MenuScope(GAME_SERVICE *gameService) : SCOPE(gameService) {}
 
-        ~MenuScope() = default;
+        ~MenuScope() override = default;
 
 
         void initialize() override {
@@ -56,6 +56,5 @@ namespace Scopes {
             }
             ImGui::End();
         }
-
     };
 }

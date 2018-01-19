@@ -20,6 +20,7 @@ EngineStatus GRAPHICAL_SERVICE::earlyUpdate() {
 
         if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
             this->window->close();
+            ImGui::SFML::Update(*this->window, this->deltaClock.restart());
             return EngineStatus::Stop;
         }
     }
