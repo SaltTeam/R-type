@@ -37,9 +37,7 @@ namespace Entities {
              float const &x, float const &y, float const &xSpeed, float const &ySpeed,
              int const &health, int const &shield = 0);
 
-        ~Ship() override {
-            delete this->weapon;
-        }
+        ~Ship() override;
 
         void update() override;
 
@@ -51,7 +49,9 @@ namespace Entities {
 
         void moveLeft() override;
 
-        void onCollision(ENTITY *other);
+        void spawnPowerUp();
+
+        virtual void onCollision(ENTITY *other);
 
         IWeapon *weapon;
 

@@ -8,7 +8,7 @@
 #include <entities/weapons/sub/Laser3.hpp>
 
 namespace Entities {
-    class Enemy4 : public Ship {
+    class TieAdvance : public Ship {
         enum State{
             State1 = 0,
             State2,
@@ -26,15 +26,15 @@ namespace Entities {
         State state;
 
     public:
-        Enemy4(SCOPE *scope, uint64_t id = 0, bool isEnabled = true, const float &x = 0, const float &y = 0)
+        TieAdvance(SCOPE *scope, uint64_t id = 0, bool isEnabled = true, const float &x = 0, const float &y = 0)
                 : Ship(scope, id, "resources/sprites/ships/enemy/ship4/base.png", isEnabled, Entities::Ship::GAME, x,
-                       y, 0.25, 0.1, 50) {
+                       y, 0.25, 0.1, 40) {
             this->weapon = new Entities::Laser3(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->OriginalXPosition = this->position.x;
             this->OriginalYPosition = this->position.y;
-            this->canons.push_back({14, 10});
-            this->canons.push_back({28, 10});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 8, this->texture->sprite.getGlobalBounds().height / 2 + 5});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 8, this->texture->sprite.getGlobalBounds().height / 2 + 5});
             this->state = State6;
             this->speed.x = 0;
             this->rng.seed(std::random_device()());

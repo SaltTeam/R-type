@@ -5,6 +5,7 @@
 #pragma once
 
 #include <SFML/Window.hpp>
+#include "entities/powerups/grade.hpp"
 
 namespace Entities {
     class IWeapon {
@@ -24,6 +25,8 @@ namespace Entities {
         virtual float getXSpeed() const = 0;
 
         virtual float getYSpeed() const = 0;
+
+        virtual void upgrade(GRADE grade) = 0;
 
     protected:
         virtual void spawnLasers(sf::Vector2f const &position) = 0;

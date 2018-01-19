@@ -44,6 +44,22 @@ namespace Entities {
             return this->ySpeed;
         }
 
+        virtual void upgrade(GRADE grade) {
+            switch (grade) {
+                case BRONZE:
+                    if (this->ySpeed < 2)
+                        this->ySpeed *= 1.1;
+                    break;
+                case SILVER:
+                    if (this->cd > 0.1)
+                        this->cd -= 0.1;
+                    break;
+                case GOLD:
+                    this->damage *= 1.1;
+                    break;
+            }
+        };
+
     protected:
         AWeapon(SCOPE *scope, std::string const &projectilePath, float const &cd, int const &damage,
                 float const &xSpeed, float const &ySpeed, Entities::Ship::TEAM originTeam)

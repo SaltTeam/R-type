@@ -36,11 +36,11 @@ add_executable(${EXECUTABLE_NAME}
         sources/entities/ships/sub/Interceptor.hpp
         sources/entities/ships/sub/XWing.hpp
         sources/entities/ships/sub/YWing.hpp
-        sources/entities/ships/sub/Enemy1.hpp
-        sources/entities/ships/sub/Enemy2.hpp
-        sources/entities/ships/sub/Enemy3.hpp
-        sources/entities/ships/sub/Enemy4.hpp
-        sources/entities/ships/sub/Enemy5.hpp
+        sources/entities/ships/sub/TieFigther.hpp
+        sources/entities/ships/sub/TieAvenger.hpp
+        sources/entities/ships/sub/TieBomber.hpp
+        sources/entities/ships/sub/TieAdvance.hpp
+        sources/entities/ships/sub/TieExperiment.hpp
         sources/entities/Asteroid.cpp
         sources/entities/Asteroid.hpp
         sources/entities/projectiles/Projectile.cpp
