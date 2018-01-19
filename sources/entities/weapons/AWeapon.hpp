@@ -47,10 +47,12 @@ namespace Entities {
         virtual void upgrade(GRADE grade) {
             switch (grade) {
                 case BRONZE:
-                    this->ySpeed *= 1.1;
+                    if (this->ySpeed < 2)
+                        this->ySpeed *= 1.1;
                     break;
                 case SILVER:
-                    this->cd -= 0.1;
+                    if (this->cd > 0.1)
+                        this->cd -= 0.1;
                     break;
                 case GOLD:
                     this->damage *= 1.1;

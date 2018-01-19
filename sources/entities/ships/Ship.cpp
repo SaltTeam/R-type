@@ -96,19 +96,22 @@ void Entities::Ship::gainShield(GRADE grade) {
 }
 
 void Entities::Ship::gainSpeed(GRADE grade) {
-    switch (grade) {
-        case BRONZE:
-            speed.x *= 1.1;
-            speed.y *= 1.1;
-            break;
-        case SILVER:
-            speed.x *= 1.2;
-            speed.y *= 1.2;
-            break;
-        case GOLD:
-            speed.x *= 1.3;
-            speed.y *= 1.3;
-            break;
+    if (speed.x < 2 && speed.y < 2)
+    {
+        switch (grade) {
+            case BRONZE:
+                speed.x *= 1.1;
+                speed.y *= 1.1;
+                break;
+            case SILVER:
+                speed.x *= 1.2;
+                speed.y *= 1.2;
+                break;
+            case GOLD:
+                speed.x *= 1.3;
+                speed.y *= 1.3;
+                break;
+        }
     }
 }
 
