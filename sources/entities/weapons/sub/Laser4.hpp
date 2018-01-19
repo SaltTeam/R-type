@@ -11,7 +11,7 @@ namespace Entities {
     class Laser4 : public AWeapon {
     public:
         Laser4(SCOPE *scope, Entities::Ship::TEAM originTeam)
-                : AWeapon(scope, "resources/sprites/Lasers/laserRed11.png", 0.3, 5, 0, -0.4, originTeam) {}
+                : AWeapon(scope, "resources/sprites/Lasers/laserRed11.png", 0.3, 10, 0, -0.4, originTeam) {}
 
         virtual void shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position);
 

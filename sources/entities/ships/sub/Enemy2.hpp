@@ -19,7 +19,7 @@ namespace Entities {
     public:
         Enemy2(SCOPE *scope, uint64_t id = 0, bool isEnabled = true, const float &x = 0, const float &y = 0)
                 : Ship(scope, id, "resources/sprites/ships/enemy/ship2/base.png", isEnabled, Entities::Ship::GAME, x,
-                       y, 0.2, 0.2, 50) {
+                       y, 0.2, 0.2, 40) {
             this->weapon = new Entities::Laser1(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->originXSpeed = 0.2;
