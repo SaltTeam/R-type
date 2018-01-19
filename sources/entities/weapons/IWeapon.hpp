@@ -5,6 +5,7 @@
 #pragma once
 
 #include <SFML/Window.hpp>
+#include "entities/powerups/grade.hpp"
 
 namespace Entities {
     class IWeapon {

@@ -30,7 +30,6 @@ void Entities::Ship::spawnPowerUp() {
     std::uniform_int_distribution<int> dist_powerup(0, 100);
 
     int res = dist_powerup(mt);
-    std::cout << "res is " << res << std::endl;
     if (res < 10)
         this->scope->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1, this->scope, 9, static_cast<GRADE>(res % 3), position.x, position.y);
     else if (res < 20)
