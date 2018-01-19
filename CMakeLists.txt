@@ -8,7 +8,7 @@ include_directories(sources/)
 include_directories(includes/)
 
 add_executable(${EXECUTABLE_NAME}
-        sources/main.cpp
+        sources/test_client_main.cpp
 
         sources/engine/ForwardDeclaration.hpp
         sources/engine/Runner.hpp
@@ -66,7 +66,7 @@ add_executable("server"
 target_link_libraries(server pthread)
 
 add_executable("test_client"
-        sources/main.cpp
+        sources/test_client_main.cpp
         sources/network/Addr.cpp
         sources/network/Select.cpp
         sources/network/SocketException.cpp
