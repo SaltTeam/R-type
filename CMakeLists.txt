@@ -27,10 +27,9 @@ add_executable(${EXECUTABLE_NAME}
         sources/engine/service/NetService.cpp sources/engine/service/NetService.hpp
 
         sources/scopes/TestScope.hpp
-        sources/entities/ships/PlayerShip.cpp
-        sources/entities/ships/PlayerShip.hpp
-        sources/entities/ships/Ship.cpp
-        sources/entities/ships/Ship.hpp
+
+        sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
+        sources/entities/ships/Ship.cpp sources/entities/ships/Ship.hpp
         sources/entities/ships/sub/_Wing.hpp
         sources/entities/ships/sub/Arc.hpp
         sources/entities/ships/sub/Interceptor.hpp
@@ -41,27 +40,39 @@ add_executable(${EXECUTABLE_NAME}
         sources/entities/ships/sub/TieBomber.hpp
         sources/entities/ships/sub/TieAdvance.hpp
         sources/entities/ships/sub/TieExperiment.hpp
-        sources/entities/asteroids/Asteroid.cpp
-        sources/entities/asteroids/Asteroid.hpp
-        sources/entities/projectiles/Projectile.cpp
-        sources/entities/projectiles/Projectile.hpp
-        sources/entities/projectiles/sub/SinusProjectile.cpp
-        sources/entities/projectiles/sub/SinusProjectile.hpp
-        sources/entities/weapons/Weapon.cpp
-        sources/entities/weapons/Weapon.hpp
+        sources/entities/ships/Boss/LeftPart.hpp
+        sources/entities/ships/Boss/MiddlePart.hpp
+        sources/entities/ships/Boss/RightPart.hpp
+
+        sources/entities/projectiles/Projectile.cpp sources/entities/projectiles/Projectile.hpp
+        sources/entities/projectiles/sub/SinusProjectile.cpp sources/entities/projectiles/sub/SinusProjectile.hpp
+
+        sources/entities/weapons/Weapon.cpp sources/entities/weapons/Weapon.hpp
         sources/entities/weapons/AWeapon.hpp
         sources/entities/weapons/IWeapon.hpp
         sources/entities/weapons/sub/Laser1.hpp
         sources/entities/weapons/sub/Laser2.hpp
         sources/entities/weapons/sub/Laser3.hpp
-        sources/entities/weapons/sub/Laser4.hpp
-        sources/entities/weapons/sub/Laser4.cpp
+        sources/entities/weapons/sub/Laser4.cpp sources/entities/weapons/sub/Laser4.hpp
+
+        sources/entities/powerups/APowerUp.cpp sources/entities/powerups/APowerUp.hpp
+        sources/entities/powerups/sub/HealPowerUp.hpp
+        sources/entities/powerups/sub/ShieldPowerUp.hpp
+        sources/entities/powerups/sub/SpeedPowerUp.hpp
+        sources/entities/powerups/sub/DamagePowerUp.hpp
+        sources/entities/powerups/grade.hpp
+
+        sources/entities/asteroids/Asteroid.cpp sources/entities/asteroids/Asteroid.hpp
+        sources/entities/asteroids/BigAsteroid.hpp
+        sources/entities/asteroids/MedAsteroid.hpp
+        sources/entities/asteroids/SmallAsteroid.hpp
+        sources/entities/asteroids/TinyAsteroid.hpp
 
         repos/imgui/imgui.cpp
         repos/imgui/imgui_draw.cpp
         repos/imgui/imgui_demo.cpp
         repos/imgui/imgui-SFML.cpp
-        sources/entities/powerups/APowerUp.cpp sources/entities/powerups/APowerUp.hpp sources/entities/powerups/sub/HealPowerUp.hpp sources/entities/powerups/sub/ShieldPowerUp.hpp sources/entities/powerups/sub/SpeedPowerUp.hpp sources/entities/powerups/sub/DamagePowerUp.hpp sources/entities/powerups/grade.hpp sources/entities/ships/Boss/LeftPart.hpp sources/entities/ships/Boss/MiddlePart.hpp sources/entities/ships/Boss/RightPart.hpp sources/entities/asteroids/BigAsteroid.hpp sources/entities/asteroids/MedAsteroid.hpp sources/entities/asteroids/SmallAsteroid.hpp sources/entities/asteroids/TinyAsteroid.hpp)
+        )
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
