@@ -2,12 +2,14 @@ cmake_minimum_required(VERSION 3.9)
 project(r-type)
 
 set(EXECUTABLE_NAME "r-type")
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
+include_directories(sources/)
+include_directories(includes/)
 include_directories(sources/ repos/imgui/)
 
 add_executable(${EXECUTABLE_NAME}
-        sources/main.cpp
+        sources/test_client_main.cpp
 
         sources/engine/ForwardDeclaration.hpp
         sources/engine/Runner.hpp
@@ -25,6 +27,8 @@ add_executable(${EXECUTABLE_NAME}
         sources/services/TestService.hpp
         sources/engine/service/GameService.cpp sources/engine/service/GameService.hpp
         sources/engine/service/NetService.cpp sources/engine/service/NetService.hpp
+
+        sources/logger/Logger.cpp
 
         sources/scopes/TestScope.hpp
 
@@ -82,6 +86,37 @@ if (SFML_FOUND)
     target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif ()
 
+add_executable("server"
+        sources/server/sources/Server.cpp
+        sources/network/Addr.cpp
+        sources/network/Select.cpp
+        sources/network/SocketException.cpp
+        sources/network/Socket.cpp
+        sources/server/main.cpp
+        sources/server/sources/Game.cpp
+
+        sources/logger/Logger.cpp
+
+        includes/logger/Logger.hpp
+        includes/network/Addr.hpp
+        includes/network/Select.hpp
+        includes/network/SocketException.hpp
+        includes/network/Socket.hpp
+        includes/server/Protocol.hpp
+        includes/server/Game.hpp
+        includes/server/Server.hpp
+        )
+
+find_package(Threads REQUIRED)
+target_link_libraries(server ${CMAKE_THREAD_LIBS_INIT})
+
+add_executable("test_client"
+        sources/test_client_main.cpp
+        sources/network/Addr.cpp
+        sources/network/Select.cpp
+        sources/network/SocketException.cpp
+        sources/network/Socket.cpp
+        )
 find_package(OpenGL)
 if (OPENGL_FOUND)
     include_directories(${OPENGL_INCLUDE_DIR})
