@@ -10,7 +10,7 @@ namespace Entities {
     class SpeedPowerUp : public APowerUp {
     public:
         SpeedPowerUp(SCOPE *scope, uint64_t id, GRADE grade, int x, int y)
-                : APowerUp(scope, id, isEnabled, x, y, 0, 0.1, grade) {
+                : APowerUp(scope, id, true, x, y, 0, 0.1, grade) {
             switch (grade) {
                 case BRONZE:
                     this->setTexture("resources/sprites/Power-ups/bolt_bronze.png");
