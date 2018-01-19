@@ -14,8 +14,8 @@ namespace Entities {
                 : PlayerShip(scope, id, "resources/sprites/ships/player/ship4/base.png", isEnabled, x, y, 0.3, 0.3,
                              75, 25) {
             this->weapon = new Entities::Laser3(scope, this->team);
-            this->canons.push_back({14, 8});
-            this->canons.push_back({28, 8});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 5, this->texture->sprite.getGlobalBounds().height / 2 - 42});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 5, this->texture->sprite.getGlobalBounds().height / 2 - 42});
         };
     };
 }

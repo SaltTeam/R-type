@@ -17,8 +17,8 @@ namespace Entities {
             this->weapon = new Entities::Laser4(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->weapon->setCd(1);
-            this->canons.push_back({14, 10});
-            this->canons.push_back({28, 10});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 5, this->texture->sprite.getGlobalBounds().height / 2 + 2});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 5, this->texture->sprite.getGlobalBounds().height / 2 + 2});
         }
 
         void update() override {

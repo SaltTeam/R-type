@@ -24,8 +24,8 @@ namespace Entities {
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->originXSpeed = 0.2;
             this->originYSpeed = 0.2;
-            this->canons.push_back({14, 10});
-            this->canons.push_back({28, 10});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 5, this->texture->sprite.getGlobalBounds().height / 2 - 2});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 5, this->texture->sprite.getGlobalBounds().height / 2 - 2});
             this->rng.seed(std::random_device()());
             std::uniform_int_distribution<std::mt19937::result_type> dist6(1,10000);
             dist10 = dist6;

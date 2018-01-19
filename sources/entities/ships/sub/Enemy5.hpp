@@ -19,8 +19,8 @@ namespace Entities {
                        y, 0.15, 0.15, 50) {
             this->weapon = new Entities::Laser1(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
-            this->canons.push_back({14, 10});
-            this->canons.push_back({28, 10});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 5, this->texture->sprite.getGlobalBounds().height / 2 - 20});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 5, this->texture->sprite.getGlobalBounds().height / 2 - 20});
             this->rng.seed(std::random_device()());
             std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 100000);
             dist10 = dist6;

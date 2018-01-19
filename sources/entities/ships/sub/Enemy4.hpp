@@ -33,8 +33,8 @@ namespace Entities {
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->OriginalXPosition = this->position.x;
             this->OriginalYPosition = this->position.y;
-            this->canons.push_back({14, 10});
-            this->canons.push_back({28, 10});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 8, this->texture->sprite.getGlobalBounds().height / 2 + 5});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 8, this->texture->sprite.getGlobalBounds().height / 2 + 5});
             this->state = State6;
             this->speed.x = 0;
             this->rng.seed(std::random_device()());
