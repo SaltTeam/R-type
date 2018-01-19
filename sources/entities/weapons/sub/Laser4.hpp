@@ -13,7 +13,7 @@ namespace Entities {
         Laser4(SCOPE *scope, Entities::Ship::TEAM originTeam)
                 : AWeapon(scope, "resources/sprites/Lasers/laserRed11.png", 0.3, 10, 0, -0.4, originTeam) {}
 
-        virtual void shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position);
+        virtual bool shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position);
 
     protected:
         virtual void spawnLasers(sf::Vector2f const &position);

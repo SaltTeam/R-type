@@ -13,7 +13,7 @@
 namespace Entities {
     class AWeapon : public IWeapon {
     public:
-        virtual void shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position) = 0;
+        virtual bool shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position) = 0;
 
         virtual void setSpeed(sf::Vector2f const &speed) {
             this->xSpeed = speed.x;
@@ -30,6 +30,10 @@ namespace Entities {
 
         virtual void setCd(float const &value) {
             this->cd = value;
+        }
+
+        void setLastUse(std::chrono::time_point<std::chrono::system_clock> time) {
+            this->lastUse = time;
         }
 
         virtual sf::Vector2f getSpeed() const {

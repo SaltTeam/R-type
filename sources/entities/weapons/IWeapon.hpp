@@ -10,7 +10,7 @@
 namespace Entities {
     class IWeapon {
     public:
-        virtual void shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position) = 0;
+        virtual bool shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position) = 0;
 
         virtual void setSpeed(sf::Vector2f const &speed) = 0;
 
@@ -19,6 +19,8 @@ namespace Entities {
         virtual void setYSpeed(float const &ySpeed) = 0;
 
         virtual void setCd(float const &value) = 0;
+
+        virtual void setLastUse(std::chrono::time_point<std::chrono::system_clock> time) = 0;
 
         virtual sf::Vector2f getSpeed() const = 0;
 

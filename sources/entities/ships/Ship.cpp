@@ -41,8 +41,8 @@ void Entities::Ship::spawnPowerUp() {
 }
 
 
-void Entities::Ship::shoot() {
-    this->weapon->shoot(this->canons, this->position);
+bool Entities::Ship::shoot() {
+    return this->weapon->shoot(this->canons, this->position);
 }
 
 void Entities::Ship::update() {
@@ -65,7 +65,6 @@ void Entities::Ship::takeDamage(int value) {
 }
 
 void Entities::Ship::gainHealth(GRADE grade) {
-    std::cout << "Health gained" << std::endl;
     switch (grade) {
         case BRONZE:
             health += 30;

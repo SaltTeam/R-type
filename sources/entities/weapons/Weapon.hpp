@@ -13,7 +13,7 @@
 namespace Entities {
     class Weapon : public AWeapon {
     public:
-        virtual void shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position);
+        virtual bool shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position);
 
     protected:
         Weapon(SCOPE *scope, std::string const &projectilePath, float const &cd, int const &damage,
