@@ -8,7 +8,7 @@
 #include <entities/weapons/sub/Laser3.hpp>
 
 namespace Entities {
-    class Enemy4 : public Ship {
+    class TieAdvance : public Ship {
         enum State{
             State1 = 0,
             State2,
@@ -26,7 +26,7 @@ namespace Entities {
         State state;
 
     public:
-        Enemy4(SCOPE *scope, uint64_t id = 0, bool isEnabled = true, const float &x = 0, const float &y = 0)
+        TieAdvance(SCOPE *scope, uint64_t id = 0, bool isEnabled = true, const float &x = 0, const float &y = 0)
                 : Ship(scope, id, "resources/sprites/ships/enemy/ship4/base.png", isEnabled, Entities::Ship::GAME, x,
                        y, 0.25, 0.1, 40) {
             this->weapon = new Entities::Laser3(scope, this->team);

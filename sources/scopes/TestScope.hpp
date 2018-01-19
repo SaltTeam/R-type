@@ -1,10 +1,12 @@
 
 #pragma once
 
-#include <entities/ships/sub/Enemy1.hpp>
-#include <entities/ships/sub/Enemy3.hpp>
+#include <entities/ships/sub/TieFigther.hpp>
+#include <entities/ships/sub/TieBomber.hpp>
 #include <entities/powerups/sub/HealPowerUp.hpp>
 #include <entities/powerups/sub/SpeedPowerUp.hpp>
+#include <entities/ships/sub/TieExperiment.hpp>
+#include <entities/ships/sub/TieAvenger.hpp>
 #include "entities/ships/sub/YWing.hpp"
 #include "entities/ships/sub/XWing.hpp"
 #include "entities/ships/sub/_Wing.hpp"
@@ -24,7 +26,7 @@ namespace Scopes {
         void initialize() override {
             this->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1, this, 9, GOLD, 100, 0);
             this->entityManager.add<Entities::YWing>(LAYER::Layer1, this, 0, true, 250, 600);
-            this->entityManager.add<Entities::Enemy3>(LAYER::Layer1, this, 10);
+            this->entityManager.add<Entities::TieBomber>(LAYER::Layer1, this, 10);
         }
 
         void pause() override {
