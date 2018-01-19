@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(sources/)
 include_directories(includes/)
+include_directories(sources/ repos/imgui/)
 
 add_executable(${EXECUTABLE_NAME}
         sources/test_client_main.cpp
@@ -30,9 +31,52 @@ add_executable(${EXECUTABLE_NAME}
         sources/logger/Logger.cpp
 
         sources/scopes/TestScope.hpp
+
         sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
-        sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
-        sources/entities/Projectiles/Projectile.cpp sources/entities/Projectiles/Projectile.hpp sources/entities/weapons/Weapon.cpp sources/entities/weapons/Weapon.hpp sources/entities/ships/sub/XWing.hpp sources/entities/ships/sub/YWing.hpp sources/entities/ships/sub/Arc.hpp sources/entities/ships/sub/Interceptor.hpp sources/entities/ships/sub/_Wing.hpp sources/entities/weapons/sub/Laser1.hpp sources/entities/weapons/sub/Laser2.hpp sources/entities/weapons/sub/Laser3.hpp sources/entities/weapons/sub/Laser4.hpp sources/entities/weapons/sub/Laser4.cpp sources/entities/Projectiles/sub/SinusProjectile.cpp sources/entities/Projectiles/sub/SinusProjectile.hpp sources/entities/weapons/IWeapon.hpp sources/entities/weapons/AWeapon.hpp)
+        sources/entities/ships/Ship.cpp sources/entities/ships/Ship.hpp
+        sources/entities/ships/sub/_Wing.hpp
+        sources/entities/ships/sub/Arc.hpp
+        sources/entities/ships/sub/Interceptor.hpp
+        sources/entities/ships/sub/XWing.hpp
+        sources/entities/ships/sub/YWing.hpp
+        sources/entities/ships/sub/TieFigther.hpp
+        sources/entities/ships/sub/TieAvenger.hpp
+        sources/entities/ships/sub/TieBomber.hpp
+        sources/entities/ships/sub/TieAdvance.hpp
+        sources/entities/ships/sub/TieExperiment.hpp
+        sources/entities/ships/Boss/LeftPart.hpp
+        sources/entities/ships/Boss/MiddlePart.hpp
+        sources/entities/ships/Boss/RightPart.hpp
+
+        sources/entities/projectiles/Projectile.cpp sources/entities/projectiles/Projectile.hpp
+        sources/entities/projectiles/sub/SinusProjectile.cpp sources/entities/projectiles/sub/SinusProjectile.hpp
+
+        sources/entities/weapons/Weapon.cpp sources/entities/weapons/Weapon.hpp
+        sources/entities/weapons/AWeapon.hpp
+        sources/entities/weapons/IWeapon.hpp
+        sources/entities/weapons/sub/Laser1.hpp
+        sources/entities/weapons/sub/Laser2.hpp
+        sources/entities/weapons/sub/Laser3.hpp
+        sources/entities/weapons/sub/Laser4.cpp sources/entities/weapons/sub/Laser4.hpp
+
+        sources/entities/powerups/APowerUp.cpp sources/entities/powerups/APowerUp.hpp
+        sources/entities/powerups/sub/HealPowerUp.hpp
+        sources/entities/powerups/sub/ShieldPowerUp.hpp
+        sources/entities/powerups/sub/SpeedPowerUp.hpp
+        sources/entities/powerups/sub/DamagePowerUp.hpp
+        sources/entities/powerups/grade.hpp
+
+        sources/entities/asteroids/Asteroid.cpp sources/entities/asteroids/Asteroid.hpp
+        sources/entities/asteroids/BigAsteroid.hpp
+        sources/entities/asteroids/MedAsteroid.hpp
+        sources/entities/asteroids/SmallAsteroid.hpp
+        sources/entities/asteroids/TinyAsteroid.hpp
+
+        repos/imgui/imgui.cpp
+        repos/imgui/imgui_draw.cpp
+        repos/imgui/imgui_demo.cpp
+        repos/imgui/imgui-SFML.cpp
+        )
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
@@ -73,5 +117,10 @@ add_executable("test_client"
         sources/network/SocketException.cpp
         sources/network/Socket.cpp
         )
+find_package(OpenGL)
+if (OPENGL_FOUND)
+    include_directories(${OPENGL_INCLUDE_DIR})
+    target_link_libraries(${EXECUTABLE_NAME} ${OPENGL_LIBRARIES})
+endif ()
 
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)

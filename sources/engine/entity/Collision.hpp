@@ -16,6 +16,8 @@ namespace Engine {
         };
 
         class CollisionManager {
+            friend SCOPE;
+
         private:
             std::unordered_map<ENTITY *, std::vector<Collision>> collisions;
 

@@ -5,7 +5,7 @@
 #include "engine/service/GameService.hpp"
 
 void ENTITY::registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f) {
-    this->scope->registerCallback(key, f);
+    this->scope->registerCallback(key, this, f);
 }
 
 void ENTITY::setPosition(float const &x, float const &y) {

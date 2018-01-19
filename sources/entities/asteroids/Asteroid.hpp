@@ -13,11 +13,11 @@
 namespace Entities {
     class Asteroid : public MOVABLE_ENTITY {
     public:
-	Asteroid(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled = true,
-		 float const &x = 0, float const &y = 0);
+	Asteroid(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
+		 float const &x, float const &y);
 
-	Asteroid(SCOPE *scope, uint64_t id, bool isEnabled = true,
-		 float const &x = 0, float const &y = 0);
+	Asteroid(SCOPE *scope, uint64_t id, bool isEnabled,
+		 float const &x, float const &y);
 
     protected:
 	void update() override;

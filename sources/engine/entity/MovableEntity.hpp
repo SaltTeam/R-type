@@ -18,19 +18,19 @@ namespace Engine {
             MovableEntity(SCOPE *scope, uint64_t id, bool isEnabled = true,
                           float const &x = 0, float const &y = 0,
                           float const &x_speed = 0, float const &y_speed = 0)
-                    : BaseEntity(scope, id, isEnabled, x, y), speed{x_speed, y_speed} {};
+                    : BaseEntity(scope, id, isEnabled, x, y), speed({x_speed, y_speed}) {};
 
             void update() override;
 
-            void moveUp();
+            virtual void moveUp();
 
-            void moveDown();
+            virtual void moveDown();
 
-            void moveRight();
+            virtual void moveRight();
 
-            void moveLeft();
+            virtual void moveLeft();
 
-            void move();
+            virtual void move();
 
             void setSpeed(sf::Vector2f const &speed);
 

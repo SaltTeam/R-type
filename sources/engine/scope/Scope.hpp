@@ -13,7 +13,8 @@ namespace Engine {
 
         class BaseScope {
         private:
-            std::map<sf::Keyboard::Key, std::list<std::function<void(void)>>> callbacks;
+            std::map<sf::Keyboard::Key, std::map<ENTITY *, std::list<std::function<void(void)>>>> callbacks;
+            std::list<ENTITY *> removeList;
 
         public:
             GAME_SERVICE *gameService;
@@ -32,13 +33,17 @@ namespace Engine {
 
             virtual void resume() = 0;
 
+            void earlyUpdate();
+
             virtual void update() = 0;
 
             void execCallbacks();
 
             virtual void shutdown() = 0;
 
-            void registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f);
+            void registerCallback(sf::Keyboard::Key key, ENTITY *entity, std::function<void(void)> &f);
+
+            void removeEntity(ENTITY *entity);
         };
 
     }

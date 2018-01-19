@@ -1,7 +1,6 @@
 
 #include "GameService.hpp"
-
-#include <iostream>
+#include "engine/Runner.hpp"
 
 EngineStatus GAME_SERVICE::initialize() {
     this->scopes.top()->initialize();
@@ -30,6 +29,7 @@ EngineStatus GAME_SERVICE::earlyUpdate() {
 }
 
 EngineStatus GAME_SERVICE::update() {
+    scopes.top()->earlyUpdate();
     scopes.top()->entityManager.update();
     scopes.top()->update();
     return EngineStatus::Continue;
@@ -48,4 +48,8 @@ EngineStatus GAME_SERVICE::lateUpdate() {
 
 void GAME_SERVICE::execCallbacks() {
     this->scopes.top()->execCallbacks();
+}
+
+sf::Vector2u Engine::Services::GameService::getWindowSize() {
+    return this->engine->findService<GRAPHICAL_SERVICE>()->getWindowSize();
 }

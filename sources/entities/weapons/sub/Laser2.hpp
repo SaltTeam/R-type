@@ -9,7 +9,7 @@
 namespace Entities {
     class Laser2 : public Weapon {
     public:
-        Laser2(SCOPE *scope, uint64_t const &originId)
-                : Weapon(scope, "resources/sprites/Lasers/laserRed08.png", 0.5, 20, 0, -0.3, originId) {}
+        Laser2(SCOPE *scope, Entities::Ship::TEAM originTeam)
+                : Weapon(scope, "resources/sprites/Lasers/laserRed08.png", 0.5, 30, 0, -0.4, originTeam) {}
     };
 }

@@ -2,10 +2,9 @@
 // Created by delacr_a on 11/01/18.
 //
 
-#include <engine/scope/Scope.hpp>
-#include <iostream>
-#include "Entity.hpp"
+#include "engine/scope/Scope.hpp"
 #include "MovableEntity.hpp"
+#include "engine/service/GameService.hpp"
 
 //<editor-fold> MOVE FUNCTIONS
 
@@ -48,5 +47,11 @@ void MOVABLE_ENTITY::setSpeed(float const &x_speed, float const &y_speed) {
 
 void MOVABLE_ENTITY::update() {
     this->scope->collisionManager.checkCollision(this);
+    sf::Vector2u borders = this->scope->gameService->getWindowSize();
+    sf::FloatRect sides = this->texture->sprite.getGlobalBounds();
+    if (this->position.x + sides.width < 0 || this->position.x > borders.x)
+        this->scope->removeEntity(this);
+    else if (this->position.y + sides.height < 0 || this->position.y > borders.y)
+        this->scope->removeEntity(this);
 }
 //</editor-fold>

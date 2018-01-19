@@ -20,6 +20,10 @@ namespace Engine {
 
             ~GraphicalService() override = default;
 
+            sf::Vector2u getWindowSize(){
+                return this->window->getSize();
+            };
+
         private:
             EngineStatus initialize() override;
 
