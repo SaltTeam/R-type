@@ -7,7 +7,6 @@ namespace server {
           _ips{0, 0, 0, 0}, _ips_mutex(), _name(name), _passwd(), nbPlayer(0) {
         _socket.setAddress(_port, "0.0.0.0");
         _socket.Bind();
-        _ips_mutex.unlock();
     }
 
     Game::Game(const char *name, const char *passwd, unsigned short port)
@@ -15,7 +14,6 @@ namespace server {
           _ips{0, 0, 0, 0}, _ips_mutex(), _name(name), _passwd(passwd), nbPlayer(0) {
         _socket.setAddress(_port, "0.0.0.0");
         _socket.Bind();
-        _ips_mutex.unlock();
     }
 
     void Game::start() {

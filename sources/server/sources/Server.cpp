@@ -19,7 +19,6 @@ server::Server::Server()
     _socket.setAddress(42000, "0.0.0.0");
     _socket.Bind();
     _socket.Listen(42);
-    _games_m.unlock();
 }
 
 void server::Server::start() {

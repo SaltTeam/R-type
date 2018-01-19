@@ -35,9 +35,9 @@ static void end() {
 }
 
 int main() {
+	init();
     server::Server server;
 
-    init();
     try {
         server.start();
     } catch (std::exception& exception) {

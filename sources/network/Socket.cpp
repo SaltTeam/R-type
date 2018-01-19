@@ -18,8 +18,9 @@ namespace mysocket {
             : _domain(domain), _type(type), _protocol(protocol), _socket(-1),
               _address(nullptr) {
         this->_socket = socket(domain, type, protocol);
-        if (this->_socket == INVALID_SOCKET)
-            throw SocketException(strerror(errno));
+		if (this->_socket == INVALID_SOCKET) {
+			throw SocketException(strerror(errno));
+		}
         if (domain == AF_INET) {
             this->_address = std::make_unique<InetAddr>();
         }
@@ -90,19 +91,19 @@ namespace mysocket {
     }
 
     ssize_t Socket::Send(const void* buf, size_t length, int flags) {
-        return send(_socket, buf, length, flags);
+        return send(_socket, reinterpret_cast<const char*>(buf), length, flags);
     }
 
     ssize_t Socket::Recv(void* buf, size_t maxLen, int flags) {
-        return recv(_socket, buf, maxLen, flags);
+        return recv(_socket, reinterpret_cast<char*>(buf), maxLen, flags);
     }
 
     ssize_t Socket::SendTo(const void* msg, size_t len, unsigned int flags, InetAddr& to) {
-        return sendto(_socket, msg, len, flags, reinterpret_cast<SOCKADDR*>(&to.GetStruct()), InetAddr::Size);
+        return sendto(_socket, reinterpret_cast<const char*>(msg), len, flags, reinterpret_cast<SOCKADDR*>(&to.GetStruct()), InetAddr::Size);
     }
 
     ssize_t Socket::RecvFrom(void* buf, size_t maxLen, unsigned int flags, InetAddr& from) {
         socklen_t len {InetAddr::Size};
-        return recvfrom(_socket, buf, maxLen, flags, reinterpret_cast<SOCKADDR*>(&from.GetStruct()), &len);
+        return recvfrom(_socket, reinterpret_cast<char*>(buf), maxLen, flags, reinterpret_cast<SOCKADDR*>(&from.GetStruct()), &len);
     }
 }
