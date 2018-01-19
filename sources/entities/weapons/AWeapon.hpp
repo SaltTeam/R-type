@@ -45,7 +45,17 @@ namespace Entities {
         }
 
         virtual void upgrade(GRADE grade) {
-            this->damage += 2;
+            switch (grade) {
+                case BRONZE:
+                    this->ySpeed *= 1.1;
+                    break;
+                case SILVER:
+                    this->cd -= 0.1;
+                    break;
+                case GOLD:
+                    this->damage *= 1.1;
+                    break;
+            }
         };
 
     protected:
