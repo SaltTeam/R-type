@@ -18,7 +18,7 @@ namespace Entities {
         };
 
     public:
-        bool shoot();
+        virtual bool shoot();
 
         void takeDamage(int value);
 
