@@ -46,7 +46,6 @@ void server::Server::handleConnection() {
                 {network::protocol::HeaderType::Error, 0};
         if (client->Recv(&header, sizeof(header), MSG_WAITALL) <= 0)
             return;
-        std::clog << "RECV HDR: " << (int)header.type << std::endl;
         if (header.type == network::protocol::HeaderType::Connect) {
             commandConnect(client);
         } else if (header.type == network::protocol::HeaderType::List) {
@@ -57,7 +56,7 @@ void server::Server::handleConnection() {
 
 void server::Server::commandConnect(std::unique_ptr<mysocket::Socket>& client) {
     network::protocol::ConnexionResponse res = {network::protocol::Status::Error, network::protocol::PlayerColor::Error, 0};
-    network::protocol::Connexion con;
+    network::protocol::Connexion con{};
 
     std::memset(&con, 0, sizeof(con));
 

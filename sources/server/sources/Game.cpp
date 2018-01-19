@@ -31,7 +31,6 @@ namespace server {
                     continue;
                 std::cout << "client send me: " << buf << std::endl;
                 std::cout << "client port: " << ntohs(addr.GetStruct().sin_port) << std::endl;
-                addr.SetPort(43000);
                 _socket.SendTo("hello", 5, 0, addr);
             }
 
