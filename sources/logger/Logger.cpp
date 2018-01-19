@@ -16,21 +16,21 @@
 namespace logger {
     Logger Logger::m_instance = Logger();
 
-    Logger::Logger() : _logLevel(DEBUG), _logs(5) {
+    Logger::Logger() : _logLevel(Debug), _logs(5) {
 	Parser::getLogLevel(LOGGER_CONF_PATHNAME, this->_logLevel);
-	Parser::getDebug(LOGGER_CONF_PATHNAME, this->_logs[DEBUG]);
-	Parser::getInfo(LOGGER_CONF_PATHNAME, this->_logs[INFO]);
-	Parser::getWarning(LOGGER_CONF_PATHNAME, this->_logs[WARNING]);
-	Parser::getError(LOGGER_CONF_PATHNAME, this->_logs[ERROR]);
-	Parser::getCritical(LOGGER_CONF_PATHNAME, this->_logs[CRITICAL]);
+	Parser::getDebug(LOGGER_CONF_PATHNAME, this->_logs[Debug]);
+	Parser::getInfo(LOGGER_CONF_PATHNAME, this->_logs[Info]);
+	Parser::getWarning(LOGGER_CONF_PATHNAME, this->_logs[Warning]);
+	Parser::getError(LOGGER_CONF_PATHNAME, this->_logs[Error]);
+	Parser::getCritical(LOGGER_CONF_PATHNAME, this->_logs[Critical]);
     }
 
     Logger::~Logger() {
-	this->_logs[DEBUG].file.close();
-	this->_logs[INFO].file.close();
-	this->_logs[WARNING].file.close();
-	this->_logs[ERROR].file.close();
-	this->_logs[CRITICAL].file.close();
+	this->_logs[Debug].file.close();
+	this->_logs[Info].file.close();
+	this->_logs[Warning].file.close();
+	this->_logs[Error].file.close();
+	this->_logs[Critical].file.close();
     }
 
     Logger &Logger::getLogger() {
@@ -91,7 +91,7 @@ namespace logger {
     Logger::Parser::getLogLevel(std::string const &pathname, log_type &typo) {
 	if (!isReadable(pathname)) {
 	    //todo log can't open logger.conf
-	    typo = INFO;
+	    typo = Info;
 	    return false;
 	}
 	std::ifstream file(pathname, std::ios::in);
@@ -100,18 +100,18 @@ namespace logger {
 	std::getline(file, line);
 	if (std::regex_match(line.c_str(), cm, std::regex("LOGLEVEL (.*)"))) {
 	    if (!std::strcmp(cm[1].str().c_str(), "DEBUG"))
-		typo = DEBUG;
+		typo = Debug;
 	    else if (!std::strcmp(cm[1].str().c_str(), "INFO"))
-		typo = INFO;
+		typo = Info;
 	    else if (!std::strcmp(cm[1].str().c_str(), "WARNING"))
-		typo = WARNING;
+		typo = Warning;
 	    else if (!std::strcmp(cm[1].str().c_str(), "ERROR"))
-		typo = ERROR;
+		typo = Error;
 	    else if (!std::strcmp(cm[1].str().c_str(), "CRITICAL"))
-		typo = CRITICAL;
+		typo = Critical;
 	    return true;
 	}
-	typo = INFO;
+	typo = Info;
 	return true;
     }
 

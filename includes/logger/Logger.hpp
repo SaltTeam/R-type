@@ -18,27 +18,27 @@
 # ifdef WIN32 /* if you are on windows */
 
 #  ifndef LOGGER_CONF_PATHNAME
-#   define LOGGER_CONF_PATHNAME "%~dp0\log\logger.conf"
+#   define LOGGER_CONF_PATHNAME "log\logger.conf"
 #  endif //!LOGGER_CONF_PATHNAME
 
 #  ifndef BASIC_DEBUG_LOG_FILE
-#   define BASIC_DEBUG_LOG_FILE "%~dp0\log\indie.log"
+#   define BASIC_DEBUG_LOG_FILE "log\indie.log"
 #  endif //!BASIC_DEBUG_LOG_FILE
 
 #  ifndef BASIC_INFO_LOG_FILE
-#   define BASIC_INFO_LOG_FILE "%~dp0\log\indie.log"
+#   define BASIC_INFO_LOG_FILE "log\indie.log"
 #  endif //!BASIC_INFO_LOG_FILE
 
 #  ifndef BASIC_WARNING_LOG_FILE
-#   define BASIC_WARNING_LOG_FILE "%~dp0\log\indie.log"
+#   define BASIC_WARNING_LOG_FILE "log\indie.log"
 #  endif //!BASIC_WARNING_LOG_FILE
 
 #  ifndef BASIC_ERROR_LOG_FILE
-#   define BASIC_ERROR_LOG_FILE "%~dp0\log\indie.log"
+#   define BASIC_ERROR_LOG_FILE "log\indie.log"
 #  endif //!BASIC_ERROR_LOG_FILE
 
 #  ifndef BASIC_CRITICAL_LOG_FILE
-#   define BASIC_CRITICAL_LOG_FILE "%~dp0\log\indie.log"
+#   define BASIC_CRITICAL_LOG_FILE "log\indie.log"
 #  endif //!BASIC_CRITICAL_LOG_FILE
 
 # else /* defined (linux cause error)*/
@@ -75,11 +75,11 @@ namespace logger
   /// \enum log_type
   enum log_type
   {
-    DEBUG = 0,
-    INFO = 1,
-    WARNING = 2,
-    ERROR = 3,
-    CRITICAL = 4
+    Debug = 0,
+    Info = 1,
+    Warning = 2,
+    Error = 3,
+    Critical = 4
   };
 
   /// \struct s_typo

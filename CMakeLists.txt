@@ -53,6 +53,7 @@ add_executable("server"
 
         sources/logger/Logger.cpp
 
+        includes/logger/Logger.hpp
         includes/network/Addr.hpp
         includes/network/Select.hpp
         includes/network/SocketException.hpp
