@@ -63,7 +63,8 @@ add_executable("server"
         includes/server/Server.hpp
         )
 
-target_link_libraries(server pthread)
+find_package(Threads REQUIRED)
+target_link_libraries(server ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable("test_client"
         sources/test_client_main.cpp
