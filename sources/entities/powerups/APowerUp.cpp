@@ -2,7 +2,7 @@
 // Created by delacr_a on 17/01/18.
 //
 
-#include "entities/Asteroid.hpp"
+#include "entities/asteroids/Asteroid.hpp"
 #include "entities/ships/Ship.hpp"
 #include "APowerUp.hpp"
 

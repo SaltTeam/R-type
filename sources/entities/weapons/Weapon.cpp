@@ -7,7 +7,7 @@
 #include <chrono>
 #include "Weapon.hpp"
 #include "entities/projectiles/Projectile.hpp"
-#include "entities/Asteroid.hpp"
+#include "entities/asteroids/Asteroid.hpp"
 
 bool Entities::Weapon::shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position) {
     if (std::chrono::duration_cast<std::chrono::milliseconds>(

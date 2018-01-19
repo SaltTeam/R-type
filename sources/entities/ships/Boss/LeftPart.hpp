@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "entities/asteroids/BigAsteroid.hpp"
 #include "entities/weapons/sub/Laser1.hpp"
 #include "entities/ships/Ship.hpp"
 
@@ -12,7 +13,7 @@ namespace Entities {
     public:
         LeftPart(SCOPE *scope, uint64_t id = 0, bool isEnabled = true, const float &x = 0, const float &y = 0)
                 : Ship(scope, id, "resources/sprites/Boss/left-part.png", isEnabled, Entities::Ship::GAME, x,
-                       y, 0, 0, 500, 1) {
+                       y, 0, 0, 500) {
             this->secondWeapon = false;
             this->weapon = new Entities::Laser1(scope, this->team);
             this->weapon->setYSpeed(1);
@@ -24,11 +25,16 @@ namespace Entities {
             this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 5,
                                     this->texture->sprite.getGlobalBounds().height / 2 + 30});
             this->canons2.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 30,
-                                    this->texture->sprite.getGlobalBounds().height / 2 + 30});
+                                     this->texture->sprite.getGlobalBounds().height / 2 + 30});
         }
 
-        ~LeftPart() {
+        ~LeftPart() override {
             delete this->weapon2;
+            for (int i = 0; i < 4; ++i) {
+                this->scope->entityManager.add<Entities::BigAsteroid>(LAYER::Layer1, this->scope, 10, true,
+                                                                   this->position.x + this->texture->sprite.getGlobalBounds().width / 2,
+                                                                   this->position.y + this->texture->sprite.getGlobalBounds().height / 2);
+            }
         }
 
         bool shoot() override {
@@ -47,6 +53,10 @@ namespace Entities {
                     this->weapon->setLastUse(std::chrono::system_clock::now());
             }
             Ship::update();
+        }
+
+        int getShield() override {
+            return 1;
         }
 
     protected:

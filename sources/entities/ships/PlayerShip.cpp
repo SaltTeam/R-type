@@ -2,7 +2,7 @@
 // Created by sylva on 10/01/2018.
 //
 
-#include "entities/Asteroid.hpp"
+#include "entities/asteroids/Asteroid.hpp"
 #include "engine/scope/Scope.hpp"
 #include "engine/service/GameService.hpp"
 #include "PlayerShip.hpp"
