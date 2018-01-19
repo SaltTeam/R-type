@@ -25,6 +25,8 @@ namespace Entities {
 
         virtual float getYSpeed() const = 0;
 
+        virtual void upgrade(GRADE grade) = 0;
+
     protected:
         virtual void spawnLasers(sf::Vector2f const &position) = 0;
     };

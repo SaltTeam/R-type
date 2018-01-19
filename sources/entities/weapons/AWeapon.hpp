@@ -44,6 +44,10 @@ namespace Entities {
             return this->ySpeed;
         }
 
+        virtual void upgrade(GRADE grade) {
+            this->damage += 2;
+        };
+
     protected:
         AWeapon(SCOPE *scope, std::string const &projectilePath, float const &cd, int const &damage,
                 float const &xSpeed, float const &ySpeed, Entities::Ship::TEAM originTeam)

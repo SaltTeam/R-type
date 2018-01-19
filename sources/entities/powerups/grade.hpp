@@ -5,7 +5,7 @@
 #pragma once
 
 enum GRADE {
-    BRONZE,
-    SILVER,
-    GOLD
+    BRONZE = 0,
+    SILVER = 1,
+    GOLD = 2
 };

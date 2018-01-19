@@ -5,9 +5,9 @@
 #pragma once
 
 #include "engine/ForwardDeclaration.hpp"
-#include "engine/entity/MovableEntity.hpp"
-#include "engine/scope/Scope.hpp"
 #include "engine/entity/Entity.hpp"
+#include "engine/scope/Scope.hpp"
+#include "engine/entity/MovableEntity.hpp"
 #include "entities/ships/PlayerShip.hpp"
 #include "grade.hpp"
 
