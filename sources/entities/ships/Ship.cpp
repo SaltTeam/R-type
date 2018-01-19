@@ -162,3 +162,7 @@ void Entities::Ship::moveLeft() {
         MovableEntity::moveLeft();
 }
 
+int Entities::Ship::getShield() {
+    return this->shield;
+}
+

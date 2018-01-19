@@ -37,7 +37,8 @@ void Entities::PlayerShip::onCollision(ENTITY *other) {
             this->shield = 0;
     else if (dynamic_cast<Entities::Ship *>(other) != nullptr)
         if (dynamic_cast<Entities::Ship *>(other)->getTeam() != this->team) {
-            this->scope->removeEntity(other);
+            if (dynamic_cast<Entities::Ship *>(other)->getShield() == 0)
+                this->scope->removeEntity(other);
             if (this->shield == 0)
                 this->scope->removeEntity(this);
             else

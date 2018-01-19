@@ -32,6 +32,8 @@ namespace Entities {
 
         TEAM getTeam();
 
+        int getShield();
+
     protected:
         Ship(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled, TEAM team,
              float const &x, float const &y, float const &xSpeed, float const &ySpeed,
