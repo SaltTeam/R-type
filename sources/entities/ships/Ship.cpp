@@ -31,18 +31,38 @@ void Entities::Ship::spawnPowerUp() {
 
     int res = dist_powerup(mt);
     if (res < 10)
-        this->scope->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1, this->scope, 9, static_cast<GRADE>(res % 3), position.x, position.y);
+        this->scope->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1, this->scope, 9,
+                                                               static_cast<GRADE>(res % 3), position.x +
+                                                                                            this->texture->sprite.getGlobalBounds().width /
+                                                                                            2, position.y +
+                                                                                               this->texture->sprite.getGlobalBounds().height /
+                                                                                               2);
     else if (res < 20)
-        this->scope->entityManager.add<Entities::HealPowerUp>(LAYER::Layer1, this->scope, 9, static_cast<GRADE>(res % 3), position.x, position.y);
+        this->scope->entityManager.add<Entities::HealPowerUp>(LAYER::Layer1, this->scope, 9,
+                                                              static_cast<GRADE>(res % 3), position.x +
+                                                                                           this->texture->sprite.getGlobalBounds().width /
+                                                                                           2, position.y +
+                                                                                              this->texture->sprite.getGlobalBounds().height /
+                                                                                              2);
     else if (res < 30)
-        this->scope->entityManager.add<Entities::ShieldPowerUp>(LAYER::Layer1, this->scope, 9, static_cast<GRADE>(res % 3), position.x, position.y);
+        this->scope->entityManager.add<Entities::ShieldPowerUp>(LAYER::Layer1, this->scope, 9,
+                                                                static_cast<GRADE>(res % 3), position.x +
+                                                                                             this->texture->sprite.getGlobalBounds().width /
+                                                                                             2, position.y +
+                                                                                                this->texture->sprite.getGlobalBounds().height /
+                                                                                                2);
     else if (res < 40)
-        this->scope->entityManager.add<Entities::DamagePowerUp>(LAYER::Layer1, this->scope, 9, static_cast<GRADE>(res % 3), position.x, position.y);
+        this->scope->entityManager.add<Entities::DamagePowerUp>(LAYER::Layer1, this->scope, 9,
+                                                                static_cast<GRADE>(res % 3), position.x +
+                                                                                             this->texture->sprite.getGlobalBounds().width /
+                                                                                             2, position.y +
+                                                                                                this->texture->sprite.getGlobalBounds().height /
+                                                                                                2);
 }
 
 
-void Entities::Ship::shoot() {
-    this->weapon->shoot(this->canons, this->position);
+bool Entities::Ship::shoot() {
+    return this->weapon->shoot(this->canons, this->position);
 }
 
 void Entities::Ship::update() {
@@ -65,7 +85,6 @@ void Entities::Ship::takeDamage(int value) {
 }
 
 void Entities::Ship::gainHealth(GRADE grade) {
-    std::cout << "Health gained" << std::endl;
     switch (grade) {
         case BRONZE:
             health += 30;
@@ -97,7 +116,6 @@ void Entities::Ship::gainShield(GRADE grade) {
 
 void Entities::Ship::gainSpeed(GRADE grade) {
     if (speed.x < 2 && speed.y < 2)
-    {
         switch (grade) {
             case BRONZE:
                 speed.x *= 1.1;
@@ -112,7 +130,6 @@ void Entities::Ship::gainSpeed(GRADE grade) {
                 speed.y *= 1.3;
                 break;
         }
-    }
 }
 
 void Entities::Ship::upgradeWeapon(GRADE grade) {
@@ -143,5 +160,9 @@ void Entities::Ship::moveRight() {
 void Entities::Ship::moveLeft() {
     if (this->position.x - this->speed.x > 0)
         MovableEntity::moveLeft();
+}
+
+int Entities::Ship::getShield() {
+    return this->shield;
 }
 

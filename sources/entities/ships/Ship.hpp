@@ -18,7 +18,7 @@ namespace Entities {
         };
 
     public:
-        void shoot();
+        virtual bool shoot();
 
         void takeDamage(int value);
 
@@ -31,6 +31,8 @@ namespace Entities {
         void gainSpeed(GRADE grade);
 
         TEAM getTeam();
+
+        virtual int getShield();
 
     protected:
         Ship(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled, TEAM team,
