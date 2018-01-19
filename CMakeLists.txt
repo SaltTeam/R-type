@@ -61,7 +61,7 @@ add_executable(${EXECUTABLE_NAME}
         repos/imgui/imgui_draw.cpp
         repos/imgui/imgui_demo.cpp
         repos/imgui/imgui-SFML.cpp
-        sources/entities/powerups/APowerUp.cpp sources/entities/powerups/APowerUp.hpp sources/entities/powerups/sub/HealPowerUp.hpp sources/entities/powerups/sub/ShieldPowerUp.hpp sources/entities/powerups/sub/SpeedPowerUp.hpp sources/entities/powerups/sub/DamagePowerUp.hpp sources/entities/powerups/grade.hpp)
+        sources/entities/powerups/APowerUp.cpp sources/entities/powerups/APowerUp.hpp sources/entities/powerups/sub/HealPowerUp.hpp sources/entities/powerups/sub/ShieldPowerUp.hpp sources/entities/powerups/sub/SpeedPowerUp.hpp sources/entities/powerups/sub/DamagePowerUp.hpp sources/entities/powerups/grade.hpp sources/entities/ships/Boss/LeftPart.hpp sources/entities/ships/Boss/MiddlePart.hpp sources/entities/ships/Boss/RightPart.hpp)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
