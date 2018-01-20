@@ -34,7 +34,7 @@ namespace Entities {
                 this->shoot();
             this->turnCheck += 1;
             Ship::update();
-            if (this->turnCheck == 1000) {
+            if (this->turnCheck == 1000 || this->position.x + this->texture->sprite.getGlobalBounds().width > this->scope->gameService->getWindowSize().x - 15 || this->position.x + this->texture->sprite.getGlobalBounds().width < 15) {
                 this->speed.x = -(this->speed.x);
                 this->turnCheck = 0;
             }
