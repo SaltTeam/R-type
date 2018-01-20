@@ -8,6 +8,7 @@
 #include "engine/service/GameService.hpp"
 #include "engine/service/GraphicalService.hpp"
 #include "scopes/TestScope.hpp"
+#include "scopes/MenuScope.hpp"
 
 static void init() {
 #ifdef WIN32
@@ -33,7 +34,7 @@ int main() {
     auto e = ENGINE();
 
     e.addService<GAME_SERVICE>();
-    e.findService<GAME_SERVICE>()->registerBaseScope<Scopes::TestScope>();
+    e.findService<GAME_SERVICE>()->registerBaseScope<Scopes::MenuScope>();
     e.addService<GRAPHICAL_SERVICE>();
     e.addService<NET_SERVICE>();
 

@@ -4,6 +4,11 @@
 
 #pragma once
 
+#include <imgui.h>
+#include <imgui-SFML.h>
+#include <array>
+#include "scopes/TestScope.hpp"
+
 namespace Scopes {
     class LoginScope : public SCOPE {
     private:
@@ -21,6 +26,8 @@ namespace Scopes {
 
 
         void initialize() override {
+            buf[0] = '\0';
+            passwd[0] = '\0';
         }
 
         void pause() override {
@@ -47,7 +54,7 @@ namespace Scopes {
                 switch (status)
                 {
                     case(200):
-                    std::cout << "login" << std::endl;
+                        this->gameService->pushScope<Scopes::TestScope>();
                         break;
                     case(500):
                         this->error_message = "An error Occured please try again later";

@@ -30,6 +30,7 @@ add_executable(${EXECUTABLE_NAME}
 
         sources/scopes/TestScope.hpp
         sources/scopes/MenuScope.hpp
+        sources/scopes/ShipChoiceScope.cpp
         
         sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
         sources/entities/ships/Ship.cpp sources/entities/ships/Ship.hpp

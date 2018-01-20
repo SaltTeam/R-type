@@ -28,13 +28,13 @@ EngineStatus GRAPHICAL_SERVICE::earlyUpdate() {
             return EngineStatus::Stop;
         }
     }
-    ImGui::SFML::Update(*this->window, this->deltaClock.restart());
     this->engine->findService<GAME_SERVICE>()->execCallbacks();
 
     sf::sleep(sf::microseconds(1));
 
     if (this->frameTime.asSeconds() <= 0) {
         this->render = true;
+        ImGui::SFML::Update(*this->window, this->deltaClock.restart());
         sf::Time newTime = this->clock.getElapsedTime();
         this->frameTime = newTime - this->currentTime;
         this->currentTime = newTime;

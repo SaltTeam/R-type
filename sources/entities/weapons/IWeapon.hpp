@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <chrono>
 #include <SFML/Window.hpp>
 #include "entities/powerups/grade.hpp"
 
