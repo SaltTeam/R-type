@@ -115,13 +115,6 @@ else ()
     target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif ()
 
-add_executable("test_client"
-        #sources/test_client_main.cpp
-        sources/network/Addr.cpp
-        sources/network/Select.cpp
-        sources/network/SocketException.cpp
-        sources/network/Socket.cpp
-        )
 find_package(OpenGL)
 if (OPENGL_FOUND)
     include_directories(${OPENGL_INCLUDE_DIR})
