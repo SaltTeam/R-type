@@ -18,7 +18,8 @@ namespace Scopes {
         if (button) {
             switch (cpt) {
                 case 0:
-                    this->entityManager.entities.clear();
+                    if (this->entityManager.entities.size() > 0)
+                        this->removeEntity(this->entityManager.entities.begin()->second.front());
                     this->entityManager.add<Entities::XWing>(LAYER::Layer1, network::protocol::Update::Replica, 1000, true,
                                                              this->gameService->getWindowSize().x / 2 - 50, 300);
                     g_Ship = cpt;
@@ -27,7 +28,8 @@ namespace Scopes {
                     name = "XWing";
                     break;
                 case 1:
-                    this->entityManager.entities.clear();
+                    if (this->entityManager.entities.size() > 0)
+                        this->removeEntity(this->entityManager.entities.begin()->second.front());
                     this->entityManager.add<Entities::YWing>(LAYER::Layer1, network::protocol::Update::Replica, 1000, true,
                                                              this->gameService->getWindowSize().x / 2 - 50, 300);
                     g_Ship = cpt;
@@ -36,7 +38,8 @@ namespace Scopes {
                     name = "YWing";
                     break;
                 case 2:
-                    this->entityManager.entities.clear();
+                    if (this->entityManager.entities.size() > 0)
+                        this->removeEntity(this->entityManager.entities.begin()->second.front());
                     this->entityManager.add<Entities::_Wing>(LAYER::Layer1, network::protocol::Update::Replica, 1000, true,
                                                              this->gameService->getWindowSize().x / 2 - 50, 300);
                     g_Ship = cpt;
@@ -45,7 +48,8 @@ namespace Scopes {
                     name = "Wing";
                     break;
                 case 3:
-                    this->entityManager.entities.clear();
+                    if (this->entityManager.entities.size() > 0)
+                        this->removeEntity(this->entityManager.entities.begin()->second.front());
                     this->entityManager.add<Entities::Interceptor>(LAYER::Layer1, network::protocol::Update::Replica, 1000, true,
                                                                    this->gameService->getWindowSize().x / 2 - 50, 300);
                     g_Ship = cpt;
@@ -54,7 +58,8 @@ namespace Scopes {
                     name = "Interceptor";
                     break;
                 case 4:
-                    this->entityManager.entities.clear();
+                    if (this->entityManager.entities.size() > 0)
+                        this->removeEntity(this->entityManager.entities.begin()->second.front());
                     this->entityManager.add<Entities::Arc>(LAYER::Layer1, network::protocol::Update::Replica, 1000, true,
                                                            this->gameService->getWindowSize().x / 2 - 50, 300);
                     g_Ship = cpt;
