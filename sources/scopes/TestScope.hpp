@@ -19,6 +19,7 @@
 #include "entities/asteroids/Asteroid.hpp"
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/service/GameService.hpp"
+#include "ShipChoiceScope.hpp"
 
 namespace Scopes {
     class TestScope : public SCOPE {
@@ -35,11 +36,12 @@ namespace Scopes {
         }
 
         void initialize() override {
-            this->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1, GOLD, 100, 0);
-            this->entityManager.add<Entities::YWing>(LAYER::Layer1, network::protocol::Update::Replica, 250, true, 250, 600);
-            this->entityManager.add<Entities::TieBomber>(LAYER::Layer1, network::protocol::Update::Replica, 250);
-
-            spawnBoss(this, 125, 0);
+            ShipChoiceScope::createShip(this);
+            if (this->gameService->engine->findService<NET_SERVICE>()->color == network::protocol::PlayerColor::Blue)
+            {
+                this->entityManager.add<Entities::TieBomber>(LAYER::Layer1, network::protocol::Update::Replica, 250);
+                spawnBoss(this, 125, 0);
+            }
         }
 
         void pause() override {

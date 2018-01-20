@@ -14,7 +14,7 @@ namespace Scopes {
         static std::string desc(" ");
         static std::string stat(" ");
         static std::string name(" ");
-      
+
         if (button) {
             switch (cpt) {
                 case 0:
@@ -106,29 +106,29 @@ namespace Scopes {
             button = true;
         }
         ImGui::End();
-    }
 
-    static void createShip(SCOPE *scope)
-    {
-        switch (ShipChoiceScope::g_Ship)
-       {
-           case(0):
-               scope->entityManager.add<Entities::XWing>(LAYER::Layer1);
-               break;
-           case(1):
-               scope->entityManager.add<Entities::YWing>(LAYER::Layer1);
-               break;
-           case(2):
-               scope->entityManager.add<Entities::_Wing>(LAYER::Layer1);
-               break;
-           case(3):
-               scope->entityManager.add<Entities::Interceptor>(LAYER::Layer1);
-               break;
-           case(4):
-               scope->entityManager.add<Entities::Arc>(LAYER::Layer1);
-               break;
-           default:
-               break;
-       }
+        static void ShipChoiceScope::createShip(SCOPE *scope)
+        {
+            switch (ShipChoiceScope::g_Ship)
+            {
+                case(0):
+                    scope->entityManager.add<Entities::XWing>(LAYER::Layer1);
+                    break;
+                case(1):
+                    scope->entityManager.add<Entities::YWing>(LAYER::Layer1);
+                    break;
+                case(2):
+                    scope->entityManager.add<Entities::_Wing>(LAYER::Layer1);
+                    break;
+                case(3):
+                    scope->entityManager.add<Entities::Interceptor>(LAYER::Layer1);
+                    break;
+                case(4):
+                    scope->entityManager.add<Entities::Arc>(LAYER::Layer1);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
