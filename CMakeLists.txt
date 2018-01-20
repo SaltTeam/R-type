@@ -105,8 +105,14 @@ add_executable("server"
         includes/server/Server.hpp
         )
 
+if (WIN32)
 find_package(Threads REQUIRED)
 target_link_libraries(server ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${EXECUTABLE_NAME} ${CMAKE_THREAD_LIBS_INIT})
+else ()
+    target_link_libraries(server pthread)
+    target_link_libraries(${EXECUTABLE_NAME} pthread)
+endif ()
 
 add_executable("test_client"
         #sources/test_client_main.cpp
