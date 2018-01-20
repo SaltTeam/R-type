@@ -244,7 +244,7 @@ namespace Engine {
                 }
             }
             this->out.pop();
-            delete p;
+            delete[] reinterpret_cast<char*>(p);
         }
         this->mut_out.unlock();
         return EngineStatus::Continue;
@@ -264,8 +264,11 @@ namespace Engine {
 
         try {
             sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+            sock->setAddress(43000, "0.0.0.0");
+            if (sock->Bind() == -1)
+                return ;
         }
-        catch (mysocket::SocketException const &e) {
+        catch (mysocket::SocketException const& e) {
             sock.reset(nullptr);
         }
         catch (...) {
@@ -273,13 +276,14 @@ namespace Engine {
         }
 
         while (this->running.load()) {
-            if (sock->RecvFrom(buf, 1024, 0, server) >= 0) {
-                auto *hdr = reinterpret_cast<network::protocol::Header *>(buf);
-                auto *odr = reinterpret_cast<network::protocol::ObjectHeader *>(hdr + 1);
-                auto *tp = new char[odr->size];
+            int len = 0;
+            if ((len = sock->RecvFrom(buf, 1024, MSG_DONTWAIT, server)) >= 0) {
+                auto* hdr = reinterpret_cast<network::protocol::Header*>(buf);
+                auto* odr = reinterpret_cast<network::protocol::ObjectHeader*>(hdr + 1);
+                auto* tp = new char[odr->size];
                 std::memcpy(tp, odr, odr->size);
                 mut_out.lock();
-                out.push(reinterpret_cast<network::protocol::ObjectHeader *>(tp));
+                out.push(reinterpret_cast<network::protocol::ObjectHeader*>(tp));
                 mut_out.unlock();
             }
         }
@@ -296,9 +300,11 @@ namespace Engine {
             while (!connect.load() && this->running.load()) {}
             try {
                 sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+                server.SetAddress(address);
+                server.SetPort(port);
                 ok = true;
             }
-            catch (mysocket::SocketException const &e) {
+            catch (mysocket::SocketException const& e) {
                 sock.reset(nullptr);
             }
             catch (...) {
@@ -309,17 +315,17 @@ namespace Engine {
             mut_in.lock();
             while (!this->in.empty()) {
                 auto p = this->in.front();
-                this->in.pop();
 
                 network::protocol::Header hdr{};
                 hdr.size = p->size;
                 hdr.type = network::protocol::HeaderType::Object;
                 std::basic_string<unsigned char> msg;
-                msg.append(reinterpret_cast<unsigned char *>(&hdr), sizeof(network::protocol::Header));
-                msg.append(reinterpret_cast<unsigned char *>(p), p->size);
-
+                msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
+                msg.append(reinterpret_cast<unsigned char*>(p), p->size);
+                
                 sock->SendTo(msg.data(), p->size + sizeof(network::protocol::Header), 0, server);
 
+                this->in.pop();
                 delete p;
             }
             mut_in.unlock();
@@ -328,9 +334,9 @@ namespace Engine {
             t.join();
     }
 
-    network::protocol::Status NET_SERVICE::connectTCP(std::string const &name,
-                                                      std::string const &passwd,
-                                                      std::string const &ipAddr) {
+    network::protocol::Status NET_SERVICE::connectTCP(std::string const& name,
+                                                      std::string const& passwd,
+                                                      std::string const& ipAddr) {
 
         try {
             mysocket::Socket tc{AF_INET, SOCK_STREAM, IPPROTO_TCP};
@@ -346,8 +352,8 @@ namespace Engine {
                 return network::protocol::Status::Error;
             }
             std::basic_string<unsigned char> msg;
-            msg.append(reinterpret_cast<unsigned char *>(&hdr), sizeof(network::protocol::Header));
-            msg.append(reinterpret_cast<unsigned char *>(&connect), hdr.size);
+            msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
+            msg.append(reinterpret_cast<unsigned char*>(&connect), hdr.size);
             if (tc.Send(msg.data(), msg.length(), 0) == -1) {
                 // LOG
                 return network::protocol::Status::Error;
@@ -372,7 +378,7 @@ namespace Engine {
             this->connect = true;
             return resp.status;
         }
-        catch (mysocket::SocketException const &e) {
+        catch (mysocket::SocketException const& e) {
             // LOG
             return network::protocol::Status::Error;
         }
