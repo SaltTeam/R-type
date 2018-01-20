@@ -13,6 +13,7 @@
 #include <string>
 #include <atomic>
 #include <mutex>
+#include <array>
 #include "network/Socket.hpp"
 
 namespace server {
