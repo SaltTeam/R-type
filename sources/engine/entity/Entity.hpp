@@ -58,7 +58,8 @@ namespace Engine {
 
             void registerCollisionBox(const sf::FloatRect &size, std::function<void(ENTITY *)> &f);
 
-            void registerCollisionBox(const sf::Vector2f &origin, const sf::FloatRect &size, std::function<void(ENTITY *)> &f);
+            void registerCollisionBox(const sf::Vector2f &origin, const sf::FloatRect &size,
+                                      std::function<void(ENTITY *)> &f);
 
         protected:
             virtual void update() = 0;
@@ -80,9 +81,12 @@ namespace Engine {
 
         private:
             std::list<ENTITY *> removedEntities;
+            SCOPE *scope;
 
         public:
             std::unordered_map<Layer, std::list<ENTITY *>> entities;
+
+            explicit EntityManager(SCOPE *scope) : scope(scope) {}
 
             ~EntityManager() {
                 std::for_each(this->entities.begin(), this->entities.end(),
@@ -92,25 +96,48 @@ namespace Engine {
                               });
             }
 
+            uint64_t generateId();
+
+            uint64_t generateId(network::protocol::PlayerColor);
+
             template<typename T, typename... Args>
             void add(Layer layer, Args &&...args) {
-                this->entities[layer].push_back(new T(std::forward<Args>(args)...));
+                this->entities[layer].push_back(new T(this->scope, generateId(), std::forward<Args>(args)...));
             }
 
-            template<typename T>
-            T *find(uint64_t id) {
+            template<typename T, typename... Args>
+            void netAdd(Layer layer, network::protocol::PlayerColor color, Args &&...args) {
+                this->entities[layer].push_back(new T(this->scope, generateId(color), std::forward<Args>(args)...));
+            }
+
+            ENTITY *find(uint64_t id) {
                 for (auto &layer: this->entities) {
                     auto ptr = std::find_if(layer.second.begin(), layer.second.end(),
                                             [&, id](const auto &item) -> bool {
                                                 if (item->id == id) {
-                                                    return dynamic_cast<T *>(item) != nullptr;
+                                                    return item;
                                                 }
                                                 return false;
                                             });
-                    if (ptr != nullptr)
-                        return ptr;
+                    if (*ptr != nullptr)
+                        return *ptr;
                 }
                 return nullptr;
+            }
+
+            bool exists(uint64_t id) {
+                for (auto &layer: this->entities) {
+                    bool check = false;
+                    std::for_each(layer.second.begin(), layer.second.end(),
+                                            [&check, &id](const auto &item) {
+                                                if (item->id == id) {
+                                                    check = true;
+                                                }
+                                            });
+                    if (check == true)
+                        return true;
+                }
+                return false;
             }
 
             void update() {

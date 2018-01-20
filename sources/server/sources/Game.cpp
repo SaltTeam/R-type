@@ -1,5 +1,6 @@
 #include <iostream>
 #include "server/Game.hpp"
+#include "server/Protocol.hpp"
 
 namespace server {
     Game::Game(const char *name, unsigned short port)
@@ -27,8 +28,9 @@ namespace server {
             if (_socket.RecvFrom(buf, 1024, 0, addr) >= 0) {
                 if (!checkIP(addr.GetStruct().sin_addr.s_addr))
                     continue;
-                std::cout << "client send me: " << buf << std::endl;
-                std::cout << "client port: " << ntohs(addr.GetStruct().sin_port) << std::endl;
+                auto* hdr = reinterpret_cast<network::protocol::Header*>(buf);
+                auto* odr = reinterpret_cast<network::protocol::ObjectHeader*>(hdr + 1);
+                std::cout << (short) odr->type << std::endl;
                 _socket.SendTo("hello", 5, 0, addr);
             }
 

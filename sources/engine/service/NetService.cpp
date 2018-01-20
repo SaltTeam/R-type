@@ -1,6 +1,6 @@
 
-#include <entities/projectiles/Projectile.hpp>
-#include <entities/powerups/APowerUp.hpp>
+#include "entities/projectiles/Projectile.hpp"
+#include "entities/powerups/APowerUp.hpp"
 #include "NetService.hpp"
 #include "engine/Runner.hpp"
 #include "engine/entity/Entity.hpp"
@@ -11,6 +11,8 @@
 namespace Engine {
     EngineStatus NET_SERVICE::initialize() {
         this->running = true;
+        this->connect = false;
+        this->color = network::protocol::PlayerColor::Error;
         this->thread = new std::thread(&NET_SERVICE::run, std::ref(*this));
         return EngineStatus::Continue;
     }
@@ -59,7 +61,7 @@ namespace Engine {
                                                         entity->refreshTime,
                                                         entity->id,
                                                         network::protocol::Action::Update,
-                                                        sizeof(network::protocol::SShip)
+                                                        sizeof(network::protocol::SProjectile)
                                                 },
                                                 entity->isEnabled,
                                                 entity->position.x,
@@ -83,7 +85,7 @@ namespace Engine {
                                                 entity->refreshTime,
                                                 entity->id,
                                                 network::protocol::Action::Update,
-                                                sizeof(network::protocol::SShip)
+                                                sizeof(network::protocol::SMovable)
                                         },
                                         entity->isEnabled,
                                         entity->position.x,
@@ -105,7 +107,7 @@ namespace Engine {
                                                         entity->refreshTime,
                                                         entity->id,
                                                         network::protocol::Action::Update,
-                                                        sizeof(network::protocol::SShip)
+                                                        sizeof(network::protocol::SPowerUp)
                                                 },
                                                 entity->isEnabled,
                                                 entity->position.x,
@@ -127,9 +129,6 @@ namespace Engine {
     }
 
     EngineStatus NET_SERVICE::update() {
-        this->mut_in.lock();
-        std::cout << this->in.size() << std::endl;
-        this->mut_in.unlock();
         return EngineStatus::Continue;
     }
 
@@ -148,16 +147,99 @@ namespace Engine {
     }
 
     void NET_SERVICE::run() {
+        bool ok = false;
+        std::unique_ptr<mysocket::Socket> sock;
+        mysocket::InetAddr server{};
+        
+        while (!ok) {
+            while (!connect.load()) {}
+            try {
+                sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+                sock->setAddress(43000, "0.0.0.0");
+                if (sock->Bind() == -1)
+                    throw std::exception();
+                server.SetPort(this->port);
+                server.SetAddress(this->address);
+                ok = true;
+            }
+            catch (mysocket::SocketException const& e) {
+                sock.reset(nullptr);
+            }
+            catch (...) {
+                sock.reset(nullptr);
+            }
+        }
         while (this->running.load()) {
             mut_in.lock();
             while (!this->in.empty()) {
                 auto p = this->in.front();
-                std::cout << (short) p->type << std::endl;
                 this->in.pop();
-                // send packet
+                
+                network::protocol::Header hdr{};
+                hdr.size = p->size;
+                hdr.type = network::protocol::HeaderType::Object;
+                std::basic_string<unsigned char> msg;
+                msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
+                msg.append(reinterpret_cast<unsigned char*>(p), p->size);
+                
+                sock->SendTo(msg.data(), p->size + sizeof(network::protocol::Header), 0, server);
+                
                 delete p;
             }
             mut_in.unlock();
+        }
+    }
+
+    network::protocol::Status NET_SERVICE::connectTCP(std::string const& name,
+                                                      std::string const& passwd,
+                                                      std::string const& ipAddr) {
+
+        try {
+            mysocket::Socket tc{AF_INET, SOCK_STREAM, IPPROTO_TCP};
+            network::protocol::Header hdr{};
+            network::protocol::Connexion connect{};
+            hdr.type = network::protocol::HeaderType::Connect;
+            hdr.size = sizeof(network::protocol::Connexion);
+            std::strncpy(connect.name, name.c_str(), 256);
+            std::strncpy(connect.pass, passwd.c_str(), 256);
+            tc.setAddress(42000, ipAddr);
+            if (tc.Connect() == -1) {
+                // LOG
+                return network::protocol::Status::Error;
+            }
+            std::basic_string<unsigned char> msg;
+            msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
+            msg.append(reinterpret_cast<unsigned char*>(&connect), hdr.size);
+            if (tc.Send(msg.data(), msg.length(), 0) == -1) {
+                // LOG
+                return network::protocol::Status::Error;
+            }
+            network::protocol::Header mdr{};
+            network::protocol::ConnexionResponse resp{};
+            if (tc.Recv(&mdr, sizeof(mdr)) == -1) {
+                // LOG
+                return network::protocol::Status::Error;
+            }
+            if (tc.Recv(&resp, sizeof(resp)) == -1) {
+                // LOG
+                return network::protocol::Status::Error;
+            }
+            if (resp.status >= network::protocol::Status::Error) {
+                // LOG
+                return resp.status;
+            }
+            this->color = resp.color;
+            this->address = ipAddr;
+            this->port = resp.port;
+            this->connect = true;
+            return resp.status;
+        }
+        catch (mysocket::SocketException const& e) {
+            // LOG
+            return network::protocol::Status::Error;
+        }
+        catch (...) {
+            return network::protocol::Status::Error;
         }
     }
 }

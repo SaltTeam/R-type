@@ -8,6 +8,8 @@
 #include <imgui-SFML.h>
 #include <array>
 #include "scopes/TestScope.hpp"
+#include "engine/Runner.hpp"
+#include "engine/service/NetService.hpp"
 
 namespace Scopes {
     class LoginScope : public SCOPE {
@@ -15,6 +17,7 @@ namespace Scopes {
         bool setting = false;
         std::array<char, 256> buf;
         std::array<char, 256> passwd;
+        std::array<char, 256> ip;
         std::string error_message = "";
         int status = 200;
 
@@ -28,6 +31,7 @@ namespace Scopes {
         void initialize() override {
             buf[0] = '\0';
             passwd[0] = '\0';
+            ip[0] = '\0';
         }
 
         void pause() override {
@@ -45,12 +49,17 @@ namespace Scopes {
             ImGui::Text(this->error_message.c_str());
             ImGui::SetWindowPos(ImVec2(300, 300));
             ImGui::SetWindowSize(ImVec2(300, 250));
+            ImGui::InputText("Ip", ip.data(), 256);
             ImGui::InputText("Game", buf.data(), 256);
             ImGui::InputText("Password", passwd.data(), 256,ImGuiInputTextFlags_Password);
             if (ImGui::Button("Validate", ImVec2(75, 20)))
             {
                 std::cout << buf.data() << std::endl;
                 std::cout << passwd.data() << std::endl;
+
+                status = static_cast<int>(gameService->engine->findService<NET_SERVICE>()->connectTCP(buf.data(),
+                                                                                                      passwd.data(),
+                                                                                                      ip.data()));
                 switch (status)
                 {
                     case(200):
