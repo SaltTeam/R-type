@@ -14,6 +14,7 @@ namespace Engine {
 
         private:
             std::unique_ptr<sf::RenderWindow> window = nullptr;
+            sf::Clock deltaClock;
             sf::Clock clock;
             sf::Time currentTime;
             sf::Time frameTime;

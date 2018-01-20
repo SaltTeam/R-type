@@ -3,7 +3,8 @@
 #include "engine/Runner.hpp"
 
 EngineStatus GAME_SERVICE::initialize() {
-    this->scopes.top()->initialize();
+    if (this->scopes.empty())
+        this->scopes.top()->initialize();
     return EngineStatus::Continue;
 }
 
@@ -18,20 +19,24 @@ EngineStatus GAME_SERVICE::shutdown() {
 EngineStatus GAME_SERVICE::earlyUpdate() {
     /// Check for adding Scope
     if (this->addScope) {
-        this->scopes.top()->pause();
+        if (!scopes.empty())
+            this->scopes.top()->pause();
         this->scopes.push(this->scopeToAdd);
         this->scopeToAdd->initialize();
         this->addScope = false;
         this->scopeToAdd = nullptr;
     }
-
+    if (scopes.empty())
+        return EngineStatus::Stop;
     return EngineStatus::Continue;
 }
 
 EngineStatus GAME_SERVICE::update() {
-    scopes.top()->earlyUpdate();
-    scopes.top()->entityManager.update();
-    scopes.top()->update();
+    if (!scopes.empty()) {
+        scopes.top()->earlyUpdate();
+        scopes.top()->entityManager.update();
+        scopes.top()->update();
+    }
     return EngineStatus::Continue;
 }
 

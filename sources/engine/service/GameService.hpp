@@ -41,6 +41,8 @@ namespace Engine {
             }
 
             SCOPE *currentScope() {
+                if (this->scopes.empty())
+                    return nullptr;
                 return this->scopes.top();
             }
 

@@ -29,7 +29,8 @@ add_executable(${EXECUTABLE_NAME}
         sources/logger/Logger.cpp
 
         sources/scopes/TestScope.hpp
-
+        sources/scopes/MenuScope.hpp
+        
         sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
         sources/entities/ships/Ship.cpp sources/entities/ships/Ship.hpp
         sources/entities/ships/sub/_Wing.hpp

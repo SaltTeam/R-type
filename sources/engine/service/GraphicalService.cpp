@@ -1,4 +1,5 @@
 
+#include <imgui-SFML.h>
 #include "engine/ForwardDeclaration.hpp"
 #include "GraphicalService.hpp"
 #include "engine/Runner.hpp"
@@ -10,6 +11,7 @@ sf::Time GRAPHICAL_SERVICE::deltaTime = GRAPHICAL_SERVICE::ups;
 
 EngineStatus GRAPHICAL_SERVICE::initialize() {
     this->window = std::make_unique<sf::RenderWindow>(sf::VideoMode(720, 980), "R-type");
+    ImGui::SFML::Init(*this->window);
     this->currentTime = this->clock.getElapsedTime();
     this->render = false;
     return EngineStatus::Continue;
@@ -18,11 +20,15 @@ EngineStatus GRAPHICAL_SERVICE::initialize() {
 EngineStatus GRAPHICAL_SERVICE::earlyUpdate() {
     sf::Event event{};
     while (this->window->pollEvent(event)) {
+        ImGui::SFML::ProcessEvent(event);
+
         if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
             this->window->close();
+            ImGui::SFML::Update(*this->window, this->deltaClock.restart());
             return EngineStatus::Stop;
         }
     }
+    ImGui::SFML::Update(*this->window, this->deltaClock.restart());
     this->engine->findService<GAME_SERVICE>()->execCallbacks();
 
     sf::sleep(sf::microseconds(1));
@@ -48,6 +54,8 @@ EngineStatus GRAPHICAL_SERVICE::lateUpdate() {
     if (this->render) {
         GAME_SERVICE *game = this->engine->findService<GAME_SERVICE>();
         SCOPE *scope = game->currentScope();
+        if (scope == nullptr)
+            return EngineStatus::Stop;
         this->window->clear();
         for (const auto &layer : scope->entityManager.entities) {
             for (const auto &entity : layer.second) {
@@ -57,6 +65,7 @@ EngineStatus GRAPHICAL_SERVICE::lateUpdate() {
                 }
             }
         }
+        ImGui::SFML::Render(*this->window);
         this->window->display();
 
         this->render = false;
@@ -65,6 +74,7 @@ EngineStatus GRAPHICAL_SERVICE::lateUpdate() {
 }
 
 EngineStatus GRAPHICAL_SERVICE::shutdown() {
+    ImGui::SFML::Shutdown();
     if (this->window->isOpen())
         this->window->close();
     return EngineStatus::Continue;

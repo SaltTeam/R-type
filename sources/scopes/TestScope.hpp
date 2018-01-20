@@ -1,6 +1,9 @@
 
 #pragma once
 
+#include <imgui.h>
+#include "entities/PlayerShip.hpp"
+#include "entities/Asteroid.hpp"
 #include <entities/ships/sub/TieFigther.hpp>
 #include <entities/ships/sub/TieBomber.hpp>
 #include <entities/powerups/sub/HealPowerUp.hpp>
@@ -51,6 +54,21 @@ namespace Scopes {
         }
 
         void update() override {
+            ImGui::Begin("Hello, world!");
+            ImGui::Button("Look at this pretty button");
+            ImGui::End();
+        }
+    };
+
+    class MenuScope : public SCOPE {
+    public:
+        MenuScope(GAME_SERVICE *gameService) : SCOPE(gameService) {}
+        ~MenuScope() {}
+
+
+
+        void initialize() override {
+
         }
     };
 }
