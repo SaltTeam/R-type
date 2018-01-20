@@ -23,7 +23,7 @@ namespace Engine {
 
             COLLISION_MANAGER collisionManager;
 
-            explicit BaseScope(GAME_SERVICE *gameService) : gameService(gameService) {}
+            explicit BaseScope(GAME_SERVICE *gameService) : gameService(gameService), entityManager(this) {}
 
             virtual ~BaseScope() = default;
 

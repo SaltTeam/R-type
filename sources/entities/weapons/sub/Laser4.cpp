@@ -18,7 +18,7 @@ bool Entities::Laser4::shoot(std::vector<sf::Vector2f> const &canons, sf::Vector
 }
 
 void Entities::Laser4::spawnLasers(sf::Vector2f const &position) {
-    this->scope->entityManager.add<Entities::SinusProjectile>(LAYER::Layer1, this->scope, 2,
+    this->scope->entityManager.add<Entities::SinusProjectile>(LAYER::Layer1,
                                                               this->projectilePath, true,
                                                               position.x, position.y,
                                                               this->xSpeed, this->ySpeed, this->damage, this->originTeam);

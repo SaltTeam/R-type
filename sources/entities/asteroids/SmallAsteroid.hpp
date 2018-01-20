@@ -15,7 +15,7 @@ namespace Entities {
 
         ~SmallAsteroid() override {
             for (int i = 0; i < 2; ++i) {
-                this->scope->entityManager.add<Entities::TinyAsteroid>(LAYER::Layer1, this->scope, 10, true,
+                this->scope->entityManager.add<Entities::TinyAsteroid>(LAYER::Layer1, true,
                                                  this->position.x + this->texture->sprite.getGlobalBounds().width / 2,
                                                  this->position.y + this->texture->sprite.getGlobalBounds().height / 2);
             }

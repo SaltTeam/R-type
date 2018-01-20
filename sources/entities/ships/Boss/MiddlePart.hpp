@@ -22,7 +22,7 @@ namespace Entities {
 
         ~MiddlePart() override {
             for (int i = 0; i < 4; ++i) {
-                this->scope->entityManager.add<Entities::BigAsteroid>(LAYER::Layer1, this->scope, 10, true,
+                this->scope->entityManager.add<Entities::BigAsteroid>(LAYER::Layer1, true,
                                                                    this->position.x + this->texture->sprite.getGlobalBounds().width / 2,
                                                                    this->position.y + this->texture->sprite.getGlobalBounds().height / 2);
             }

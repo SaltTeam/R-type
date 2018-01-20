@@ -32,28 +32,28 @@ void Entities::Ship::spawnPowerUp() {
 
     int res = dist_powerup(mt);
     if (res < 10)
-        this->scope->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1, this->scope, 9,
+        this->scope->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1,
                                                                static_cast<GRADE>(res % 3), position.x +
                                                                                             this->texture->sprite.getGlobalBounds().width /
                                                                                             2, position.y +
                                                                                                this->texture->sprite.getGlobalBounds().height /
                                                                                                2);
     else if (res < 20)
-        this->scope->entityManager.add<Entities::HealPowerUp>(LAYER::Layer1, this->scope, 9,
+        this->scope->entityManager.add<Entities::HealPowerUp>(LAYER::Layer1,
                                                               static_cast<GRADE>(res % 3), position.x +
                                                                                            this->texture->sprite.getGlobalBounds().width /
                                                                                            2, position.y +
                                                                                               this->texture->sprite.getGlobalBounds().height /
                                                                                               2);
     else if (res < 30)
-        this->scope->entityManager.add<Entities::ShieldPowerUp>(LAYER::Layer1, this->scope, 9,
+        this->scope->entityManager.add<Entities::ShieldPowerUp>(LAYER::Layer1,
                                                                 static_cast<GRADE>(res % 3), position.x +
                                                                                              this->texture->sprite.getGlobalBounds().width /
                                                                                              2, position.y +
                                                                                                 this->texture->sprite.getGlobalBounds().height /
                                                                                                 2);
     else if (res < 40)
-        this->scope->entityManager.add<Entities::DamagePowerUp>(LAYER::Layer1, this->scope, 9,
+        this->scope->entityManager.add<Entities::DamagePowerUp>(LAYER::Layer1,
                                                                 static_cast<GRADE>(res % 3), position.x +
                                                                                              this->texture->sprite.getGlobalBounds().width /
                                                                                              2, position.y +

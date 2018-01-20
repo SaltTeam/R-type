@@ -31,6 +31,7 @@ namespace Scopes {
         void initialize() override {
             buf[0] = '\0';
             passwd[0] = '\0';
+            ip[0] = '\0';
         }
 
         void pause() override {
