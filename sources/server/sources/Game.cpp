@@ -22,16 +22,24 @@ namespace server {
 
         while (!end) {
             mysocket::InetAddr addr{};
+            mysocket::InetAddr send_addr{};
             char buf[1024];
 
+            send_addr.SetPort(43000);
             std::memset(buf, 0, 1024);
             if (_socket.RecvFrom(buf, 1024, 0, addr) >= 0) {
                 if (!checkIP(addr.GetStruct().sin_addr.s_addr))
                     continue;
                 auto* hdr = reinterpret_cast<network::protocol::Header*>(buf);
-                auto* odr = reinterpret_cast<network::protocol::ObjectHeader*>(hdr + 1);
-                std::cout << (short) odr->type << std::endl;
-                _socket.SendTo("hello", 5, 0, addr);
+//                auto* odr = reinterpret_cast<network::protocol::ObjectHeader*>(hdr + 1);
+                _ips_mutex.lock();
+                for (int i = 0; i < 4; ++i) {
+                    if (_ips[i] == addr.GetStruct().sin_addr.s_addr)
+                        continue;
+                    send_addr.SetAddress(addr.GetStruct().sin_addr.s_addr);
+                    _socket.SendTo(hdr, hdr->size + sizeof(network::protocol::Header), 0, send_addr);
+                }
+                _ips_mutex.unlock();
             }
 
         }

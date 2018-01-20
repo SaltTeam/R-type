@@ -92,6 +92,7 @@ namespace network {
             uint64_t id;
             Action action;
             std::size_t size;
+            PlayerColor color;
         } PACKED;
 #ifdef WIN32
 #pragma pack(pop)

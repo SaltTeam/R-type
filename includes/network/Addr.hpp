@@ -75,6 +75,7 @@ namespace mysocket {
 
     public:
         void SetAddress(std::string const& address);
+        void SetAddress(unsigned long address);
         void SetPort(unsigned short port);
 
         type& GetStruct();

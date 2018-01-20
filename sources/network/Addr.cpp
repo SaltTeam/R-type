@@ -32,6 +32,10 @@ namespace mysocket {
         _struct.sin_addr.s_addr = inet_addr(address.c_str());
     }
 
+    void InetAddr::SetAddress(unsigned long address) {
+        _struct.sin_addr.s_addr = address;
+    }
+
     void InetAddr::SetPort(unsigned short port) {
         _struct.sin_port = htons(port);
     }

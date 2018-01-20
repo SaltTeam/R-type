@@ -36,6 +36,8 @@ namespace Engine {
 
             void run();
 
+            void runRead();
+
             network::protocol::Status connectTCP(std::string const& name,
                                                  std::string const& passwd,
                                                  std::string const& ipAddr);

@@ -25,9 +25,20 @@ namespace Engine {
         this->mut_in.lock();
         for (auto &entry : scope->entityManager.entities) {
             for (auto &entity : entry.second) {
-                /*
                 switch (entity->type) {
-                    case network::protocol::Type::SHIP : {
+                    case network::protocol::Type::BOSS_LEFTPART:
+                    case network::protocol::Type::BOSS_MIDDLEPART:
+                    case network::protocol::Type::BOSS_RIGHTPART:
+                    case network::protocol::Type::SHIP_WING:
+                    case network::protocol::Type::SHIP_ARC:
+                    case network::protocol::Type::SHIP_INTERCEPTOR:
+                    case network::protocol::Type::SHIP_TIEADVANCE:
+                    case network::protocol::Type::SHIP_TIEAVENGER:
+                    case network::protocol::Type::SHIP_TIEBOMBER:
+                    case network::protocol::Type::SHIP_TIEEXPERIMENT:
+                    case network::protocol::Type::SHIP_TIEFIGHTER:
+                    case network::protocol::Type::SHIP_XWING:
+                    case network::protocol::Type::SHIP_YWING : {
                         auto ship = new network::protocol::SShip{
                                 {
                                         {
@@ -37,7 +48,8 @@ namespace Engine {
                                                         entity->refreshTime,
                                                         entity->id,
                                                         network::protocol::Action::Update,
-                                                        sizeof(network::protocol::SShip)
+                                                        sizeof(network::protocol::SShip),
+                                                        entity->playerColor
                                                 },
                                                 entity->isEnabled,
                                                 entity->position.x,
@@ -53,7 +65,10 @@ namespace Engine {
                         this->in.push(&ship->base.base.header);
                         break;
                     }
-                    case network::protocol::Type::PROJECTILE: {
+                    case network::protocol::Type::LASER1:
+                    case network::protocol::Type::LASER2:
+                    case network::protocol::Type::LASER3:
+                    case network::protocol::Type::LASER4: {
                         auto projectile = new network::protocol::SProjectile{
                                 {
                                         {
@@ -63,7 +78,8 @@ namespace Engine {
                                                         entity->refreshTime,
                                                         entity->id,
                                                         network::protocol::Action::Update,
-                                                        sizeof(network::protocol::SProjectile)
+                                                        sizeof(network::protocol::SProjectile),
+                                                        entity->playerColor
                                                 },
                                                 entity->isEnabled,
                                                 entity->position.x,
@@ -78,7 +94,10 @@ namespace Engine {
                         this->in.push(&projectile->base.base.header);
                         break;
                     }
-                    case network::protocol::Type::ASTEROID: {
+                    case network::protocol::Type::ASTEROID_BIG:
+                    case network::protocol::Type::ASTEROID_MED:
+                    case network::protocol::Type::ASTEROID_SMALL:
+                    case network::protocol::Type::ASTEROID_TINY: {
                         auto asteroid = new network::protocol::SMovable{
                                 {
                                         {
@@ -87,7 +106,8 @@ namespace Engine {
                                                 entity->refreshTime,
                                                 entity->id,
                                                 network::protocol::Action::Update,
-                                                sizeof(network::protocol::SMovable)
+                                                sizeof(network::protocol::SMovable),
+                                                entity->playerColor
                                         },
                                         entity->isEnabled,
                                         entity->position.x,
@@ -99,7 +119,10 @@ namespace Engine {
                         this->in.push(&asteroid->base.header);
                         break;
                     }
-                    case network::protocol::Type::POWERUP: {
+                    case network::protocol::Type::POWERUP_DAMAGE:
+                    case network::protocol::Type::POWERUP_HEAL:
+                    case network::protocol::Type::POWERUP_SHIELD:
+                    case network::protocol::Type::POWERUP_SPEED: {
                         auto powerup = new network::protocol::SPowerUp{
                                 {
                                         {
@@ -109,7 +132,8 @@ namespace Engine {
                                                         entity->refreshTime,
                                                         entity->id,
                                                         network::protocol::Action::Update,
-                                                        sizeof(network::protocol::SPowerUp)
+                                                        sizeof(network::protocol::SPowerUp),
+                                                        entity->playerColor
                                                 },
                                                 entity->isEnabled,
                                                 entity->position.x,
@@ -124,7 +148,6 @@ namespace Engine {
                         break;
                     }
                 }
-                 */
             }
         }
         this->mut_in.unlock();
@@ -136,9 +159,27 @@ namespace Engine {
     }
 
     EngineStatus NET_SERVICE::lateUpdate() {
-        //this->mut_out.lock();
-        // Code
-        //this->mut_out.unlock();
+        auto gm = this->engine->findService<GAME_SERVICE>();
+        auto scope = gm->currentScope();
+        if (scope == nullptr) return EngineStatus::Continue;
+        this->mut_out.lock();
+        while (!this->out.empty()) {
+            auto p = this->out.front();
+
+            auto e = scope->entityManager.find(p->id);
+//            if (e == nullptr) {
+//                switch (p->type) {
+//                }
+////                scope->entityManager.netAdd(LAYER::Layer1, p->color, )
+//            }
+//            else {
+//                // cast and update
+//            }
+
+            this->out.pop();
+            delete p;
+        }
+        this->mut_out.unlock();
         return EngineStatus::Continue;
     }
 
@@ -149,23 +190,48 @@ namespace Engine {
         return EngineStatus::Continue;
     }
 
+    void NET_SERVICE::runRead() {
+        std::unique_ptr<mysocket::Socket> sock;
+        mysocket::InetAddr server{};
+        char buf[1024];
+
+        try {
+            sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+        }
+        catch (mysocket::SocketException const& e) {
+            sock.reset(nullptr);
+        }
+        catch (...) {
+            sock.reset(nullptr);
+        }
+
+        while (this->running.load()) {
+            if (sock->RecvFrom(buf, 1024, 0, server) >= 0) {
+                auto* hdr = reinterpret_cast<network::protocol::Header*>(buf);
+                auto* odr = reinterpret_cast<network::protocol::ObjectHeader*>(hdr + 1);
+                auto* tp = new char[odr->size];
+                std::memcpy(tp, odr, odr->size);
+                mut_out.lock();
+                out.push(reinterpret_cast<network::protocol::ObjectHeader*>(tp));
+                mut_out.unlock();
+            }
+        }
+    }
+
     void NET_SERVICE::run() {
         bool ok = false;
         std::unique_ptr<mysocket::Socket> sock;
         mysocket::InetAddr server{};
 
-        while (!ok) {
-            while (!connect.load()) {}
+        std::thread t(&NET_SERVICE::runRead, std::ref(*this));
+
+        while (!ok && this->running.load()) {
+            while (!connect.load() && this->running.load()) {}
             try {
                 sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-                sock->setAddress(43000, "0.0.0.0");
-                if (sock->Bind() == -1)
-                    throw std::exception();
-                server.SetPort(this->port);
-                server.SetAddress(this->address);
                 ok = true;
             }
-            catch (mysocket::SocketException const &e) {
+            catch (mysocket::SocketException const& e) {
                 sock.reset(nullptr);
             }
             catch (...) {
@@ -177,25 +243,27 @@ namespace Engine {
             while (!this->in.empty()) {
                 auto p = this->in.front();
                 this->in.pop();
-
+                
                 network::protocol::Header hdr{};
                 hdr.size = p->size;
                 hdr.type = network::protocol::HeaderType::Object;
                 std::basic_string<unsigned char> msg;
-                msg.append(reinterpret_cast<unsigned char *>(&hdr), sizeof(network::protocol::Header));
-                msg.append(reinterpret_cast<unsigned char *>(p), p->size);
-
+                msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
+                msg.append(reinterpret_cast<unsigned char*>(p), p->size);
+                
                 sock->SendTo(msg.data(), p->size + sizeof(network::protocol::Header), 0, server);
-
+                
                 delete p;
             }
             mut_in.unlock();
         }
+        if (t.joinable())
+            t.join();
     }
 
-    network::protocol::Status NET_SERVICE::connectTCP(std::string const &name,
-                                                      std::string const &passwd,
-                                                      std::string const &ipAddr) {
+    network::protocol::Status NET_SERVICE::connectTCP(std::string const& name,
+                                                      std::string const& passwd,
+                                                      std::string const& ipAddr) {
 
         try {
             mysocket::Socket tc{AF_INET, SOCK_STREAM, IPPROTO_TCP};
@@ -211,8 +279,8 @@ namespace Engine {
                 return network::protocol::Status::Error;
             }
             std::basic_string<unsigned char> msg;
-            msg.append(reinterpret_cast<unsigned char *>(&hdr), sizeof(network::protocol::Header));
-            msg.append(reinterpret_cast<unsigned char *>(&connect), hdr.size);
+            msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
+            msg.append(reinterpret_cast<unsigned char*>(&connect), hdr.size);
             if (tc.Send(msg.data(), msg.length(), 0) == -1) {
                 // LOG
                 return network::protocol::Status::Error;
@@ -237,7 +305,7 @@ namespace Engine {
             this->connect = true;
             return resp.status;
         }
-        catch (mysocket::SocketException const &e) {
+        catch (mysocket::SocketException const& e) {
             // LOG
             return network::protocol::Status::Error;
         }
