@@ -11,8 +11,10 @@
 
 namespace Entities {
     class Ship : public MOVABLE_ENTITY {
+        friend NET_SERVICE;
+
     public:
-        enum TEAM {
+        enum TEAM : short {
             PLAYER,
             GAME
         };

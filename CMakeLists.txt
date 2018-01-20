@@ -4,12 +4,10 @@ project(r-type)
 set(EXECUTABLE_NAME "r-type")
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(sources/)
-include_directories(includes/)
-include_directories(sources/ repos/imgui/)
+include_directories(sources/ repos/imgui/ includes/)
 
 add_executable(${EXECUTABLE_NAME}
-        sources/test_client_main.cpp
+        sources/main.cpp
 
         sources/engine/ForwardDeclaration.hpp
         sources/engine/Runner.hpp
@@ -111,7 +109,7 @@ find_package(Threads REQUIRED)
 target_link_libraries(server ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable("test_client"
-        sources/test_client_main.cpp
+        #sources/test_client_main.cpp
         sources/network/Addr.cpp
         sources/network/Select.cpp
         sources/network/SocketException.cpp

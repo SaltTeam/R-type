@@ -9,6 +9,7 @@
 Entities::APowerUp::APowerUp(SCOPE *scope, uint64_t id, bool isEnabled, float const &x,
                              float const &y, float const &xSpeed, float const &ySpeed, GRADE grade)
         : MovableEntity(scope, id, isEnabled, x, y, xSpeed, ySpeed), grade(grade) {
+    type = network::protocol::Type::POWERUP;
 }
 
 void Entities::APowerUp::update() {

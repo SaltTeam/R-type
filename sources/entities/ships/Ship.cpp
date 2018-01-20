@@ -13,6 +13,7 @@ Entities::Ship::Ship(SCOPE *scope, uint64_t id, const std::string &texturePath, 
                      float const &ySpeed, int const &health, const int &shield)
         : MovableEntity(scope, id, isEnabled, x, y, xSpeed, ySpeed),
           health(health), maxHealth(health), shield(shield), team(team) {
+    type = network::protocol::Type::SHIP;
     this->setTexture(texturePath);
     std::function<void(ENTITY *)> f5 = std::bind(&Ship::onCollision, this, std::placeholders::_1);
     this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f5);

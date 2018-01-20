@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <entities/asteroids/BigAsteroid.hpp>
 #include "entities/weapons/sub/Laser1.hpp"
 #include "entities/ships/Ship.hpp"
 

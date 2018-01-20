@@ -10,6 +10,8 @@ namespace Engine {
     namespace Entities {
 
         class MovableEntity : public ENTITY {
+            friend NET_SERVICE;
+
         protected:
             sf::Vector2f speed;
 

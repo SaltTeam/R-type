@@ -13,6 +13,8 @@
 
 namespace Entities {
     class APowerUp : public MOVABLE_ENTITY {
+        friend NET_SERVICE;
+
     public:
         APowerUp(SCOPE *scope, uint64_t id, bool isEnabled, float const &x, float const &y, float const &xSpeed,
                  float const &ySpeed, GRADE grade);

@@ -10,6 +10,8 @@ Entities::Projectile::Projectile(SCOPE *scope, uint64_t id, const std::string &t
                                  float const &x, float const &y, float const &xSpeed, float const &ySpeed,
                                  int const &damage, Entities::Ship::TEAM originTeam)
         : MovableEntity(scope, id, isEnabled, x, y, xSpeed, ySpeed), damage(damage), originTeam(originTeam) {
+    type = network::protocol::Type::PROJECTILE;
+
     this->setTexture(texturePath);
     this->position.x -= this->texture->sprite.getGlobalBounds().width / 2;
     std::function<void(ENTITY *)> f = std::bind(&Projectile::onCollision, this, std::placeholders::_1);

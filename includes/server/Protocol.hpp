@@ -29,7 +29,11 @@ namespace network {
             Replica
         };
 
-        enum class Type {
+        enum class Type : short {
+            PROJECTILE,
+            SHIP,
+            ASTEROID,
+            POWERUP
         };
 
         enum class Action {
@@ -51,6 +55,56 @@ namespace network {
         };
 
         extern "C" {
+
+
+#ifdef WIN32
+#define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
+        struct ObjectHeader {
+            Update update;
+            Type type;
+            uint16_t refresh;
+            uint64_t id;
+            Action action;
+            std::size_t size;
+        } PACKED;
+#ifdef WIN32
+#pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
+
+        struct SBase {
+            ObjectHeader header;
+            bool isEnabled;
+            float pos_x;
+            float pos_y;
+        };
+        struct SMovable {
+            struct SBase base;
+            float speed_x;
+            float speed_y;
+        };
+        struct SShip {
+            struct SMovable base;
+            short team;
+            int health;
+            int shield;
+        };
+        struct SProjectile {
+            struct SMovable base;
+            short team;
+            int damage;
+        };
+        struct SPowerUp {
+            struct SMovable base;
+            short grade;
+        };
+
 
 #ifdef WIN32
         #define PACKED
@@ -142,25 +196,6 @@ namespace network {
 //#endif
 
 
-#ifdef WIN32
-        #define PACKED
-#pragma pack(push,1)
-#else
-#define PACKED __attribute__((packed))
-#endif
-        struct ObjectHeader {
-            Update update;
-            Type type;
-            uint16_t refresh;
-            uint64_t id;
-            Action action;
-        } PACKED;
-#ifdef WIN32
-        #pragma pack(pop)
-#undef PACKED
-#else
-#undef PACKED
-#endif
         }
     }
 }

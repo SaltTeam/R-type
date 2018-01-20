@@ -10,15 +10,21 @@
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/display/Texture.hpp"
+#include "server/Protocol.hpp"
 
 namespace Engine {
     namespace Entities {
 
         class BaseEntity {
             friend ENTITY_MANAGER;
+            friend NET_SERVICE;
+
         protected:
             std::map<int, std::function<void(void)>> callbacks;
             SCOPE *scope;
+            network::protocol::Type type;
+            network::protocol::Update updateType;
+            uint16_t refreshTime;
 
         public:
             uint64_t id;
@@ -68,6 +74,7 @@ namespace Engine {
 
         class EntityManager {
             friend GRAPHICAL_SERVICE;
+            friend NET_SERVICE;
             friend SCOPE;
 
         private:

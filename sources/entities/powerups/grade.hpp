@@ -4,7 +4,7 @@
 
 #pragma once
 
-enum GRADE {
+enum GRADE : short {
     BRONZE = 0,
     SILVER = 1,
     GOLD = 2
