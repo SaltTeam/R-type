@@ -7,6 +7,9 @@
 #include "entities/ships/Ship.hpp"
 #include "engine/scope/Scope.hpp"
 #include "engine/service/GameService.hpp"
+#include "entities/powerups/APowerUp.hpp"
+#include "entities/projectiles/Projectile.hpp"
+#include "entities/ships/Ship.hpp"
 
 namespace Engine {
     network::protocol::PlayerColor NET_SERVICE::color = network::protocol::PlayerColor::Error;
@@ -167,15 +170,79 @@ namespace Engine {
             auto p = this->out.front();
 
             auto e = scope->entityManager.find(p->id);
-//            if (e == nullptr) {
-//                switch (p->type) {
-//                }
-////                scope->entityManager.netAdd(LAYER::Layer1, p->color, )
-//            }
-//            else {
-//                // cast and update
-//            }
-
+            if (e == nullptr) {
+//                scope->entityManager.netAdd(LAYER::Layer1, p->color, )
+            } else {
+                switch (p->type) {
+                    case network::protocol::Type::ASTEROID_BIG:
+                    case network::protocol::Type::ASTEROID_MED:
+                    case network::protocol::Type::ASTEROID_SMALL:
+                    case network::protocol::Type::ASTEROID_TINY: {
+                        auto obj = reinterpret_cast<MOVABLE_ENTITY *>(e);
+                        auto data = reinterpret_cast<network::protocol::SMovable *>(p);
+                        obj->position.x = data->base.pos_x;
+                        obj->position.y = data->base.pos_y;
+                        obj->isEnabled = data->base.isEnabled;
+                        obj->speed.x = data->speed_x;
+                        obj->speed.y = data->speed_y;
+                        break;
+                    }
+                    case network::protocol::Type::POWERUP_DAMAGE:
+                    case network::protocol::Type::POWERUP_HEAL:
+                    case network::protocol::Type::POWERUP_SHIELD:
+                    case network::protocol::Type::POWERUP_SPEED: {
+                        auto obj = reinterpret_cast<::Entities::APowerUp *>(e);
+                        auto data = reinterpret_cast<network::protocol::SPowerUp *>(p);
+                        obj->position.x = data->base.base.pos_x;
+                        obj->position.y = data->base.base.pos_y;
+                        obj->isEnabled = data->base.base.isEnabled;
+                        obj->speed.x = data->base.speed_x;
+                        obj->speed.y = data->base.speed_y;
+                        obj->grade = (GRADE) data->grade;
+                        break;
+                    }
+                    case network::protocol::Type::LASER1:
+                    case network::protocol::Type::LASER2:
+                    case network::protocol::Type::LASER3:
+                    case network::protocol::Type::LASER4: {
+                        auto obj = reinterpret_cast<::Entities::Projectile *>(e);
+                        auto data = reinterpret_cast<network::protocol::SProjectile *>(p);
+                        obj->position.x = data->base.base.pos_x;
+                        obj->position.y = data->base.base.pos_y;
+                        obj->isEnabled = data->base.base.isEnabled;
+                        obj->speed.x = data->base.speed_x;
+                        obj->speed.y = data->base.speed_y;
+                        obj->damage = data->damage;
+                        obj->originTeam = (::Entities::Ship::TEAM) data->team;
+                        break;
+                    }
+                    case network::protocol::Type::BOSS_LEFTPART:
+                    case network::protocol::Type::BOSS_MIDDLEPART:
+                    case network::protocol::Type::BOSS_RIGHTPART:
+                    case network::protocol::Type::SHIP_WING:
+                    case network::protocol::Type::SHIP_ARC:
+                    case network::protocol::Type::SHIP_INTERCEPTOR:
+                    case network::protocol::Type::SHIP_TIEADVANCE:
+                    case network::protocol::Type::SHIP_TIEAVENGER:
+                    case network::protocol::Type::SHIP_TIEBOMBER:
+                    case network::protocol::Type::SHIP_TIEEXPERIMENT:
+                    case network::protocol::Type::SHIP_TIEFIGHTER:
+                    case network::protocol::Type::SHIP_XWING:
+                    case network::protocol::Type::SHIP_YWING: {
+                        auto obj = reinterpret_cast<::Entities::Ship *>(e);
+                        auto data = reinterpret_cast<network::protocol::SShip *>(p);
+                        obj->position.x = data->base.base.pos_x;
+                        obj->position.y = data->base.base.pos_y;
+                        obj->isEnabled = data->base.base.isEnabled;
+                        obj->speed.x = data->base.speed_x;
+                        obj->speed.y = data->base.speed_y;
+                        obj->team = (::Entities::Ship::TEAM) data->team;
+                        obj->health = data->health;
+                        obj->shield = data->shield;
+                        break;
+                    }
+                }
+            }
             this->out.pop();
             delete p;
         }
@@ -198,7 +265,7 @@ namespace Engine {
         try {
             sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
         }
-        catch (mysocket::SocketException const& e) {
+        catch (mysocket::SocketException const &e) {
             sock.reset(nullptr);
         }
         catch (...) {
@@ -207,12 +274,12 @@ namespace Engine {
 
         while (this->running.load()) {
             if (sock->RecvFrom(buf, 1024, 0, server) >= 0) {
-                auto* hdr = reinterpret_cast<network::protocol::Header*>(buf);
-                auto* odr = reinterpret_cast<network::protocol::ObjectHeader*>(hdr + 1);
-                auto* tp = new char[odr->size];
+                auto *hdr = reinterpret_cast<network::protocol::Header *>(buf);
+                auto *odr = reinterpret_cast<network::protocol::ObjectHeader *>(hdr + 1);
+                auto *tp = new char[odr->size];
                 std::memcpy(tp, odr, odr->size);
                 mut_out.lock();
-                out.push(reinterpret_cast<network::protocol::ObjectHeader*>(tp));
+                out.push(reinterpret_cast<network::protocol::ObjectHeader *>(tp));
                 mut_out.unlock();
             }
         }
@@ -231,7 +298,7 @@ namespace Engine {
                 sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
                 ok = true;
             }
-            catch (mysocket::SocketException const& e) {
+            catch (mysocket::SocketException const &e) {
                 sock.reset(nullptr);
             }
             catch (...) {
@@ -243,16 +310,16 @@ namespace Engine {
             while (!this->in.empty()) {
                 auto p = this->in.front();
                 this->in.pop();
-                
+
                 network::protocol::Header hdr{};
                 hdr.size = p->size;
                 hdr.type = network::protocol::HeaderType::Object;
                 std::basic_string<unsigned char> msg;
-                msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
-                msg.append(reinterpret_cast<unsigned char*>(p), p->size);
-                
+                msg.append(reinterpret_cast<unsigned char *>(&hdr), sizeof(network::protocol::Header));
+                msg.append(reinterpret_cast<unsigned char *>(p), p->size);
+
                 sock->SendTo(msg.data(), p->size + sizeof(network::protocol::Header), 0, server);
-                
+
                 delete p;
             }
             mut_in.unlock();
@@ -261,9 +328,9 @@ namespace Engine {
             t.join();
     }
 
-    network::protocol::Status NET_SERVICE::connectTCP(std::string const& name,
-                                                      std::string const& passwd,
-                                                      std::string const& ipAddr) {
+    network::protocol::Status NET_SERVICE::connectTCP(std::string const &name,
+                                                      std::string const &passwd,
+                                                      std::string const &ipAddr) {
 
         try {
             mysocket::Socket tc{AF_INET, SOCK_STREAM, IPPROTO_TCP};
@@ -279,8 +346,8 @@ namespace Engine {
                 return network::protocol::Status::Error;
             }
             std::basic_string<unsigned char> msg;
-            msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
-            msg.append(reinterpret_cast<unsigned char*>(&connect), hdr.size);
+            msg.append(reinterpret_cast<unsigned char *>(&hdr), sizeof(network::protocol::Header));
+            msg.append(reinterpret_cast<unsigned char *>(&connect), hdr.size);
             if (tc.Send(msg.data(), msg.length(), 0) == -1) {
                 // LOG
                 return network::protocol::Status::Error;
@@ -305,7 +372,7 @@ namespace Engine {
             this->connect = true;
             return resp.status;
         }
-        catch (mysocket::SocketException const& e) {
+        catch (mysocket::SocketException const &e) {
             // LOG
             return network::protocol::Status::Error;
         }
