@@ -11,9 +11,10 @@
 namespace Entities {
     class RightPart : public Ship {
     public:
-        RightPart(SCOPE *scope, uint64_t id = 0, bool isEnabled = true, const float &x = 0, const float &y = 0)
-                : Ship(scope, id, "resources/sprites/Boss/right-part.png", isEnabled, Entities::Ship::GAME, x,
-                       y, 0, 0, 500) {
+        RightPart(SCOPE *scope, uint64_t id = 0, network::protocol::Update updateType = network::protocol::Update::Replica, uint16_t refreshTime = 1000,
+                  bool isEnabled = true, const float &x = 0, const float &y = 0)
+                : Ship(scope, id, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0, 0, 500) {
+            this->registerTexture("resources/sprites/Boss/right-part.png");
             this->secondWeapon = false;
             this->weapon = new Entities::Laser1(scope, this->team);
             this->weapon->setYSpeed(1);

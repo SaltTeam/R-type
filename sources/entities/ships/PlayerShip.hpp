@@ -8,7 +8,7 @@ namespace Entities {
     class PlayerShip : public Ship {
 
     protected:
-        PlayerShip(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
+        PlayerShip(SCOPE *scope, uint64_t id, network::protocol::Update updateType, uint16_t refreshTime, bool isEnabled,
                    float const &x, float const &y, float const &xSpeed, float const &ySpeed,
                    int const &health, int const &shield = 0);
 

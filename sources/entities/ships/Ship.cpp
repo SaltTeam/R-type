@@ -8,21 +8,24 @@
 #include "entities/powerups/sub/DamagePowerUp.hpp"
 #include "Ship.hpp"
 
-Entities::Ship::Ship(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
-                     Entities::Ship::TEAM team, float const &x, float const &y, float const &xSpeed,
+Entities::Ship::Ship(SCOPE *scope, uint64_t id , network::protocol::Update updateType, uint16_t refreshTime,
+                     bool isEnabled, Entities::Ship::TEAM team, float const &x, float const &y, float const &xSpeed,
                      float const &ySpeed, int const &health, const int &shield)
-        : MovableEntity(scope, id, isEnabled, x, y, xSpeed, ySpeed),
+        : MovableEntity(scope, id, updateType, refreshTime, isEnabled, x, y, xSpeed, ySpeed),
           health(health), maxHealth(health), shield(shield), team(team) {
     type = network::protocol::Type::SHIP;
-    this->setTexture(texturePath);
-    std::function<void(ENTITY *)> f5 = std::bind(&Ship::onCollision, this, std::placeholders::_1);
-    this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f5);
 }
 
 Entities::Ship::~Ship() {
     delete weapon;
     if (team == GAME)
         spawnPowerUp();
+}
+
+void Entities::Ship::registerTexture(std::string const &path) {
+    this->setTexture(path);
+    std::function<void(ENTITY *)> f5 = std::bind(&Ship::onCollision, this, std::placeholders::_1);
+    this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f5);
 }
 
 void Entities::Ship::spawnPowerUp() {
