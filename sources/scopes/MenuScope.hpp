@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/service/GameService.hpp"
+#include "ShipChoiceScope.hpp"
 
 namespace Scopes {
 
@@ -33,7 +34,7 @@ namespace Scopes {
             ImGui::Begin("R-type");
             ImGui::SetWindowPos(ImVec2(500, 700));
             if (ImGui::Button("Play", ImVec2(100, 50))) {
-                std::cout << "Play" << std::endl;
+                this->gameService->pushScope<Scopes::ShipChoiceScope>();
             }
             if (ImGui::Button("Settings", ImVec2(100, 50))) {
                if (!setting)
