@@ -10,10 +10,10 @@ namespace Scopes {
     int ShipChoiceScope::g_Ship = 0;
     void ShipChoiceScope::update() {
         static int cpt = 0;
-        static bool button = false;
-        std::string desc(" ");
-        std::string stat(" ");
-        std::string name(" ");
+        static bool button = true;
+        static std::string desc(" ");
+        static std::string stat(" ");
+        static std::string name(" ");
 
         if (button) {
             switch (cpt) {
@@ -88,7 +88,10 @@ namespace Scopes {
             button = true;
         }
         if (ImGui::Button("Prev")) {
-            cpt--;
+            if (cpt == 0)
+                cpt = 4;
+            else
+                cpt--;
             button = true;
 
         };
