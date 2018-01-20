@@ -17,9 +17,10 @@ namespace Entities {
         std::mt19937 rng;
 
     public:
-        TieAvenger(SCOPE *scope, uint64_t id = 0, bool isEnabled = true, const float &x = 0, const float &y = 0)
-                : Ship(scope, id, "resources/sprites/ships/enemy/ship2/base.png", isEnabled, Entities::Ship::GAME, x,
-                       y, 0.2, 0.2, 40) {
+        TieAvenger(SCOPE *scope, uint64_t id = 0, network::protocol::Update updateType = network::protocol::Update::Replica, uint16_t refreshTime = 1000,
+                   bool isEnabled = true, const float &x = 0, const float &y = 0)
+                : Ship(scope, id, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0.2, 0.2, 40) {
+            this->registerTexture("resources/sprites/ships/enemy/ship2/base.png");
             this->weapon = new Entities::Laser1(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->originXSpeed = 0.2;
