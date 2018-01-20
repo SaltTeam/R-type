@@ -12,6 +12,7 @@ namespace Entities {
         ShieldPowerUp(SCOPE *scope, uint64_t id, GRADE grade, int x, int y)
                 : APowerUp(scope, id, true, x, y, 0, 0.1, grade) {
             this->registerTexture("resources/sprites/Power-ups/shield_" + this->getEnumName(grade) + ".png");
+            this->type = network::protocol::Type::POWERUP_SHIELD;
         };
 
         void interract(PlayerShip *ship) override {

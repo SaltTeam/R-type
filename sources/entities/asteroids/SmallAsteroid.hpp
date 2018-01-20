@@ -11,7 +11,9 @@ namespace Entities {
     class SmallAsteroid : public Asteroid {
     public:
         SmallAsteroid(SCOPE *scope, uint64_t id, bool isEnabled, float const &x, float const &y)
-                : Asteroid(scope, id, "resources/sprites/Meteors/meteorGrey_small2.png", isEnabled, x, y) {}
+                : Asteroid(scope, id, "resources/sprites/Meteors/meteorGrey_small2.png", isEnabled, x, y) {
+            this->type = network::protocol::Type::ASTEROID_SMALL;
+        }
 
         ~SmallAsteroid() override {
             for (int i = 0; i < 2; ++i) {

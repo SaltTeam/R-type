@@ -13,7 +13,6 @@ Entities::Ship::Ship(SCOPE *scope, uint64_t id , network::protocol::Update updat
                      float const &ySpeed, int const &health, const int &shield)
         : MovableEntity(scope, id, updateType, refreshTime, isEnabled, x, y, xSpeed, ySpeed),
           health(health), maxHealth(health), shield(shield), team(team) {
-    type = network::protocol::Type::SHIP;
 }
 
 Entities::Ship::~Ship() {

@@ -19,6 +19,7 @@ namespace Entities {
                   bool isEnabled = true, const float &x = 0, const float &y = 0)
                 : Ship(scope, id, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0.25, 0.05, 40) {
             this->registerTexture("resources/sprites/ships/enemy/ship3/base.png");
+            this->type = network::protocol::Type::SHIP_TIEBOMBER;
             this->weapon = new Entities::Laser2(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->turnCheck = 0;
