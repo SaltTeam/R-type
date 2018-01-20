@@ -41,7 +41,7 @@ namespace network {
             Delete = 1,
         };
 
-        enum class Status {
+        enum class Status : int {
             Ok = 200,
             Error = 500,
             PassError = 501,
@@ -51,7 +51,8 @@ namespace network {
         enum class HeaderType {
             Error = 0,
             Connect = 1,
-            List = 2
+            List = 2,
+            Object = 3
         };
 
         extern "C" {
@@ -78,33 +79,97 @@ namespace network {
 #undef PACKED
 #endif
 
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct SBase {
             ObjectHeader header;
             bool isEnabled;
             float pos_x;
             float pos_y;
         };
+
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
+
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct SMovable {
             struct SBase base;
             float speed_x;
             float speed_y;
         };
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
+
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct SShip {
             struct SMovable base;
             short team;
             int health;
             int shield;
         };
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
+
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct SProjectile {
             struct SMovable base;
             short team;
             int damage;
         };
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
+
+#ifdef WIN32
+        #define PACKED
+#pragma pack(push,1)
+#else
+#define PACKED __attribute__((packed))
+#endif
         struct SPowerUp {
             struct SMovable base;
             short grade;
         };
-
+#ifdef WIN32
+        #pragma pack(pop)
+#undef PACKED
+#else
+#undef PACKED
+#endif
 
 #ifdef WIN32
         #define PACKED

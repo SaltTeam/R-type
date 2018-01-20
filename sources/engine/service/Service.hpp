@@ -16,9 +16,10 @@ namespace Engine {
             friend ENGINE;
             friend SERVICE_MANAGER;
 
-        protected:
+        public:
             ENGINE *engine;
 
+        protected:
             explicit BaseService(ENGINE *engine) : engine(engine) {}
 
             virtual ~BaseService() = default;

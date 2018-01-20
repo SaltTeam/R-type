@@ -8,6 +8,8 @@
 #include <imgui-SFML.h>
 #include <array>
 #include "scopes/TestScope.hpp"
+#include "engine/Runner.hpp"
+#include "engine/service/NetService.hpp"
 
 namespace Scopes {
     class LoginScope : public SCOPE {
@@ -53,6 +55,10 @@ namespace Scopes {
             {
                 std::cout << buf.data() << std::endl;
                 std::cout << passwd.data() << std::endl;
+
+                status = static_cast<int>(gameService->engine->findService<NET_SERVICE>()->connectTCP(buf.data(),
+                                                                                                      passwd.data(),
+                                                                                                      ip.data()));
                 switch (status)
                 {
                     case(200):

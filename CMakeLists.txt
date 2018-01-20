@@ -31,7 +31,8 @@ add_executable(${EXECUTABLE_NAME}
         sources/scopes/TestScope.hpp
         sources/scopes/MenuScope.hpp
         sources/scopes/ShipChoiceScope.cpp
-        
+        sources/scopes/LoginScope.hpp
+
         sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
         sources/entities/ships/Ship.cpp sources/entities/ships/Ship.hpp
         sources/entities/ships/sub/_Wing.hpp
@@ -71,6 +72,11 @@ add_executable(${EXECUTABLE_NAME}
         sources/entities/asteroids/MedAsteroid.hpp
         sources/entities/asteroids/SmallAsteroid.hpp
         sources/entities/asteroids/TinyAsteroid.hpp
+
+        sources/network/Addr.cpp
+        sources/network/Select.cpp
+        sources/network/SocketException.cpp
+        sources/network/Socket.cpp
 
         repos/imgui/imgui.cpp
         repos/imgui/imgui_draw.cpp
