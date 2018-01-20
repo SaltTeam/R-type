@@ -13,7 +13,7 @@
 namespace Entities {
     class Projectile : public MOVABLE_ENTITY {
     public:
-        Projectile(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
+        Projectile(SCOPE *scope, uint64_t id,network::protocol::PlayerColor playerColor, const std::string &texturePath, bool isEnabled,
                    float const &x, float const &y, float const &xSpeed, float const &ySpeed,
                    int const &damage, Entities::Ship::TEAM originTeam);
 

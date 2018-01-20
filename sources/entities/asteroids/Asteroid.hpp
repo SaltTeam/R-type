@@ -13,15 +13,16 @@
 namespace Entities {
     class Asteroid : public MOVABLE_ENTITY {
     public:
-	Asteroid(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled,
-		 float const &x, float const &y);
+        Asteroid(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, const std::string &texturePath,
+                 bool isEnabled,
+                 float const &x, float const &y);
 
-	Asteroid(SCOPE *scope, uint64_t id, bool isEnabled,
-		 float const &x, float const &y);
+        Asteroid(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, bool isEnabled,
+                 float const &x, float const &y);
 
     protected:
-	void update() override;
+        void update() override;
 
-	void onCollision(ENTITY *other);
+        void onCollision(ENTITY *other);
     };
 }

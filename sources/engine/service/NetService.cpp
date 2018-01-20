@@ -9,10 +9,11 @@
 #include "engine/service/GameService.hpp"
 
 namespace Engine {
+    network::protocol::PlayerColor NET_SERVICE::color = network::protocol::PlayerColor::Error;
+
     EngineStatus NET_SERVICE::initialize() {
         this->running = true;
         this->connect = false;
-        this->color = network::protocol::PlayerColor::Error;
         this->thread = new std::thread(&NET_SERVICE::run, std::ref(*this));
         return EngineStatus::Continue;
     }
@@ -150,7 +151,7 @@ namespace Engine {
         bool ok = false;
         std::unique_ptr<mysocket::Socket> sock;
         mysocket::InetAddr server{};
-        
+
         while (!ok) {
             while (!connect.load()) {}
             try {
@@ -162,7 +163,7 @@ namespace Engine {
                 server.SetAddress(this->address);
                 ok = true;
             }
-            catch (mysocket::SocketException const& e) {
+            catch (mysocket::SocketException const &e) {
                 sock.reset(nullptr);
             }
             catch (...) {
@@ -174,25 +175,25 @@ namespace Engine {
             while (!this->in.empty()) {
                 auto p = this->in.front();
                 this->in.pop();
-                
+
                 network::protocol::Header hdr{};
                 hdr.size = p->size;
                 hdr.type = network::protocol::HeaderType::Object;
                 std::basic_string<unsigned char> msg;
-                msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
-                msg.append(reinterpret_cast<unsigned char*>(p), p->size);
-                
+                msg.append(reinterpret_cast<unsigned char *>(&hdr), sizeof(network::protocol::Header));
+                msg.append(reinterpret_cast<unsigned char *>(p), p->size);
+
                 sock->SendTo(msg.data(), p->size + sizeof(network::protocol::Header), 0, server);
-                
+
                 delete p;
             }
             mut_in.unlock();
         }
     }
 
-    network::protocol::Status NET_SERVICE::connectTCP(std::string const& name,
-                                                      std::string const& passwd,
-                                                      std::string const& ipAddr) {
+    network::protocol::Status NET_SERVICE::connectTCP(std::string const &name,
+                                                      std::string const &passwd,
+                                                      std::string const &ipAddr) {
 
         try {
             mysocket::Socket tc{AF_INET, SOCK_STREAM, IPPROTO_TCP};
@@ -208,8 +209,8 @@ namespace Engine {
                 return network::protocol::Status::Error;
             }
             std::basic_string<unsigned char> msg;
-            msg.append(reinterpret_cast<unsigned char*>(&hdr), sizeof(network::protocol::Header));
-            msg.append(reinterpret_cast<unsigned char*>(&connect), hdr.size);
+            msg.append(reinterpret_cast<unsigned char *>(&hdr), sizeof(network::protocol::Header));
+            msg.append(reinterpret_cast<unsigned char *>(&connect), hdr.size);
             if (tc.Send(msg.data(), msg.length(), 0) == -1) {
                 // LOG
                 return network::protocol::Status::Error;
@@ -234,7 +235,7 @@ namespace Engine {
             this->connect = true;
             return resp.status;
         }
-        catch (mysocket::SocketException const& e) {
+        catch (mysocket::SocketException const &e) {
             // LOG
             return network::protocol::Status::Error;
         }

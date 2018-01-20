@@ -11,9 +11,11 @@
 namespace Entities {
     class LeftPart : public Ship {
     public:
-        LeftPart(SCOPE *scope, uint64_t id = 0, network::protocol::Update updateType = network::protocol::Update::Replica, uint16_t refreshTime = 1000,
+        LeftPart(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
+                 network::protocol::Update updateType = network::protocol::Update::Replica, uint16_t refreshTime = 1000,
                  bool isEnabled = true, const float &x = 0, const float &y = 0)
-                : Ship(scope, id, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0, 0, 500) {
+                : Ship(scope, id, playerColor, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0, 0,
+                       500) {
             this->registerTexture("resources/sprites/Boss/left-part.png");
             this->secondWeapon = false;
             this->weapon = new Entities::Laser1(scope, this->team);
@@ -33,8 +35,11 @@ namespace Entities {
             delete this->weapon2;
             for (int i = 0; i < 4; ++i) {
                 this->scope->entityManager.add<Entities::BigAsteroid>(LAYER::Layer1, true,
-                                                                   this->position.x + this->texture->sprite.getGlobalBounds().width / 2,
-                                                                   this->position.y + this->texture->sprite.getGlobalBounds().height / 2);
+                                                                      this->position.x +
+                                                                      this->texture->sprite.getGlobalBounds().width / 2,
+                                                                      this->position.y +
+                                                                      this->texture->sprite.getGlobalBounds().height /
+                                                                      2);
             }
         }
 

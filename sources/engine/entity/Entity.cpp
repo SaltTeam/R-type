@@ -31,31 +31,10 @@ void ENTITY::registerCollisionBox(const sf::Vector2f &origin, const sf::FloatRec
 }
 
 uint64_t ENTITY_MANAGER::generateId() {
-    return this->generateId(network::protocol::PlayerColor::Blue);
-}
-
-uint64_t ENTITY_MANAGER::generateId(network::protocol::PlayerColor color) {
     static uint64_t lastId = 0;
-    uint64_t headerId;
-    switch (color) {
-        case network::protocol::PlayerColor::Blue:
-            headerId = 0x00000000;
-            break;
-        case network::protocol::PlayerColor::Green:
-            headerId = 0x01000000;
-            break;
-        case network::protocol::PlayerColor::Red:
-            headerId = 0x02000000;
-            break;
-        case network::protocol::PlayerColor::Yellow:
-        default:
-            headerId = 0x03000000;
-            break;
-    }
     for (;;) {
-        if (!this->exists(headerId + lastId)) {
-            std::cout << headerId + lastId << std::endl;
-            return headerId + lastId;
+        if (!this->exists(lastId)) {
+            return lastId;
         }
         if (lastId > 0x00ffffff)
             lastId = 0;

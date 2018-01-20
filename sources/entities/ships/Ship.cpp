@@ -8,10 +8,11 @@
 #include "entities/powerups/sub/DamagePowerUp.hpp"
 #include "Ship.hpp"
 
-Entities::Ship::Ship(SCOPE *scope, uint64_t id , network::protocol::Update updateType, uint16_t refreshTime,
+Entities::Ship::Ship(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
+                     network::protocol::Update updateType, uint16_t refreshTime,
                      bool isEnabled, Entities::Ship::TEAM team, float const &x, float const &y, float const &xSpeed,
                      float const &ySpeed, int const &health, const int &shield)
-        : MovableEntity(scope, id, updateType, refreshTime, isEnabled, x, y, xSpeed, ySpeed),
+        : MovableEntity(scope, id, playerColor, updateType, refreshTime, isEnabled, x, y, xSpeed, ySpeed),
           health(health), maxHealth(health), shield(shield), team(team) {
     type = network::protocol::Type::SHIP;
 }

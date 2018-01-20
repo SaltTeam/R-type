@@ -17,18 +17,23 @@ namespace Entities {
         std::mt19937 rng;
 
     public:
-        TieAvenger(SCOPE *scope, uint64_t id = 0, network::protocol::Update updateType = network::protocol::Update::Replica, uint16_t refreshTime = 1000,
+        TieAvenger(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
+                   network::protocol::Update updateType = network::protocol::Update::Replica,
+                   uint16_t refreshTime = 1000,
                    bool isEnabled = true, const float &x = 0, const float &y = 0)
-                : Ship(scope, id, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0.2, 0.2, 40) {
+                : Ship(scope, id, playerColor, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0.2, 0.2,
+                       40) {
             this->registerTexture("resources/sprites/ships/enemy/ship2/base.png");
             this->weapon = new Entities::Laser1(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->originXSpeed = 0.2;
             this->originYSpeed = 0.2;
-            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 5, this->texture->sprite.getGlobalBounds().height / 2 - 2});
-            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 5, this->texture->sprite.getGlobalBounds().height / 2 - 2});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 5,
+                                    this->texture->sprite.getGlobalBounds().height / 2 - 2});
+            this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 5,
+                                    this->texture->sprite.getGlobalBounds().height / 2 - 2});
             this->rng.seed(std::random_device()());
-            std::uniform_int_distribution<std::mt19937::result_type> dist6(1,10000);
+            std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 10000);
             dist10 = dist6;
         }
 
@@ -38,15 +43,17 @@ namespace Entities {
             if (dist10(rng) % 1005 == 0)
                 this->shoot();
             Ship::update();
-            if ((this->position.x >= (this->scope->gameService->getWindowSize().x / 2) && this->speed.x == this->originXSpeed
-                && this->speed.y == this->originYSpeed) ||
-                    (this->position.x <= (this->scope->gameService->getWindowSize().x / 2) && this->speed.x != this->originXSpeed
-                    && this->speed.y == this->originYSpeed))
+            if ((this->position.x >= (this->scope->gameService->getWindowSize().x / 2) &&
+                 this->speed.x == this->originXSpeed
+                 && this->speed.y == this->originYSpeed) ||
+                (this->position.x <= (this->scope->gameService->getWindowSize().x / 2) &&
+                 this->speed.x != this->originXSpeed
+                 && this->speed.y == this->originYSpeed))
                 this->speed.y = -(this->speed.y);
             else if ((this->position.x >= (this->scope->gameService->getWindowSize().x - 50) &&
-                    (this->speed.x == this->originXSpeed && this->speed.y != this->originYSpeed)) ||
-                    (this->position.x <= 25 && (this->speed.x != this->originXSpeed && this->speed.y != this->originYSpeed)))
-            {
+                      (this->speed.x == this->originXSpeed && this->speed.y != this->originYSpeed)) ||
+                     (this->position.x <= 25 &&
+                      (this->speed.x != this->originXSpeed && this->speed.y != this->originYSpeed))) {
                 this->speed.y = -(this->speed.y);
                 this->speed.x = -(this->speed.x);
             }

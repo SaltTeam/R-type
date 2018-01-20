@@ -8,10 +8,12 @@
 #include "engine/service/GameService.hpp"
 #include "PlayerShip.hpp"
 
-Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, network::protocol::Update updateType, uint16_t refreshTime, bool isEnabled,
+Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
+                                 network::protocol::Update updateType, uint16_t refreshTime, bool isEnabled,
                                  float const &x, float const &y, const float &xSpeed, const float &ySpeed,
                                  int const &health, int const &shield)
-        : Ship(scope, id, updateType, refreshTime, isEnabled, Entities::Ship::PLAYER, x, y, xSpeed, ySpeed, health, shield) {
+        : Ship(scope, id, playerColor, updateType, refreshTime, isEnabled, Entities::Ship::PLAYER, x, y, xSpeed, ySpeed,
+               health, shield) {
     this->registerBindings();
 }
 
@@ -31,16 +33,14 @@ void Entities::PlayerShip::registerBindings() {
 void Entities::PlayerShip::onCollision(ENTITY *other) {
     if (!other->isEnabled)
         return;
-    if (dynamic_cast<Entities::Asteroid *>(other) != nullptr)
-    {
+    if (dynamic_cast<Entities::Asteroid *>(other) != nullptr) {
         if (dynamic_cast<Entities::TinyAsteroid *>(other) != nullptr)
             this->takeDamage(25);
         else if (this->shield == 0)
             this->scope->removeEntity(this);
         else
             this->shield = 0;
-    }
-    else if (dynamic_cast<Entities::Ship *>(other) != nullptr)
+    } else if (dynamic_cast<Entities::Ship *>(other) != nullptr)
         if (dynamic_cast<Entities::Ship *>(other)->getTeam() != this->team) {
             if (dynamic_cast<Entities::Ship *>(other)->getShield() == 0)
                 this->scope->removeEntity(other);

@@ -16,7 +16,7 @@ namespace Entities {
         friend NET_SERVICE;
 
     public:
-        APowerUp(SCOPE *scope, uint64_t id, bool isEnabled, float const &x, float const &y, float const &xSpeed,
+        APowerUp(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, bool isEnabled, float const &x, float const &y, float const &xSpeed,
                  float const &ySpeed, GRADE grade);
 
         virtual void interract(Entities::PlayerShip *ship) = 0;

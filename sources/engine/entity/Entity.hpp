@@ -7,6 +7,7 @@
 #include <functional>
 #include <SFML/System/Vector2.hpp>
 #include <list>
+#include <engine/service/NetService.hpp>
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/display/Texture.hpp"
@@ -100,16 +101,14 @@ namespace Engine {
 
             uint64_t generateId();
 
-            uint64_t generateId(network::protocol::PlayerColor);
-
             template<typename T, typename... Args>
             void add(Layer layer, Args &&...args) {
-                this->entities[layer].push_back(new T(this->scope, generateId(), std::forward<Args>(args)...));
+                this->entities[layer].push_back(new T(this->scope, generateId(), NET_SERVICE::color, std::forward<Args>(args)...));
             }
 
             template<typename T, typename... Args>
             void netAdd(Layer layer, network::protocol::PlayerColor color, Args &&...args) {
-                this->entities[layer].push_back(new T(this->scope, generateId(color), std::forward<Args>(args)...));
+                this->entities[layer].push_back(new T(this->scope, generateId(), color, std::forward<Args>(args)...));
             }
 
             ENTITY *find(uint64_t id) {
