@@ -1,4 +1,26 @@
 
+#include <entities/asteroids/BigAsteroid.hpp>
+#include <entities/powerups/sub/DamagePowerUp.hpp>
+#include <entities/powerups/sub/HealPowerUp.hpp>
+#include <entities/powerups/sub/ShieldPowerUp.hpp>
+#include <entities/powerups/sub/SpeedPowerUp.hpp>
+#include <entities/weapons/sub/Laser1.hpp>
+#include <entities/weapons/sub/Laser2.hpp>
+#include <entities/weapons/sub/Laser3.hpp>
+#include <entities/weapons/sub/Laser4.hpp>
+#include <entities/ships/Boss/LeftPart.hpp>
+#include <entities/ships/Boss/MiddlePart.hpp>
+#include <entities/ships/Boss/RightPart.hpp>
+#include <entities/ships/sub/_Wing.hpp>
+#include <entities/ships/sub/Arc.hpp>
+#include <entities/ships/sub/Interceptor.hpp>
+#include <entities/ships/sub/TieAdvance.hpp>
+#include <entities/ships/sub/TieAvenger.hpp>
+#include <entities/ships/sub/TieBomber.hpp>
+#include <entities/ships/sub/TieExperiment.hpp>
+#include <entities/ships/sub/TieFigther.hpp>
+#include <entities/ships/sub/XWing.hpp>
+#include <entities/ships/sub/YWing.hpp>
 #include "entities/projectiles/Projectile.hpp"
 #include "entities/powerups/APowerUp.hpp"
 #include "NetService.hpp"
@@ -168,79 +190,137 @@ namespace Engine {
         this->mut_out.lock();
         while (!this->out.empty()) {
             auto p = this->out.front();
-
             auto e = scope->entityManager.find(p->id);
             if (e == nullptr) {
-//                scope->entityManager.netAdd(LAYER::Layer1, p->color, )
-            } else {
+                /*
+            if (p->action == network::protocol::Action::Update) {
                 switch (p->type) {
                     case network::protocol::Type::ASTEROID_BIG:
+                        scope->entityManager.netAdd<::Entities::BigAsteroid>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::ASTEROID_MED:
+                        scope->entityManager.netAdd<::Entities::MedAsteroid>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::ASTEROID_SMALL:
-                    case network::protocol::Type::ASTEROID_TINY: {
-                        auto obj = reinterpret_cast<MOVABLE_ENTITY *>(e);
-                        auto data = reinterpret_cast<network::protocol::SMovable *>(p);
-                        obj->position.x = data->base.pos_x;
-                        obj->position.y = data->base.pos_y;
-                        obj->isEnabled = data->base.isEnabled;
-                        obj->speed.x = data->speed_x;
-                        obj->speed.y = data->speed_y;
-                        break;
-                    }
+                        scope->entityManager.netAdd<::Entities::SmallAsteroid>(LAYER::Layer1, p->color); break;
+                    case network::protocol::Type::ASTEROID_TINY:
+                        scope->entityManager.netAdd<::Entities::TinyAsteroid>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::POWERUP_DAMAGE:
+                        scope->entityManager.netAdd<::Entities::DamagePowerUp>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::POWERUP_HEAL:
+                        scope->entityManager.netAdd<::Entities::HealPowerUp>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::POWERUP_SHIELD:
-                    case network::protocol::Type::POWERUP_SPEED: {
-                        auto obj = reinterpret_cast<::Entities::APowerUp *>(e);
-                        auto data = reinterpret_cast<network::protocol::SPowerUp *>(p);
-                        obj->position.x = data->base.base.pos_x;
-                        obj->position.y = data->base.base.pos_y;
-                        obj->isEnabled = data->base.base.isEnabled;
-                        obj->speed.x = data->base.speed_x;
-                        obj->speed.y = data->base.speed_y;
-                        obj->grade = (GRADE) data->grade;
-                        break;
-                    }
+                        scope->entityManager.netAdd<::Entities::ShieldPowerUp>(LAYER::Layer1, p->color); break;
+                    case network::protocol::Type::POWERUP_SPEED:
+                        scope->entityManager.netAdd<::Entities::SpeedPowerUp>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::LASER1:
+                        scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::LASER2:
+                        scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::LASER3:
-                    case network::protocol::Type::LASER4: {
-                        auto obj = reinterpret_cast<::Entities::Projectile *>(e);
-                        auto data = reinterpret_cast<network::protocol::SProjectile *>(p);
-                        obj->position.x = data->base.base.pos_x;
-                        obj->position.y = data->base.base.pos_y;
-                        obj->isEnabled = data->base.base.isEnabled;
-                        obj->speed.x = data->base.speed_x;
-                        obj->speed.y = data->base.speed_y;
-                        obj->damage = data->damage;
-                        obj->originTeam = (::Entities::Ship::TEAM) data->team;
-                        break;
-                    }
+                        scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color); break;
+                    case network::protocol::Type::LASER4:
+                        scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::BOSS_LEFTPART:
+                        scope->entityManager.netAdd<::Entities::LeftPart>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::BOSS_MIDDLEPART:
+                        scope->entityManager.netAdd<::Entities::MiddlePart>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::BOSS_RIGHTPART:
+                        scope->entityManager.netAdd<::Entities::RightPart>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::SHIP_WING:
+                        scope->entityManager.netAdd<::Entities::_Wing>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::SHIP_ARC:
+                        scope->entityManager.netAdd<::Entities::Arc>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::SHIP_INTERCEPTOR:
+                        scope->entityManager.netAdd<::Entities::Interceptor>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::SHIP_TIEADVANCE:
+                        scope->entityManager.netAdd<::Entities::TieAdvance>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::SHIP_TIEAVENGER:
+                        scope->entityManager.netAdd<::Entities::TieAvenger>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::SHIP_TIEBOMBER:
+                        scope->entityManager.netAdd<::Entities::TieBomber>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::SHIP_TIEEXPERIMENT:
+                        scope->entityManager.netAdd<::Entities::TieExperiment>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::SHIP_TIEFIGHTER:
+                        scope->entityManager.netAdd<::Entities::TieFigther>(LAYER::Layer1, p->color); break;
                     case network::protocol::Type::SHIP_XWING:
-                    case network::protocol::Type::SHIP_YWING: {
-                        auto obj = reinterpret_cast<::Entities::Ship *>(e);
-                        auto data = reinterpret_cast<network::protocol::SShip *>(p);
-                        obj->position.x = data->base.base.pos_x;
-                        obj->position.y = data->base.base.pos_y;
-                        obj->isEnabled = data->base.base.isEnabled;
-                        obj->speed.x = data->base.speed_x;
-                        obj->speed.y = data->base.speed_y;
-                        obj->team = (::Entities::Ship::TEAM) data->team;
-                        obj->health = data->health;
-                        obj->shield = data->shield;
-                        break;
+                        scope->entityManager.netAdd<::Entities::XWing>(LAYER::Layer1, p->color); break;
+                    case network::protocol::Type::SHIP_YWING:
+                        scope->entityManager.netAdd<::Entities::YWing>(LAYER::Layer1, p->color); break;
+                }
+            }
+                 */
+            } else {
+                if (p->action == network::protocol::Action::Update) {
+                    switch (p->type) {
+                        case network::protocol::Type::ASTEROID_BIG:
+                        case network::protocol::Type::ASTEROID_MED:
+                        case network::protocol::Type::ASTEROID_SMALL:
+                        case network::protocol::Type::ASTEROID_TINY: {
+                            auto obj = reinterpret_cast<MOVABLE_ENTITY *>(e);
+                            auto data = reinterpret_cast<network::protocol::SMovable *>(p);
+                            obj->position.x = data->base.pos_x;
+                            obj->position.y = data->base.pos_y;
+                            obj->isEnabled = data->base.isEnabled;
+                            obj->speed.x = data->speed_x;
+                            obj->speed.y = data->speed_y;
+                            break;
+                        }
+                        case network::protocol::Type::POWERUP_DAMAGE:
+                        case network::protocol::Type::POWERUP_HEAL:
+                        case network::protocol::Type::POWERUP_SHIELD:
+                        case network::protocol::Type::POWERUP_SPEED: {
+                            auto obj = reinterpret_cast<::Entities::APowerUp *>(e);
+                            auto data = reinterpret_cast<network::protocol::SPowerUp *>(p);
+                            obj->position.x = data->base.base.pos_x;
+                            obj->position.y = data->base.base.pos_y;
+                            obj->isEnabled = data->base.base.isEnabled;
+                            obj->speed.x = data->base.speed_x;
+                            obj->speed.y = data->base.speed_y;
+                            obj->grade = (GRADE) data->grade;
+                            break;
+                        }
+                        case network::protocol::Type::LASER1:
+                        case network::protocol::Type::LASER2:
+                        case network::protocol::Type::LASER3:
+                        case network::protocol::Type::LASER4: {
+                            auto obj = reinterpret_cast<::Entities::Projectile *>(e);
+                            auto data = reinterpret_cast<network::protocol::SProjectile *>(p);
+                            obj->position.x = data->base.base.pos_x;
+                            obj->position.y = data->base.base.pos_y;
+                            obj->isEnabled = data->base.base.isEnabled;
+                            obj->speed.x = data->base.speed_x;
+                            obj->speed.y = data->base.speed_y;
+                            obj->damage = data->damage;
+                            obj->originTeam = (::Entities::Ship::TEAM) data->team;
+                            break;
+                        }
+                        case network::protocol::Type::BOSS_LEFTPART:
+                        case network::protocol::Type::BOSS_MIDDLEPART:
+                        case network::protocol::Type::BOSS_RIGHTPART:
+                        case network::protocol::Type::SHIP_WING:
+                        case network::protocol::Type::SHIP_ARC:
+                        case network::protocol::Type::SHIP_INTERCEPTOR:
+                        case network::protocol::Type::SHIP_TIEADVANCE:
+                        case network::protocol::Type::SHIP_TIEAVENGER:
+                        case network::protocol::Type::SHIP_TIEBOMBER:
+                        case network::protocol::Type::SHIP_TIEEXPERIMENT:
+                        case network::protocol::Type::SHIP_TIEFIGHTER:
+                        case network::protocol::Type::SHIP_XWING:
+                        case network::protocol::Type::SHIP_YWING: {
+                            auto obj = reinterpret_cast<::Entities::Ship *>(e);
+                            auto data = reinterpret_cast<network::protocol::SShip *>(p);
+                            obj->position.x = data->base.base.pos_x;
+                            obj->position.y = data->base.base.pos_y;
+                            obj->isEnabled = data->base.base.isEnabled;
+                            obj->speed.x = data->base.speed_x;
+                            obj->speed.y = data->base.speed_y;
+                            obj->team = (::Entities::Ship::TEAM) data->team;
+                            obj->health = data->health;
+                            obj->shield = data->shield;
+                            break;
+                        }
                     }
+                } else {
+                    scope->removeEntity(e);
                 }
             }
             this->out.pop();
