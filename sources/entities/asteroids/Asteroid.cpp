@@ -21,7 +21,7 @@ Entities::Asteroid::Asteroid(SCOPE *scope, uint64_t id, const std::string &textu
 
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_real_distribution<float> dist_speed(-0.2, 0.2);
+    std::uniform_real_distribution<float> dist_speed(-0.3, 0.3);
 
     this->setTexture(texturePath);
     this->setSpeed(dist_speed(mt), dist_speed(mt));
@@ -34,7 +34,7 @@ Entities::Asteroid::Asteroid(SCOPE *scope, uint64_t id, bool isEnabled,
     : MovableEntity(scope, id, network::protocol::Update::Instanciated, 250, isEnabled, x, y) {
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_real_distribution<float> dist_speed(-0.2, 0.2);
+    std::uniform_real_distribution<float> dist_speed(-0.3, 0.3);
     std::uniform_real_distribution<float> dist_path(0, 9);
 
     this->setTexture(paths[dist_path(mt)]);

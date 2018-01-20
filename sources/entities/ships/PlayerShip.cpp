@@ -2,6 +2,7 @@
 // Created by sylva on 10/01/2018.
 //
 
+#include <entities/asteroids/TinyAsteroid.hpp>
 #include "entities/asteroids/Asteroid.hpp"
 #include "engine/scope/Scope.hpp"
 #include "engine/service/GameService.hpp"
@@ -31,10 +32,14 @@ void Entities::PlayerShip::onCollision(ENTITY *other) {
     if (!other->isEnabled)
         return;
     if (dynamic_cast<Entities::Asteroid *>(other) != nullptr)
-        if (this->shield == 0)
+    {
+        if (dynamic_cast<Entities::TinyAsteroid *>(other) != nullptr)
+            this->takeDamage(25);
+        else if (this->shield == 0)
             this->scope->removeEntity(this);
         else
             this->shield = 0;
+    }
     else if (dynamic_cast<Entities::Ship *>(other) != nullptr)
         if (dynamic_cast<Entities::Ship *>(other)->getTeam() != this->team) {
             if (dynamic_cast<Entities::Ship *>(other)->getShield() == 0)
