@@ -12,6 +12,7 @@ namespace Engine {
 
         class GraphicalService;
         class GameService;
+        class NetService;
     }
 
     namespace Entities {
@@ -40,6 +41,7 @@ namespace Engine {
 #define SERVICE_MANAGER Engine::Services::ServiceManager
 #define GRAPHICAL_SERVICE Engine::Services::GraphicalService
 #define GAME_SERVICE Engine::Services::GameService
+#define NET_SERVICE Engine::Services::NetService
 
 #define ENTITY Engine::Entities::BaseEntity
 #define MOVABLE_ENTITY Engine::Entities::MovableEntity

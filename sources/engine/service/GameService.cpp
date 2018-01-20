@@ -33,6 +33,7 @@ EngineStatus GAME_SERVICE::earlyUpdate() {
 
 EngineStatus GAME_SERVICE::update() {
     if (!scopes.empty()) {
+        scopes.top()->earlyUpdate();
         scopes.top()->entityManager.update();
         scopes.top()->update();
     }

@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.9)
 project(r-type)
 
 set(EXECUTABLE_NAME "r-type")
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
-include_directories(sources/ repos/imgui/)
+include_directories(sources/ repos/imgui/ includes/)
 
 add_executable(${EXECUTABLE_NAME}
         sources/main.cpp
@@ -26,11 +26,50 @@ add_executable(${EXECUTABLE_NAME}
         sources/engine/service/GameService.cpp sources/engine/service/GameService.hpp
         sources/engine/service/NetService.cpp sources/engine/service/NetService.hpp
 
+        sources/logger/Logger.cpp
+
         sources/scopes/TestScope.hpp
-        sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
-        sources/entities/Asteroid.cpp sources/entities/Asteroid.hpp
-        sources/entities/Projectiles/Projectile.cpp sources/entities/Projectiles/Projectile.hpp sources/entities/Weapons/Weapon.cpp sources/entities/Weapons/Weapon.hpp
         sources/scopes/MenuScope.hpp
+        
+        sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
+        sources/entities/ships/Ship.cpp sources/entities/ships/Ship.hpp
+        sources/entities/ships/sub/_Wing.hpp
+        sources/entities/ships/sub/Arc.hpp
+        sources/entities/ships/sub/Interceptor.hpp
+        sources/entities/ships/sub/XWing.hpp
+        sources/entities/ships/sub/YWing.hpp
+        sources/entities/ships/sub/TieFigther.hpp
+        sources/entities/ships/sub/TieAvenger.hpp
+        sources/entities/ships/sub/TieBomber.hpp
+        sources/entities/ships/sub/TieAdvance.hpp
+        sources/entities/ships/sub/TieExperiment.hpp
+        sources/entities/ships/Boss/LeftPart.hpp
+        sources/entities/ships/Boss/MiddlePart.hpp
+        sources/entities/ships/Boss/RightPart.hpp
+
+        sources/entities/projectiles/Projectile.cpp sources/entities/projectiles/Projectile.hpp
+        sources/entities/projectiles/sub/SinusProjectile.cpp sources/entities/projectiles/sub/SinusProjectile.hpp
+
+        sources/entities/weapons/Weapon.cpp sources/entities/weapons/Weapon.hpp
+        sources/entities/weapons/AWeapon.hpp
+        sources/entities/weapons/IWeapon.hpp
+        sources/entities/weapons/sub/Laser1.hpp
+        sources/entities/weapons/sub/Laser2.hpp
+        sources/entities/weapons/sub/Laser3.hpp
+        sources/entities/weapons/sub/Laser4.cpp sources/entities/weapons/sub/Laser4.hpp
+
+        sources/entities/powerups/APowerUp.cpp sources/entities/powerups/APowerUp.hpp
+        sources/entities/powerups/sub/HealPowerUp.hpp
+        sources/entities/powerups/sub/ShieldPowerUp.hpp
+        sources/entities/powerups/sub/SpeedPowerUp.hpp
+        sources/entities/powerups/sub/DamagePowerUp.hpp
+        sources/entities/powerups/grade.hpp
+
+        sources/entities/asteroids/Asteroid.cpp sources/entities/asteroids/Asteroid.hpp
+        sources/entities/asteroids/BigAsteroid.hpp
+        sources/entities/asteroids/MedAsteroid.hpp
+        sources/entities/asteroids/SmallAsteroid.hpp
+        sources/entities/asteroids/TinyAsteroid.hpp
 
         repos/imgui/imgui.cpp
         repos/imgui/imgui_draw.cpp
@@ -46,7 +85,44 @@ if (SFML_FOUND)
     target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif ()
 
-find_package(OPENGL)
+add_executable("server"
+        sources/server/sources/Server.cpp
+        sources/network/Addr.cpp
+        sources/network/Select.cpp
+        sources/network/SocketException.cpp
+        sources/network/Socket.cpp
+        sources/server/main.cpp
+        sources/server/sources/Game.cpp
+
+        sources/logger/Logger.cpp
+
+        includes/logger/Logger.hpp
+        includes/network/Addr.hpp
+        includes/network/Select.hpp
+        includes/network/SocketException.hpp
+        includes/network/Socket.hpp
+        includes/server/Protocol.hpp
+        includes/server/Game.hpp
+        includes/server/Server.hpp
+        )
+
+if (WIN32)
+find_package(Threads REQUIRED)
+target_link_libraries(server ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${EXECUTABLE_NAME} ${CMAKE_THREAD_LIBS_INIT})
+else ()
+    target_link_libraries(server pthread)
+    target_link_libraries(${EXECUTABLE_NAME} pthread)
+endif ()
+
+add_executable("test_client"
+        #sources/test_client_main.cpp
+        sources/network/Addr.cpp
+        sources/network/Select.cpp
+        sources/network/SocketException.cpp
+        sources/network/Socket.cpp
+        )
+find_package(OpenGL)
 if (OPENGL_FOUND)
     include_directories(${OPENGL_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${OPENGL_LIBRARIES})

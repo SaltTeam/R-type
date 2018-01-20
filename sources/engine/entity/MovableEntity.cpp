@@ -8,25 +8,31 @@
 
 //<editor-fold> MOVE FUNCTIONS
 
+#define MOVE_MULTIPLIER 1000
+
 void MOVABLE_ENTITY::moveUp() {
-    this->position.y -= this->speed.y;
+    this->position.y -= this->speed.y * (GRAPHICAL_SERVICE::deltaTime.asSeconds() * MOVE_MULTIPLIER);
 }
 
 void MOVABLE_ENTITY::moveDown() {
-    this->position.y += this->speed.y;
+    this->position.y += this->speed.y * (GRAPHICAL_SERVICE::deltaTime.asSeconds() * MOVE_MULTIPLIER);
 }
 
 void MOVABLE_ENTITY::moveLeft() {
-    this->position.x -= this->speed.x;
+    this->position.x -= this->speed.x * (GRAPHICAL_SERVICE::deltaTime.asSeconds() * MOVE_MULTIPLIER);
 }
 
 void MOVABLE_ENTITY::moveRight() {
-    this->position.x += this->speed.x;
+    this->position.x += this->speed.x * (GRAPHICAL_SERVICE::deltaTime.asSeconds() * MOVE_MULTIPLIER);
 }
 
 void MOVABLE_ENTITY::move() {
-    this->position += this->speed;
+    this->position.x += this->speed.x * (GRAPHICAL_SERVICE::deltaTime.asSeconds() * MOVE_MULTIPLIER);
+    this->position.y += this->speed.y * (GRAPHICAL_SERVICE::deltaTime.asSeconds() * MOVE_MULTIPLIER);
 }
+
+#undef MOVE_MULTIPLIER
+
 //</editor-fold>
 
 
@@ -50,8 +56,8 @@ void MOVABLE_ENTITY::update() {
     sf::Vector2u borders = this->scope->gameService->getWindowSize();
     sf::FloatRect sides = this->texture->sprite.getGlobalBounds();
     if (this->position.x + sides.width < 0 || this->position.x > borders.x)
-        this->scope->entityManager.remove(this);
+        this->scope->removeEntity(this);
     else if (this->position.y + sides.height < 0 || this->position.y > borders.y)
-        this->scope->entityManager.remove(this);
+        this->scope->removeEntity(this);
 }
 //</editor-fold>

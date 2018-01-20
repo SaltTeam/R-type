@@ -188,6 +188,7 @@ RFC 1432          R-Type Client Server Protocol             January 2018
     +--------------------------------------+
     |  STATUS   |    4   | response-status |
     |   COLOR   |    4   |   player-color  |
+    |   PORT    |    2   | connection-port |
     +--------------------------------------+
 
     +--------------------------------------+
@@ -236,6 +237,14 @@ RFC 4242          R-Type Client Server Protocol           December 2010
 	  MASTER = 0,
 	  INSTANCIATED = 1,
 	  REPLICA = 2
+	}
+
+     The player color. Used for IDs (ref. object)
+	PlayerColor {
+	  BLUE = 0,
+	  GREEN,
+	  RED,
+	  YELLOW
 	}
 
      The entity type, implementation define.
