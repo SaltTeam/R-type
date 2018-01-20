@@ -29,15 +29,15 @@ namespace Scopes {
 
         void spawnBoss(SCOPE *scope, int x, int y)
         {
-            scope->entityManager.add<Entities::LeftPart>(LAYER::Layer1, network::protocol::Update::Replica, true, x, y + 131);
-            scope->entityManager.add<Entities::MiddlePart>(LAYER::Layer1, network::protocol::Update::Replica, true, x + 16, y);
-            scope->entityManager.add<Entities::RightPart>(LAYER::Layer1, network::protocol::Update::Replica, true, x + 200, y + 131);
+            scope->entityManager.add<Entities::LeftPart>(LAYER::Layer1, network::protocol::Update::Replica, 250, true, x, y + 131);
+            scope->entityManager.add<Entities::MiddlePart>(LAYER::Layer1, network::protocol::Update::Replica, 250, true, x + 16, y);
+            scope->entityManager.add<Entities::RightPart>(LAYER::Layer1, network::protocol::Update::Replica, 250, true, x + 200, y + 131);
         }
 
         void initialize() override {
-            this->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1, network::protocol::Update::Replica, GOLD, 100, 0);
-            this->entityManager.add<Entities::YWing>(LAYER::Layer1, network::protocol::Update::Replica, true, 250, 600);
-            this->entityManager.add<Entities::TieBomber>(LAYER::Layer1, network::protocol::Update::Replica);
+            this->entityManager.add<Entities::SpeedPowerUp>(LAYER::Layer1, GOLD, 100, 0);
+            this->entityManager.add<Entities::YWing>(LAYER::Layer1, network::protocol::Update::Replica, 250, true, 250, 600);
+            this->entityManager.add<Entities::TieBomber>(LAYER::Layer1, network::protocol::Update::Replica, 250);
 
             spawnBoss(this, 125, 0);
         }
