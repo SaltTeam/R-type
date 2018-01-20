@@ -15,6 +15,7 @@ namespace Scopes {
         bool setting = false;
         std::array<char, 256> buf;
         std::array<char, 256> passwd;
+        std::array<char, 256> ip;
         std::string error_message = "";
         int status = 200;
 
@@ -45,6 +46,7 @@ namespace Scopes {
             ImGui::Text(this->error_message.c_str());
             ImGui::SetWindowPos(ImVec2(300, 300));
             ImGui::SetWindowSize(ImVec2(300, 250));
+            ImGui::InputText("Ip", ip.data(), 256);
             ImGui::InputText("Game", buf.data(), 256);
             ImGui::InputText("Password", passwd.data(), 256,ImGuiInputTextFlags_Password);
             if (ImGui::Button("Validate", ImVec2(75, 20)))
