@@ -193,3 +193,5 @@ Makefile
 cpp_spider_server
 cpp_spider
 /spider.tar.gz
+
+*.ini
