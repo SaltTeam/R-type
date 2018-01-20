@@ -37,7 +37,8 @@ namespace Entities {
         virtual int getShield();
 
     protected:
-        Ship(SCOPE *scope, uint64_t id, network::protocol::Update updateType, uint16_t refreshTime, bool isEnabled,
+        Ship(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
+             network::protocol::Update updateType, uint16_t refreshTime, bool isEnabled,
              TEAM team, float const &x, float const &y, float const &xSpeed, float const &ySpeed,
              int const &health, int const &shield = 0);
 

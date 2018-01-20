@@ -17,11 +17,12 @@ namespace Engine {
 
         public:
 
-            MovableEntity(SCOPE *scope, uint64_t id = 0,
+            MovableEntity(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
                           network::protocol::Update updateType = network::protocol::Update::Instanciated,
                           uint16_t refreshTime = 1, bool isEnabled = true,
                           float const &x = 0, float const &y = 0, float const &x_speed = 0, float const &y_speed = 0)
-                    : BaseEntity(scope, id, updateType, refreshTime, isEnabled, x, y), speed({x_speed, y_speed}) {};
+                    : BaseEntity(scope, id, playerColor, updateType, refreshTime, isEnabled, x, y),
+                      speed({x_speed, y_speed}) {};
 
             void update() override;
 

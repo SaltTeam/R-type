@@ -7,6 +7,7 @@
 #include <functional>
 #include <SFML/System/Vector2.hpp>
 #include <list>
+#include <engine/service/NetService.hpp>
 
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/display/Texture.hpp"
@@ -31,10 +32,12 @@ namespace Engine {
             bool isEnabled;
             sf::Vector2f position;
             std::unique_ptr<SFML_TEXTURE> texture;
+            network::protocol::PlayerColor playerColor;
 
-            explicit BaseEntity(SCOPE *scope, uint64_t id, network::protocol::Update updateType, uint16_t refreshTime,
+            explicit BaseEntity(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
+                                network::protocol::Update updateType, uint16_t refreshTime,
                                 bool isEnabled = true, float const &x = 0, float const &y = 0)
-                    : scope(scope), id(id), isEnabled(isEnabled), position{x, y},
+                    : scope(scope), id(id), playerColor(playerColor), isEnabled(isEnabled), position{x, y},
                       updateType(updateType), refreshTime(refreshTime) {}
 
             virtual ~BaseEntity() = default;
@@ -98,16 +101,14 @@ namespace Engine {
 
             uint64_t generateId();
 
-            uint64_t generateId(network::protocol::PlayerColor);
-
             template<typename T, typename... Args>
             void add(Layer layer, Args &&...args) {
-                this->entities[layer].push_back(new T(this->scope, generateId(), std::forward<Args>(args)...));
+                this->entities[layer].push_back(new T(this->scope, generateId(), NET_SERVICE::color, std::forward<Args>(args)...));
             }
 
             template<typename T, typename... Args>
             void netAdd(Layer layer, network::protocol::PlayerColor color, Args &&...args) {
-                this->entities[layer].push_back(new T(this->scope, generateId(color), std::forward<Args>(args)...));
+                this->entities[layer].push_back(new T(this->scope, generateId(), color, std::forward<Args>(args)...));
             }
 
             ENTITY *find(uint64_t id) {
@@ -129,11 +130,11 @@ namespace Engine {
                 for (auto &layer: this->entities) {
                     bool check = false;
                     std::for_each(layer.second.begin(), layer.second.end(),
-                                            [&check, &id](const auto &item) {
-                                                if (item->id == id) {
-                                                    check = true;
-                                                }
-                                            });
+                                  [&check, &id](const auto &item) {
+                                      if (item->id == id) {
+                                          check = true;
+                                      }
+                                  });
                     if (check == true)
                         return true;
                 }

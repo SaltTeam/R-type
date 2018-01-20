@@ -9,8 +9,8 @@
 namespace Entities {
     class HealPowerUp : public APowerUp {
     public:
-        HealPowerUp(SCOPE *scope, uint64_t id, GRADE grade, int x, int y)
-                : APowerUp(scope, id, true, x, y, 0, 0.1, grade) {
+        HealPowerUp(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, GRADE grade, int x, int y)
+                : APowerUp(scope, id, playerColor, true, x, y, 0, 0.1, grade) {
             this->registerTexture("resources/sprites/Power-ups/star_" + this->getEnumName(grade) + ".png");
             this->type = network::protocol::Type::POWERUP_HEAL;
         };

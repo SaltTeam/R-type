@@ -26,9 +26,10 @@ namespace Engine {
             std::mutex mut_out;
             unsigned short port;
             std::string address;
-            network::protocol::PlayerColor color;
 
         public:
+            static network::protocol::PlayerColor color;
+
             explicit NetService(ENGINE *engine) : SERVICE(engine), mut_in(), mut_out() {}
 
             ~NetService() override = default;
