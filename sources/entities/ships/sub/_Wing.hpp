@@ -19,8 +19,9 @@ namespace Entities {
             this->weapon = new Entities::Laser1(scope, this->team);
             this->canons.push_back({2, -15});
             this->canons.push_back({114, -15});
-            this->setPosition(static_cast<short>(this->playerColor) * 100,
-                              this->scope->gameService->getWindowSize().y - this->texture->sprite.getGlobalBounds().height);
+            if (x == 0 && y == 0)
+                this->setPosition(static_cast<short>(this->playerColor) * 100,
+                                  this->scope->gameService->getWindowSize().y - this->texture->sprite.getGlobalBounds().height);
         };
     };
 }
