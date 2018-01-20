@@ -31,10 +31,12 @@ namespace Engine {
             bool isEnabled;
             sf::Vector2f position;
             std::unique_ptr<SFML_TEXTURE> texture;
+            network::protocol::PlayerColor playerColor;
 
-            explicit BaseEntity(SCOPE *scope, uint64_t id, network::protocol::Update updateType, uint16_t refreshTime,
+            explicit BaseEntity(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
+                                network::protocol::Update updateType, uint16_t refreshTime,
                                 bool isEnabled = true, float const &x = 0, float const &y = 0)
-                    : scope(scope), id(id), isEnabled(isEnabled), position{x, y},
+                    : scope(scope), id(id), playerColor(playerColor), isEnabled(isEnabled), position{x, y},
                       updateType(updateType), refreshTime(refreshTime) {}
 
             virtual ~BaseEntity() = default;
@@ -129,11 +131,11 @@ namespace Engine {
                 for (auto &layer: this->entities) {
                     bool check = false;
                     std::for_each(layer.second.begin(), layer.second.end(),
-                                            [&check, &id](const auto &item) {
-                                                if (item->id == id) {
-                                                    check = true;
-                                                }
-                                            });
+                                  [&check, &id](const auto &item) {
+                                      if (item->id == id) {
+                                          check = true;
+                                      }
+                                  });
                     if (check == true)
                         return true;
                 }
