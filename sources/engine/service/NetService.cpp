@@ -50,127 +50,129 @@ namespace Engine {
         this->mut_in.lock();
         for (auto &entry : scope->entityManager.entities) {
             for (auto &entity : entry.second) {
-                switch (entity->type) {
-                    case network::protocol::Type::BOSS_LEFTPART:
-                    case network::protocol::Type::BOSS_MIDDLEPART:
-                    case network::protocol::Type::BOSS_RIGHTPART:
-                    case network::protocol::Type::SHIP_WING:
-                    case network::protocol::Type::SHIP_ARC:
-                    case network::protocol::Type::SHIP_INTERCEPTOR:
-                    case network::protocol::Type::SHIP_TIEADVANCE:
-                    case network::protocol::Type::SHIP_TIEAVENGER:
-                    case network::protocol::Type::SHIP_TIEBOMBER:
-                    case network::protocol::Type::SHIP_TIEEXPERIMENT:
-                    case network::protocol::Type::SHIP_TIEFIGHTER:
-                    case network::protocol::Type::SHIP_XWING:
-                    case network::protocol::Type::SHIP_YWING : {
-                        auto ship = new network::protocol::SShip{
-                                {
-                                        {
-                                                {
-                                                        entity->updateType,
-                                                        entity->type,
-                                                        entity->refreshTime,
-                                                        entity->id,
-                                                        network::protocol::Action::Update,
-                                                        sizeof(network::protocol::SShip),
-                                                        entity->playerColor
-                                                },
-                                                entity->isEnabled,
-                                                entity->position.x,
-                                                entity->position.y
-                                        },
-                                        ((MOVABLE_ENTITY *) entity)->speed.x,
-                                        ((MOVABLE_ENTITY *) entity)->speed.y
-                                },
-                                ((::Entities::Ship *) entity)->team,
-                                ((::Entities::Ship *) entity)->health,
-                                ((::Entities::Ship *) entity)->shield
-                        };
-                        this->in.push(&ship->base.base.header);
-                        break;
-                    }
-                    case network::protocol::Type::LASER1:
-                    case network::protocol::Type::LASER2:
-                    case network::protocol::Type::LASER3:
-                    case network::protocol::Type::LASER4: {
-                        auto projectile = new network::protocol::SProjectile{
-                                {
-                                        {
-                                                {
-                                                        entity->updateType,
-                                                        entity->type,
-                                                        entity->refreshTime,
-                                                        entity->id,
-                                                        network::protocol::Action::Update,
-                                                        sizeof(network::protocol::SProjectile),
-                                                        entity->playerColor
-                                                },
-                                                entity->isEnabled,
-                                                entity->position.x,
-                                                entity->position.y
-                                        },
-                                        ((MOVABLE_ENTITY *) entity)->speed.x,
-                                        ((MOVABLE_ENTITY *) entity)->speed.y
-                                },
-                                ((::Entities::Projectile *) entity)->originTeam,
-                                ((::Entities::Projectile *) entity)->damage
-                        };
-                        this->in.push(&projectile->base.base.header);
-                        break;
-                    }
-                    case network::protocol::Type::ASTEROID_BIG:
-                    case network::protocol::Type::ASTEROID_MED:
-                    case network::protocol::Type::ASTEROID_SMALL:
-                    case network::protocol::Type::ASTEROID_TINY: {
-                        auto asteroid = new network::protocol::SMovable{
-                                {
-                                        {
-                                                entity->updateType,
-                                                entity->type,
-                                                entity->refreshTime,
-                                                entity->id,
-                                                network::protocol::Action::Update,
-                                                sizeof(network::protocol::SMovable),
-                                                entity->playerColor
-                                        },
-                                        entity->isEnabled,
-                                        entity->position.x,
-                                        entity->position.y
-                                },
-                                ((MOVABLE_ENTITY *) entity)->speed.x,
-                                ((MOVABLE_ENTITY *) entity)->speed.y
-                        };
-                        this->in.push(&asteroid->base.header);
-                        break;
-                    }
-                    case network::protocol::Type::POWERUP_DAMAGE:
-                    case network::protocol::Type::POWERUP_HEAL:
-                    case network::protocol::Type::POWERUP_SHIELD:
-                    case network::protocol::Type::POWERUP_SPEED: {
-                        auto powerup = new network::protocol::SPowerUp{
-                                {
-                                        {
-                                                {
-                                                        entity->updateType,
-                                                        entity->type,
-                                                        entity->refreshTime,
-                                                        entity->id,
-                                                        network::protocol::Action::Update,
-                                                        sizeof(network::protocol::SPowerUp),
-                                                        entity->playerColor
-                                                },
-                                                entity->isEnabled,
-                                                entity->position.x,
-                                                entity->position.y
-                                        },
-                                        ((MOVABLE_ENTITY *) entity)->speed.x,
-                                        ((MOVABLE_ENTITY *) entity)->speed.y
-                                },
-                                ((::Entities::APowerUp *) entity)->grade
-                        };
-                        this->in.push(&powerup->base.base.header);
-                        break;
+                if (entity->updateType == network::protocol::Update::Master) {
+                    switch (entity->type) {
+                        case network::protocol::Type::BOSS_LEFTPART:
+                        case network::protocol::Type::BOSS_MIDDLEPART:
+                        case network::protocol::Type::BOSS_RIGHTPART:
+                        case network::protocol::Type::SHIP_WING:
+                        case network::protocol::Type::SHIP_ARC:
+                        case network::protocol::Type::SHIP_INTERCEPTOR:
+                        case network::protocol::Type::SHIP_TIEADVANCE:
+                        case network::protocol::Type::SHIP_TIEAVENGER:
+                        case network::protocol::Type::SHIP_TIEBOMBER:
+                        case network::protocol::Type::SHIP_TIEEXPERIMENT:
+                        case network::protocol::Type::SHIP_TIEFIGHTER:
+                        case network::protocol::Type::SHIP_XWING:
+                        case network::protocol::Type::SHIP_YWING : {
+                            auto ship = new network::protocol::SShip{
+                                    {
+                                            {
+                                                    {
+                                                            network::protocol::Update::Replica,
+                                                            entity->type,
+                                                            entity->refreshTime,
+                                                            entity->id,
+                                                            network::protocol::Action::Update,
+                                                            sizeof(network::protocol::SShip),
+                                                            entity->playerColor
+                                                    },
+                                                    entity->isEnabled,
+                                                    entity->position.x,
+                                                    entity->position.y
+                                            },
+                                            ((MOVABLE_ENTITY *) entity)->speed.x,
+                                            ((MOVABLE_ENTITY *) entity)->speed.y
+                                    },
+                                    ((::Entities::Ship *) entity)->team,
+                                    ((::Entities::Ship *) entity)->health,
+                                    ((::Entities::Ship *) entity)->shield
+                            };
+                            this->in.push(&ship->base.base.header);
+                            break;
+                        }
+                        case network::protocol::Type::LASER1:
+                        case network::protocol::Type::LASER2:
+                        case network::protocol::Type::LASER3:
+                        case network::protocol::Type::LASER4: {
+                            auto projectile = new network::protocol::SProjectile{
+                                    {
+                                            {
+                                                    {
+                                                            network::protocol::Update::Replica,
+                                                            entity->type,
+                                                            entity->refreshTime,
+                                                            entity->id,
+                                                            network::protocol::Action::Update,
+                                                            sizeof(network::protocol::SProjectile),
+                                                            entity->playerColor
+                                                    },
+                                                    entity->isEnabled,
+                                                    entity->position.x,
+                                                    entity->position.y
+                                            },
+                                            ((MOVABLE_ENTITY *) entity)->speed.x,
+                                            ((MOVABLE_ENTITY *) entity)->speed.y
+                                    },
+                                    ((::Entities::Projectile *) entity)->originTeam,
+                                    ((::Entities::Projectile *) entity)->damage
+                            };
+                            this->in.push(&projectile->base.base.header);
+                            break;
+                        }
+                        case network::protocol::Type::ASTEROID_BIG:
+                        case network::protocol::Type::ASTEROID_MED:
+                        case network::protocol::Type::ASTEROID_SMALL:
+                        case network::protocol::Type::ASTEROID_TINY: {
+                            auto asteroid = new network::protocol::SMovable{
+                                    {
+                                            {
+                                                    network::protocol::Update::Replica,
+                                                    entity->type,
+                                                    entity->refreshTime,
+                                                    entity->id,
+                                                    network::protocol::Action::Update,
+                                                    sizeof(network::protocol::SMovable),
+                                                    entity->playerColor
+                                            },
+                                            entity->isEnabled,
+                                            entity->position.x,
+                                            entity->position.y
+                                    },
+                                    ((MOVABLE_ENTITY *) entity)->speed.x,
+                                    ((MOVABLE_ENTITY *) entity)->speed.y
+                            };
+                            this->in.push(&asteroid->base.header);
+                            break;
+                        }
+                        case network::protocol::Type::POWERUP_DAMAGE:
+                        case network::protocol::Type::POWERUP_HEAL:
+                        case network::protocol::Type::POWERUP_SHIELD:
+                        case network::protocol::Type::POWERUP_SPEED: {
+                            auto powerup = new network::protocol::SPowerUp{
+                                    {
+                                            {
+                                                    {
+                                                            network::protocol::Update::Replica,
+                                                            entity->type,
+                                                            entity->refreshTime,
+                                                            entity->id,
+                                                            network::protocol::Action::Update,
+                                                            sizeof(network::protocol::SPowerUp),
+                                                            entity->playerColor
+                                                    },
+                                                    entity->isEnabled,
+                                                    entity->position.x,
+                                                    entity->position.y
+                                            },
+                                            ((MOVABLE_ENTITY *) entity)->speed.x,
+                                            ((MOVABLE_ENTITY *) entity)->speed.y
+                                    },
+                                    ((::Entities::APowerUp *) entity)->grade
+                            };
+                            this->in.push(&powerup->base.base.header);
+                            break;
+                        }
                     }
                 }
             }

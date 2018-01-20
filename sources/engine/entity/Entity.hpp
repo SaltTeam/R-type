@@ -114,11 +114,8 @@ namespace Engine {
             ENTITY *find(uint64_t id) {
                 for (auto &layer: this->entities) {
                     auto ptr = std::find_if(layer.second.begin(), layer.second.end(),
-                                            [&, id](const auto &item) -> bool {
-                                                if (item->id == id) {
-                                                    return item;
-                                                }
-                                                return false;
+                                            [&id](const auto &item) -> bool {
+                                                return item->id == id;
                                             });
                     if (*ptr != nullptr)
                         return *ptr;
