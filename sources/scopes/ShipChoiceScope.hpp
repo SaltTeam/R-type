@@ -29,8 +29,7 @@ namespace Scopes {
         }
 
         void update() override;
-
-        static void createShip(SCOPE *scope);
     };
+    static void createShip(SCOPE *scope);
 }
 

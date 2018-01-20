@@ -20,6 +20,7 @@
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/service/GameService.hpp"
 #include "ShipChoiceScope.hpp"
+#include "engine/Runner.hpp"
 
 namespace Scopes {
     class TestScope : public SCOPE {
@@ -36,7 +37,7 @@ namespace Scopes {
         }
 
         void initialize() override {
-            ShipChoiceScope::createShip(this);
+            Scopes::createShip(this);
             if (this->gameService->engine->findService<NET_SERVICE>()->color == network::protocol::PlayerColor::Blue)
             {
                 this->entityManager.add<Entities::TieBomber>(LAYER::Layer1, network::protocol::Update::Replica, 250);
