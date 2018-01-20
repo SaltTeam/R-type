@@ -18,7 +18,6 @@ Entities::Asteroid::Asteroid(SCOPE *scope, uint64_t id, network::protocol::Playe
                              const std::string &texturePath, bool isEnabled,
                              const float &x, const float &y)
         : MovableEntity(scope, id, playerColor, network::protocol::Update::Instanciated, 250, isEnabled, x, y) {
-    type = network::protocol::Type::ASTEROID;
 
     std::random_device rd;
     std::mt19937 mt(rd());

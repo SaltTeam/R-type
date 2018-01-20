@@ -25,6 +25,7 @@ namespace Engine {
         this->mut_in.lock();
         for (auto &entry : scope->entityManager.entities) {
             for (auto &entity : entry.second) {
+                /*
                 switch (entity->type) {
                     case network::protocol::Type::SHIP : {
                         auto ship = new network::protocol::SShip{
@@ -123,6 +124,7 @@ namespace Engine {
                         break;
                     }
                 }
+                 */
             }
         }
         this->mut_in.unlock();

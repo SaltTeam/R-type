@@ -11,7 +11,6 @@ Entities::APowerUp::APowerUp(SCOPE *scope, uint64_t id, network::protocol::Playe
 
         : MovableEntity(scope, id, playerColor,  network::protocol::Update::Instanciated, 250, isEnabled, x, y, xSpeed, ySpeed),
           grade(grade) {
-    type = network::protocol::Type::POWERUP;
 }
 
 
