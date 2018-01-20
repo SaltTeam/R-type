@@ -37,8 +37,8 @@ namespace Entities {
         virtual int getShield();
 
     protected:
-        Ship(SCOPE *scope, uint64_t id, const std::string &texturePath, bool isEnabled, TEAM team,
-             float const &x, float const &y, float const &xSpeed, float const &ySpeed,
+        Ship(SCOPE *scope, uint64_t id, network::protocol::Update updateType, uint16_t refreshTime, bool isEnabled,
+             TEAM team, float const &x, float const &y, float const &xSpeed, float const &ySpeed,
              int const &health, int const &shield = 0);
 
         ~Ship() override;
@@ -56,6 +56,8 @@ namespace Entities {
         void spawnPowerUp();
 
         virtual void onCollision(ENTITY *other);
+
+        void registerTexture(std::string const &path);
 
         IWeapon *weapon;
 

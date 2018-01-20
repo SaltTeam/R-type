@@ -11,20 +11,7 @@ namespace Entities {
     public:
         HealPowerUp(SCOPE *scope, uint64_t id, GRADE grade, int x, int y)
                 : APowerUp(scope, id, true, x, y, 0, 0.1, grade) {
-            switch (grade) {
-                case BRONZE:
-                    this->setTexture("resources/sprites/Power-ups/star_bronze.png");
-                    break;
-                case SILVER:
-                    this->setTexture("resources/sprites/Power-ups/star_silver.png");
-                    break;
-                case GOLD:
-                    this->setTexture("resources/sprites/Power-ups/star_gold.png");
-                    break;
-            }
-            this->position.x -= this->texture->sprite.getGlobalBounds().width / 2;
-            std::function<void(ENTITY *)> f = std::bind(&APowerUp::onCollision, this, std::placeholders::_1);
-            this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f);
+            this->registerTexture("resources/sprites/Power-ups/star_" + this->getEnumName(grade) + ".png");
         };
 
         void interract(Entities::PlayerShip *ship) override {

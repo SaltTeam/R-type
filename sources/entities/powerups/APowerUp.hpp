@@ -25,6 +25,10 @@ namespace Entities {
 
         void onCollision(ENTITY *other);
 
+        void registerTexture(std::string const &path);
+
+        std::string getEnumName(GRADE grade);
+
     protected:
         GRADE grade;
     };
