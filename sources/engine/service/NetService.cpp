@@ -129,9 +129,6 @@ namespace Engine {
     }
 
     EngineStatus NET_SERVICE::update() {
-        this->mut_in.lock();
-        std::cout << this->in.size() << std::endl;
-        this->mut_in.unlock();
         return EngineStatus::Continue;
     }
 
@@ -176,7 +173,6 @@ namespace Engine {
             mut_in.lock();
             while (!this->in.empty()) {
                 auto p = this->in.front();
-                std::cout << (short) p->type << std::endl;
                 this->in.pop();
                 
                 network::protocol::Header hdr{};
