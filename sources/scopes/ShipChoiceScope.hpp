@@ -12,6 +12,7 @@ namespace Scopes {
     public:
         explicit ShipChoiceScope(GAME_SERVICE *gameService) : SCOPE(gameService) {}
         static int g_Ship;
+
         ~ShipChoiceScope() = default;
 
 
