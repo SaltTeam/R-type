@@ -1,38 +1,36 @@
 
-#include <entities/asteroids/BigAsteroid.hpp>
-#include <entities/powerups/sub/DamagePowerUp.hpp>
-#include <entities/powerups/sub/HealPowerUp.hpp>
-#include <entities/powerups/sub/ShieldPowerUp.hpp>
-#include <entities/powerups/sub/SpeedPowerUp.hpp>
-#include <entities/weapons/sub/Laser1.hpp>
-#include <entities/weapons/sub/Laser2.hpp>
-#include <entities/weapons/sub/Laser3.hpp>
-#include <entities/weapons/sub/Laser4.hpp>
-#include <entities/ships/Boss/LeftPart.hpp>
-#include <entities/ships/Boss/MiddlePart.hpp>
-#include <entities/ships/Boss/RightPart.hpp>
-#include <entities/ships/sub/_Wing.hpp>
-#include <entities/ships/sub/Arc.hpp>
-#include <entities/ships/sub/Interceptor.hpp>
-#include <entities/ships/sub/TieAdvance.hpp>
-#include <entities/ships/sub/TieAvenger.hpp>
-#include <entities/ships/sub/TieBomber.hpp>
-#include <entities/ships/sub/TieExperiment.hpp>
-#include <entities/ships/sub/TieFigther.hpp>
-#include <entities/ships/sub/XWing.hpp>
-#include <entities/ships/sub/YWing.hpp>
-#include <entities/projectiles/sub/SinusProjectile.hpp>
-#include "entities/projectiles/Projectile.hpp"
-#include "entities/powerups/APowerUp.hpp"
-#include "NetService.hpp"
 #include "engine/Runner.hpp"
+#include "NetService.hpp"
 #include "engine/entity/Entity.hpp"
+#include "entities/asteroids/BigAsteroid.hpp"
+#include "entities/powerups/APowerUp.hpp"
+#include "entities/powerups/sub/DamagePowerUp.hpp"
+#include "entities/powerups/sub/HealPowerUp.hpp"
+#include "entities/powerups/sub/ShieldPowerUp.hpp"
+#include "entities/powerups/sub/SpeedPowerUp.hpp"
+#include "entities/powerups/APowerUp.hpp"
+#include "entities/weapons/sub/Laser1.hpp"
+#include "entities/weapons/sub/Laser2.hpp"
+#include "entities/weapons/sub/Laser3.hpp"
+#include "entities/weapons/sub/Laser4.hpp"
 #include "entities/ships/Ship.hpp"
+#include "entities/ships/Boss/LeftPart.hpp"
+#include "entities/ships/Boss/MiddlePart.hpp"
+#include "entities/ships/Boss/RightPart.hpp"
+#include "entities/ships/sub/_Wing.hpp"
+#include "entities/ships/sub/Arc.hpp"
+#include "entities/ships/sub/Interceptor.hpp"
+#include "entities/ships/sub/TieAdvance.hpp"
+#include "entities/ships/sub/TieAvenger.hpp"
+#include "entities/ships/sub/TieBomber.hpp"
+#include "entities/ships/sub/TieExperiment.hpp"
+#include "entities/ships/sub/TieFigther.hpp"
+#include "entities/ships/sub/XWing.hpp"
+#include "entities/ships/sub/YWing.hpp"
+#include "entities/projectiles/Projectile.hpp"
+#include "entities/projectiles/sub/SinusProjectile.hpp"
 #include "engine/scope/Scope.hpp"
 #include "engine/service/GameService.hpp"
-#include "entities/powerups/APowerUp.hpp"
-#include "entities/projectiles/Projectile.hpp"
-#include "entities/ships/Ship.hpp"
 
 namespace Engine {
     network::protocol::PlayerColor NET_SERVICE::color = network::protocol::PlayerColor::Error;
@@ -250,13 +248,13 @@ namespace Engine {
                     case network::protocol::Type::LASER3:
                     {
                         auto obj = reinterpret_cast<::Entities::Projectile *>(p);
-                        scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color, obj->texture->path, obj->isEnabled, obj->position.x, obj->position.y, obj->speed.x, obj->speed.y, obj->damage, obj->originTeam, obj->updateType);
+                        scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color, obj->texture->path, obj->isEnabled, obj->position.x, obj->position.y, obj->speed.x, obj->speed.y, obj->damage, obj->originTeam, obj->type);
                         break;
                     }
                     case network::protocol::Type::LASER4:
                     {
                         auto obj = reinterpret_cast<::Entities::SinusProjectile *>(p);
-                        scope->entityManager.netAdd<::Entities::SinusProjectile>(LAYER::Layer1, p->color, obj->texture->path, obj->isEnabled, obj->position.x, obj->position.y, obj->speed.x, obj->speed.y, obj->damage, obj->originTeam, obj->updateType);
+                        scope->entityManager.netAdd<::Entities::SinusProjectile>(LAYER::Layer1, p->color, obj->texture->path, obj->isEnabled, obj->position.x, obj->position.y, obj->speed.x, obj->speed.y, obj->damage, obj->originTeam, obj->type);
                         break;
                     }
                     case network::protocol::Type::BOSS_LEFTPART:
