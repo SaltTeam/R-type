@@ -51,3 +51,19 @@ void Entities::PlayerShip::onCollision(ENTITY *other) {
         }
 
 }
+
+std::string Entities::PlayerShip::getColorString() {
+    switch (this->playerColor)
+    {
+        case network::protocol::PlayerColor::Blue:
+            return "blue";
+        case network::protocol::PlayerColor::Red:
+            return "red";
+        case network::protocol::PlayerColor::Green:
+            return "green";
+        case network::protocol::PlayerColor::Yellow:
+            return "yellow";
+        default:
+            return "base";
+    }
+}

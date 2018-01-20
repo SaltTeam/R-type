@@ -16,5 +16,7 @@ namespace Entities {
         void registerBindings();
 
         virtual void onCollision(ENTITY *other);
+
+        std::string getColorString();
     };
 }
