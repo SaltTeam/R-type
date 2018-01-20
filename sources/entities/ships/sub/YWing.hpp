@@ -18,6 +18,8 @@ namespace Entities {
             this->registerTexture("resources/sprites/ships/player/ship2/base.png");
             this->weapon = new Entities::Laser2(scope, this->team);
             this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2, -8});
+            this->setPosition(static_cast<short>(this->playerColor) * 100,
+                              this->scope->gameService->getWindowSize().y - this->texture->sprite.getGlobalBounds().height);
         };
     };
 }

@@ -22,6 +22,8 @@ namespace Entities {
                                     this->texture->sprite.getGlobalBounds().height / 2 - 42});
             this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 + 5,
                                     this->texture->sprite.getGlobalBounds().height / 2 - 42});
+            this->setPosition(static_cast<short>(this->playerColor) * 100,
+                              this->scope->gameService->getWindowSize().y - this->texture->sprite.getGlobalBounds().height);
         };
     };
 }
