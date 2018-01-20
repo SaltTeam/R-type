@@ -12,6 +12,7 @@ namespace Entities {
         SpeedPowerUp(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, GRADE grade, int x, int y)
                 : APowerUp(scope, id, playerColor, true, x, y, 0, 0.1, grade) {
             this->registerTexture("resources/sprites/Power-ups/bolt_" + this->getEnumName(grade) + ".png");
+            this->type = network::protocol::Type::POWERUP_SPEED;
         };
 
         void interract(PlayerShip *ship) override {

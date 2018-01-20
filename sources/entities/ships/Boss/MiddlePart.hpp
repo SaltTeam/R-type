@@ -18,6 +18,7 @@ namespace Entities {
                 : Ship(scope, id, playerColor, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0, 0,
                        500) {
             this->registerTexture("resources/sprites/Boss/middle-part.png");
+            this->type = network::protocol::Type::BOSS_MIDDLEPART;
             this->weapon = new Entities::Laser2(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2,

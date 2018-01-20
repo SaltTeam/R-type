@@ -25,5 +25,6 @@ void Entities::Weapon::spawnLasers(sf::Vector2f const &position) {
     this->scope->entityManager.add<Entities::Projectile>(LAYER::Layer1,
                                                          this->projectilePath, true,
                                                          position.x, position.y,
-                                                         this->xSpeed, this->ySpeed, this->damage, this->originTeam);
+                                                         this->xSpeed, this->ySpeed,
+                                                         this->damage, this->originTeam, this->type);
 }

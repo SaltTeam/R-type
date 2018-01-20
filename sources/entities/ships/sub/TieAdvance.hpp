@@ -33,6 +33,7 @@ namespace Entities {
                 : Ship(scope, id, playerColor, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0.25,
                        0.1, 40) {
             this->registerTexture("resources/sprites/ships/enemy/ship4/base.png");
+            this->type = network::protocol::Type::SHIP_TIEADVANCE;
             this->weapon = new Entities::Laser3(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->OriginalXPosition = this->position.x;

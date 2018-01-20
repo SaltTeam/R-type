@@ -8,10 +8,12 @@
 
 Entities::APowerUp::APowerUp(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,bool isEnabled, float const &x,
                              float const &y, float const &xSpeed, float const &ySpeed, GRADE grade)
+
         : MovableEntity(scope, id, playerColor,  network::protocol::Update::Instanciated, 250, isEnabled, x, y, xSpeed, ySpeed),
           grade(grade) {
     type = network::protocol::Type::POWERUP;
 }
+
 
 void Entities::APowerUp::update() {
     this->move();

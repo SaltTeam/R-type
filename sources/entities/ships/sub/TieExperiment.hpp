@@ -21,6 +21,7 @@ namespace Entities {
                 : Ship(scope, id, playerColor, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0.15,
                        0.15, 40) {
             this->registerTexture("resources/sprites/ships/enemy/ship5/base.png");
+            this->type = network::protocol::Type::SHIP_TIEEXPERIMENT;
             this->weapon = new Entities::Laser1(scope, this->team);
             this->weapon->setYSpeed(-(this->weapon->getYSpeed()));
             this->canons.push_back({this->texture->sprite.getGlobalBounds().width / 2 - 5,

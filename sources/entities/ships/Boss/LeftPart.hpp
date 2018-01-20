@@ -17,6 +17,7 @@ namespace Entities {
                 : Ship(scope, id, playerColor, updateType, refreshTime, isEnabled, Entities::Ship::GAME, x, y, 0, 0,
                        500) {
             this->registerTexture("resources/sprites/Boss/left-part.png");
+            this->type = network::protocol::Type::BOSS_LEFTPART;
             this->secondWeapon = false;
             this->weapon = new Entities::Laser1(scope, this->team);
             this->weapon->setYSpeed(1);

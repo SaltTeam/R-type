@@ -29,11 +29,32 @@ namespace network {
             Replica
         };
 
-        enum class Type : short {
-            PROJECTILE,
-            SHIP,
-            ASTEROID,
-            POWERUP
+        enum class Type : uint64_t {
+            ASTEROID_BIG,
+            ASTEROID_MED,
+            ASTEROID_SMALL,
+            ASTEROID_TINY,
+            POWERUP_DAMAGE,
+            POWERUP_HEAL,
+            POWERUP_SHIELD,
+            POWERUP_SPEED,
+            LASER1,
+            LASER2,
+            LASER3,
+            LASER4,
+            BOSS_LEFTPART,
+            BOSS_MIDDLEPART,
+            BOSS_RIGHTPART,
+            SHIP_WING,
+            SHIP_ARC,
+            SHIP_INTERCEPTOR,
+            SHIP_TIEADVANCE,
+            SHIP_TIEAVENGER,
+            SHIP_TIEBOMBER,
+            SHIP_TIEEXPERIMENT,
+            SHIP_TIEFIGHTER,
+            SHIP_XWING,
+            SHIP_YWING
         };
 
         enum class Action {
