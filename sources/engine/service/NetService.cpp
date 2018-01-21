@@ -255,9 +255,7 @@ namespace Engine {
                                                                                   obj->base.base.pos_y);
                             break;
                         }
-                        case network::protocol::Type::LASER1:
-                        case network::protocol::Type::LASER2:
-                        case network::protocol::Type::LASER3: {
+                        case network::protocol::Type::LASER1: {
                             auto obj = reinterpret_cast<network::protocol::SProjectile*>(p);
                             scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color, p->id, network::protocol::Update::Replica,
                                                                                 "resources/sprites/Lasers/laserRed01.png", obj->base.base.isEnabled,
@@ -266,10 +264,28 @@ namespace Engine {
                                                                                 (::Entities::Ship::TEAM)obj->team, type);
                             break;
                         }
+                        case network::protocol::Type::LASER2: {
+                            auto obj = reinterpret_cast<network::protocol::SProjectile*>(p);
+                            scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color, p->id, network::protocol::Update::Replica,
+                                                                                "resources/sprites/Lasers/laserRed08.png", obj->base.base.isEnabled,
+                                                                                obj->base.base.pos_x, obj->base.base.pos_y,
+                                                                                obj->base.speed_x, obj->base.speed_x, obj->damage,
+                                                                                (::Entities::Ship::TEAM)obj->team, type);
+                            break;
+                        }
+                        case network::protocol::Type::LASER3: {
+                            auto obj = reinterpret_cast<network::protocol::SProjectile*>(p);
+                            scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color, p->id, network::protocol::Update::Replica,
+                                                                                "resources/sprites/Lasers/laserRed02.png", obj->base.base.isEnabled,
+                                                                                obj->base.base.pos_x, obj->base.base.pos_y,
+                                                                                obj->base.speed_x, obj->base.speed_x, obj->damage,
+                                                                                (::Entities::Ship::TEAM)obj->team, type);
+                            break;
+                        }
                         case network::protocol::Type::LASER4: {
                             auto obj = reinterpret_cast<network::protocol::SProjectile*>(p);
                             scope->entityManager.netAdd<::Entities::SinusProjectile>(LAYER::Layer1, p->color, p->id, network::protocol::Update::Replica,
-                                                                                     "resources/sprites/Lasers/laserRed01.png", obj->base.base.isEnabled,
+                                                                                     "resources/sprites/Lasers/laserRed11.png", obj->base.base.isEnabled,
                                                                                      obj->base.base.pos_x, obj->base.base.pos_y,
                                                                                      obj->base.speed_x, obj->base.speed_x, obj->damage,
                                                                                      (::Entities::Ship::TEAM)obj->team, type);
