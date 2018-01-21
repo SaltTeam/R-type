@@ -5,8 +5,6 @@
 #include "Projectile.hpp"
 #include "entities/ships/PlayerShip.hpp"
 #include "entities/asteroids/Asteroid.hpp"
-#include "engine/Runner.hpp"
-#include "engine/service/NetService.hpp"
 
 Entities::Projectile::Projectile(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
                                  std::string const &texturePath, bool isEnabled,
@@ -14,8 +12,6 @@ Entities::Projectile::Projectile(SCOPE *scope, uint64_t id, network::protocol::P
                                  int const &damage, Entities::Ship::TEAM originTeam, network::protocol::Type updateType)
         : MovableEntity(scope, id, playerColor, network::protocol::Update::Instanciated, 250,
                         isEnabled, x, y, xSpeed, ySpeed), damage(damage), originTeam(originTeam) {
-    if (this->playerColor == this->scope->gameService->engine->findService<NET_SERVICE>()->color && originTeam == Entities::Ship::PLAYER)
-        this->updateType = network::protocol::Update::Master;
     this->type = updateType;
     this->setTexture(texturePath);
     this->position.x -= this->texture->sprite.getGlobalBounds().width / 2;
