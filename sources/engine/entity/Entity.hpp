@@ -12,6 +12,9 @@
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/display/Texture.hpp"
 #include "server/Protocol.hpp"
+#include "engine/scope/Scope.hpp"
+#include "engine/service/GameService.hpp"
+#include "engine/Runner.hpp"
 
 namespace Engine {
     namespace Entities {
@@ -172,6 +175,7 @@ namespace Engine {
                     for (auto &entity: layer.second) {
                         for (auto &deleteEntity: this->removedEntities) {
                             if (entity == deleteEntity) {
+                                this->scope->gameService->engine->findService<NET_SERVICE>()->sendEntityDeletion(entity->type, entity->id);
                                 delete entity;
                                 this->entities[layer.first].remove(entity);
                                 this->removedEntities.remove(deleteEntity);
