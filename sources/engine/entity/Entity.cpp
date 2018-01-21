@@ -1,9 +1,9 @@
 
 #include "Entity.hpp"
-
 #include "engine/entity/Collision.hpp"
 #include "engine/service/GameService.hpp"
 #include "engine/scope/Scope.hpp"
+#include "engine/Runner.hpp"
 #include "engine/service/NetService.hpp"
 
 void ENTITY::registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f) {
@@ -42,6 +42,64 @@ uint64_t ENTITY_MANAGER::generateId() {
             lastId = 0;
         lastId++;
     }
+}
+
+Engine::Entities::EntityManager::~EntityManager() {
+    std::for_each(this->entities.begin(), this->entities.end(),
+                  [&](auto &layer) {
+                      std::for_each(layer.second.begin(), layer.second.end(),
+                                    [&](auto &entity) -> void { delete entity; });
+                  });
+}
+
+
+ENTITY *Engine::Entities::EntityManager::find(uint64_t id) {
+    for (auto &layer: this->entities) {
+        /*auto ptr = std::find_if(layer.second.begin(), layer.second.end(),
+                                [&id](const auto &item) -> bool {
+                                    return item->id == id;
+                                });
+        if (*ptr != nullptr)
+            return *ptr;*/
+        for (auto ptr : layer.second)
+        {
+            if (ptr->id == id)
+                return ptr;
+
+        }
+    }
+    return nullptr;
+}
+
+bool Engine::Entities::EntityManager::exists(uint64_t id) {
+    for (auto &layer: this->entities) {
+        bool check = false;
+        std::for_each(layer.second.begin(), layer.second.end(),
+                      [&check, &id](const auto &item) {
+                          if (item->id == id) {
+                              check = true;
+                          }
+                      });
+        if (check == true)
+            return true;
+    }
+    return false;
+}
+
+void Engine::Entities::EntityManager::update() {
+    // REMOVE WAITING ENTITY
+    this->_removeWaitingEntities();
+    // UPDATE
+    for (auto &layer: this->entities) {
+        for (auto &entity: layer.second) {
+            if (entity->isEnabled) entity->update();
+        }
+    }
+}
+
+void Engine::Entities::EntityManager::remove(ENTITY *entity) {
+    entity->isEnabled = false;
+    this->removedEntities.push_back(entity);
 }
 
 void ENTITY_MANAGER::_removeWaitingEntities() {

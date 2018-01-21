@@ -7,14 +7,11 @@
 #include <functional>
 #include <SFML/System/Vector2.hpp>
 #include <list>
+#include <map>
 #include <engine/service/NetService.hpp>
-
-#include "engine/ForwardDeclaration.hpp"
 #include "engine/display/Texture.hpp"
+#include "engine/ForwardDeclaration.hpp"
 #include "server/Protocol.hpp"
-#include "engine/scope/Scope.hpp"
-#include "engine/service/GameService.hpp"
-#include "engine/Runner.hpp"
 
 namespace Engine {
     namespace Entities {
@@ -80,6 +77,8 @@ namespace Engine {
             Layer5
         };
 
+
+
         class EntityManager {
             friend GRAPHICAL_SERVICE;
             friend NET_SERVICE;
@@ -92,25 +91,19 @@ namespace Engine {
         public:
             std::unordered_map<Layer, std::list<ENTITY *>> entities;
 
-            explicit EntityManager(SCOPE *scope) : scope(scope) {}
+            ~EntityManager();
 
-            ~EntityManager() {
-                std::for_each(this->entities.begin(), this->entities.end(),
-                              [&](auto &layer) {
-                                  std::for_each(layer.second.begin(), layer.second.end(),
-                                                [&](auto &entity) -> void { delete entity; });
-                              });
-            }
+            explicit EntityManager(SCOPE *scope) : scope(scope) {}
 
             uint64_t generateId();
 
             template<typename T, typename... Args>
-            void add(Layer layer, Args &&...args) {
+            void add(Layer layer, Args &&...args){
                 this->entities[layer].push_back(new T(this->scope, generateId(), NET_SERVICE::color, std::forward<Args>(args)...));
             }
 
             template<typename T, typename... Args>
-            void netAdd(Layer layer, network::protocol::PlayerColor color, Args &&...args) {
+            void netAdd(Layer layer, network::protocol::PlayerColor color, Args &&...args){
                 this->entities[layer].push_back(new T(this->scope, generateId(), color, std::forward<Args>(args)...));
             }
 
@@ -119,73 +112,16 @@ namespace Engine {
                 this->entities[layer].push_back(new T(this->scope, id, color, std::forward<Args>(args)...));
             }
 
-            ENTITY *find(uint64_t id) {
-                for (auto &layer: this->entities) {
-                    /*auto ptr = std::find_if(layer.second.begin(), layer.second.end(),
-                                            [&id](const auto &item) -> bool {
-                                                return item->id == id;
-                                            });
-                    if (*ptr != nullptr)
-                        return *ptr;*/
-                    for (auto ptr : layer.second)
-                    {
-                        if (ptr->id == id)
-                            return ptr;
+            ENTITY *find(uint64_t id);
 
-                    }
-                }
-                return nullptr;
-            }
+            bool exists(uint64_t id);
 
-            bool exists(uint64_t id) {
-                for (auto &layer: this->entities) {
-                    bool check = false;
-                    std::for_each(layer.second.begin(), layer.second.end(),
-                                  [&check, &id](const auto &item) {
-                                      if (item->id == id) {
-                                          check = true;
-                                      }
-                                  });
-                    if (check == true)
-                        return true;
-                }
-                return false;
-            }
-
-            void update() {
-                // REMOVE WAITING ENTITY
-                this->_removeWaitingEntities();
-                // UPDATE
-                for (auto &layer: this->entities) {
-                    for (auto &entity: layer.second) {
-                        if (entity->isEnabled) entity->update();
-                    }
-                }
-            }
+            void update();
 
         private:
-            void remove(ENTITY *entity) {
-                entity->isEnabled = false;
-                this->removedEntities.push_back(entity);
-            }
+            void remove(ENTITY *entity);
 
-            void _removeWaitingEntities() {
-                if (this->removedEntities.empty()) return;
-                for (auto &layer: this->entities) {
-                    for (auto &entity: layer.second) {
-                        for (auto &deleteEntity: this->removedEntities) {
-                            if (entity == deleteEntity) {
-                                this->scope->gameService->engine->findService<NET_SERVICE>()->sendEntityDeletion(entity->type, entity->id);
-                                delete entity;
-                                this->entities[layer.first].remove(entity);
-                                this->removedEntities.remove(deleteEntity);
-                                this->_removeWaitingEntities(); // Recursive
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
+            void _removeWaitingEntities();
         };
 
     }

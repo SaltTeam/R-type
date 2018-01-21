@@ -7,6 +7,7 @@
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/entity/Entity.hpp"
 #include "engine/entity/Collision.hpp"
+#include "entities/starfield/star.hpp"
 
 namespace Engine {
     namespace Scopes {
@@ -46,5 +47,11 @@ namespace Engine {
             void removeEntity(ENTITY *entity);
         };
 
+    }
+}
+
+static void createStarfield(SCOPE *scope, int nbr) {
+    for (int i = 0; i < nbr; ++i) {
+        scope->entityManager.add<Entities::Star>(LAYER::Layer1);
     }
 }

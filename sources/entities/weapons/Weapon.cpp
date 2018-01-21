@@ -22,7 +22,7 @@ bool Entities::Weapon::shoot(std::vector<sf::Vector2f> const &canons, sf::Vector
 }
 
 void Entities::Weapon::spawnLasers(sf::Vector2f const &position) {
-    this->scope->entityManager.add<Entities::Projectile>(LAYER::Layer1,
+    this->scope->entityManager.add<Entities::Projectile>(LAYER::Layer2,
                                                          this->projectilePath, true,
                                                          position.x, position.y,
                                                          this->xSpeed, this->ySpeed,

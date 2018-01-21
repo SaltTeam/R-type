@@ -21,6 +21,7 @@
 #include "engine/service/GameService.hpp"
 #include "ShipChoiceScope.hpp"
 #include "engine/Runner.hpp"
+#include "engine/service/NetService.hpp"
 
 namespace Scopes {
     class TestScope : public SCOPE {
@@ -31,16 +32,17 @@ namespace Scopes {
 
         void spawnBoss(SCOPE *scope, int x, int y)
         {
-            scope->entityManager.add<Entities::LeftPart>(LAYER::Layer1, network::protocol::Update::Master, 250, true, x, y + 131);
-            scope->entityManager.add<Entities::MiddlePart>(LAYER::Layer1, network::protocol::Update::Master, 250, true, x + 16, y);
-            scope->entityManager.add<Entities::RightPart>(LAYER::Layer1, network::protocol::Update::Master, 250, true, x + 200, y + 131);
+            scope->entityManager.add<Entities::LeftPart>(LAYER::Layer3, network::protocol::Update::Master, 250, true, x, y + 131);
+            scope->entityManager.add<Entities::MiddlePart>(LAYER::Layer3, network::protocol::Update::Master, 250, true, x + 16, y);
+            scope->entityManager.add<Entities::RightPart>(LAYER::Layer3, network::protocol::Update::Master, 250, true, x + 200, y + 131);
         }
 
         void initialize() override {
+            createStarfield(this, 70);
             Scopes::createShip(this);
             if (this->gameService->engine->findService<NET_SERVICE>()->color == network::protocol::PlayerColor::Blue)
             {
-                this->entityManager.add<Entities::TieBomber>(LAYER::Layer1, network::protocol::Update::Master, 250);
+                this->entityManager.add<Entities::TieBomber>(LAYER::Layer3, network::protocol::Update::Master, 250);
                 spawnBoss(this, 125, 0);
             }
         }

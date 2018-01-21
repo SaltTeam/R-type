@@ -32,6 +32,7 @@ add_executable(${EXECUTABLE_NAME}
         sources/scopes/MenuScope.hpp
         sources/scopes/ShipChoiceScope.cpp
         sources/scopes/LoginScope.hpp
+        sources/scopes/EndGame.hpp
 
         sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
         sources/entities/ships/Ship.cpp sources/entities/ships/Ship.hpp
@@ -82,7 +83,10 @@ add_executable(${EXECUTABLE_NAME}
         repos/imgui/imgui_draw.cpp
         repos/imgui/imgui_demo.cpp
         repos/imgui/imgui-SFML.cpp
-        sources/scopes/EndGame.hpp
+
+
+        sources/entities/starfield/star.cpp
+        sources/entities/starfield/star.hpp
         )
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
