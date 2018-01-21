@@ -108,6 +108,7 @@ namespace Scopes {
         if (ImGui::Button("Solo")) {
             this->entityManager.entities.clear();
             this->gameService->pushScope<Scopes::Level1Scope>();
+            NET_SERVICE::color = network::protocol::PlayerColor::Blue;
         }
         ImGui::End();
 

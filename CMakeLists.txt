@@ -33,6 +33,9 @@ add_executable(${EXECUTABLE_NAME}
         sources/scopes/ShipChoiceScope.cpp
         sources/scopes/LoginScope.hpp
         sources/scopes/EndGame.hpp
+        sources/scopes/Level1Scope.hpp
+        sources/scopes/Level2Scope.hpp
+        sources/scopes/Level3Scope.hpp
 
         sources/entities/ships/PlayerShip.cpp sources/entities/ships/PlayerShip.hpp
         sources/entities/ships/Ship.cpp sources/entities/ships/Ship.hpp

@@ -59,7 +59,7 @@ namespace Scopes {
 	}
 
 	void update() override {
-        int ennemy_ship = 1;
+        int ennemy_ship = 0;
         int players = 0;
 
         for (auto &ship : this->entityManager.entities){
