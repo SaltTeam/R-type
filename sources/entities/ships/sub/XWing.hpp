@@ -12,7 +12,7 @@ namespace Entities {
     public:
 
         XWing(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
-              network::protocol::Update updateType = network::protocol::Update::Replica, uint16_t refreshTime = 1000,
+              network::protocol::Update updateType = network::protocol::Update::Replica, uint16_t refreshTime = 5,
               bool isEnabled = true, const float x = 0, const float y = 0)
                 : PlayerShip(scope, id, playerColor, updateType, refreshTime, isEnabled, x, y, 0.25, 0.25, 100) {
 			this->type = network::protocol::Type::SHIP_XWING;
