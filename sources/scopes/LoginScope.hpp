@@ -10,6 +10,7 @@
 #include "scopes/TestScope.hpp"
 #include "engine/Runner.hpp"
 #include "engine/service/NetService.hpp"
+#include "Level1Scope.hpp"
 
 namespace Scopes {
     class LoginScope : public SCOPE {
@@ -63,7 +64,7 @@ namespace Scopes {
                 switch (status)
                 {
                     case(200):
-                        this->gameService->pushScope<Scopes::TestScope>();
+                        this->gameService->pushScope<Scopes::Level1Scope>();
                         break;
                     case(500):
                         this->error_message = "An error Occured please try again later";
