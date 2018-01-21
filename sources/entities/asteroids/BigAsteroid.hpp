@@ -18,13 +18,16 @@ namespace Entities {
                 }
 
         ~BigAsteroid() override {
-            for (int i = 0; i < 2; ++i) {
-                this->scope->entityManager.add<Entities::MedAsteroid>(LAYER::Layer1, true,
-                                                                      this->position.x +
-                                                                      this->texture->sprite.getGlobalBounds().width / 2,
-                                                                      this->position.y +
-                                                                      this->texture->sprite.getGlobalBounds().height /
-                                                                      2);
+            if (playerColor == network::protocol::PlayerColor::Blue)
+            {
+                for (int i = 0; i < 2; ++i) {
+                    this->scope->entityManager.add<Entities::MedAsteroid>(LAYER::Layer1, true,
+                                                                          this->position.x +
+                                                                          this->texture->sprite.getGlobalBounds().width / 2,
+                                                                          this->position.y +
+                                                                          this->texture->sprite.getGlobalBounds().height /
+                                                                          2);
+                }
             }
         }
     };
