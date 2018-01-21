@@ -18,7 +18,7 @@ Entities::Ship::Ship(SCOPE *scope, uint64_t id, network::protocol::PlayerColor p
 
 Entities::Ship::~Ship() {
     delete weapon;
-    if (team == GAME)
+    if (team == GAME && playerColor == network::protocol::PlayerColor::Blue)
         spawnPowerUp();
 }
 

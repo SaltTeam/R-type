@@ -9,7 +9,7 @@
 Entities::APowerUp::APowerUp(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,bool isEnabled, float const &x,
                              float const &y, float const &xSpeed, float const &ySpeed, GRADE grade)
 
-        : MovableEntity(scope, id, playerColor,  network::protocol::Update::Instanciated, 250, isEnabled, x, y, xSpeed, ySpeed),
+        : MovableEntity(scope, id, playerColor, playerColor == network::protocol::PlayerColor::Blue ? network::protocol::Update::Master : network::protocol::Update::Replica, 250, isEnabled, x, y, xSpeed, ySpeed),
           grade(grade) {
 }
 
