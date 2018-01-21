@@ -10,7 +10,7 @@ Entities::Projectile::Projectile(SCOPE *scope, uint64_t id, network::protocol::P
                                  std::string const &texturePath, bool isEnabled,
                                  float const x, float const y, float const xSpeed, float const ySpeed,
                                  int const damage, Entities::Ship::TEAM originTeam, network::protocol::Type Type)
-        : MovableEntity(scope, id, playerColor, updateType, 250,
+        : MovableEntity(scope, id, playerColor, updateType, 100,
                         isEnabled, x, y, xSpeed, ySpeed), damage(damage), originTeam(originTeam) {
     this->type = Type;
     this->setTexture(texturePath);

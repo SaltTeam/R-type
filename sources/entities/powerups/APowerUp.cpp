@@ -44,5 +44,7 @@ std::string Entities::APowerUp::getEnumName(GRADE grade) {
             return "silver";
         case GOLD:
             return "gold";
+        default:
+            return "bronze";
     }
 }
