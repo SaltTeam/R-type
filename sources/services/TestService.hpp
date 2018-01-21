@@ -2,18 +2,18 @@
 #pragma once
 
 #include <iostream>
-#include <engine/Engine.hpp>
 
+#include "engine/service/Service.hpp"
+#include "engine/Runner.hpp"
 #include "engine/EngineStop.hpp"
-#include "services/BaseService.hpp"
 
 namespace Services {
-    class TestService : public Services::BaseService {
+    class TestService : public SERVICE {
     private:
         int end = 0;
 
     public:
-        explicit TestService(Engine *e) : BaseService(e) {
+        explicit TestService(ENGINE *e) : SERVICE(e) {
             std::cout << "Test Service: constructor." << std::endl;
         };
 

@@ -1,8 +1,6 @@
 
 #include "EngineStop.hpp"
 
-#include <iostream>
-
 std::ostream &operator<<(std::ostream &out, const EngineErrorCode value) {
     const char *s = nullptr;
 #define PROCESS_VAL(p) case(p): s = #p; break;
