@@ -6,13 +6,13 @@
 #include "entities/ships/PlayerShip.hpp"
 #include "entities/asteroids/Asteroid.hpp"
 
-Entities::Projectile::Projectile(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
+Entities::Projectile::Projectile(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, network::protocol::Update updateType,
                                  std::string const &texturePath, bool isEnabled,
                                  float const &x, float const &y, float const &xSpeed, float const &ySpeed,
-                                 int const &damage, Entities::Ship::TEAM originTeam, network::protocol::Type updateType)
-        : MovableEntity(scope, id, playerColor, network::protocol::Update::Instanciated, 250,
+                                 int const &damage, Entities::Ship::TEAM originTeam, network::protocol::Type Type)
+        : MovableEntity(scope, id, playerColor, updateType, 250,
                         isEnabled, x, y, xSpeed, ySpeed), damage(damage), originTeam(originTeam) {
-    this->type = updateType;
+    this->type = Type;
     this->setTexture(texturePath);
     this->position.x -= this->texture->sprite.getGlobalBounds().width / 2;
     std::function<void(ENTITY *)> f = std::bind(&Projectile::onCollision, this, std::placeholders::_1);
