@@ -22,5 +22,10 @@ namespace Entities {
 
         virtual void spawnLasers(sf::Vector2f const &position);
 
+    public:
+        static std::string getColorOfProjectile(Ship::TEAM team){
+            return team == Ship::PLAYER ? "Green" : "Red";
+        };
+
     };
 }

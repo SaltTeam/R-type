@@ -10,6 +10,6 @@ namespace Entities {
     class Laser2 : public Weapon {
     public:
         Laser2(SCOPE *scope, Entities::Ship::TEAM originTeam)
-                : Weapon(scope, "resources/sprites/Lasers/laserRed08.png", 0.5, 35, 0, -0.4f, originTeam, network::protocol::Type::LASER2) {}
+                : Weapon(scope, "resources/sprites/Lasers/laser" + getColorOfProjectile(originTeam) + "08.png", 0.5, 35, 0, -0.4f, originTeam, network::protocol::Type::LASER2) {}
     };
 }
