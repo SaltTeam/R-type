@@ -40,7 +40,7 @@ namespace Scopes {
         void initialize() override {
             createStarfield(this, 70);
             Scopes::createShip(this);
-            if (this->gameService->engine->findService<NET_SERVICE>()->color == network::protocol::PlayerColor::Blue)
+            if (NET_SERVICE::color == network::protocol::PlayerColor::Blue)
             {
                 this->entityManager.add<Entities::TieBomber>(LAYER::Layer3, network::protocol::Update::Master, 250);
                 spawnBoss(this, 125, 0);

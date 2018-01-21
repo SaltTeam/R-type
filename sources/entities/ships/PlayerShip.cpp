@@ -20,7 +20,7 @@ Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, network::protocol::P
 }
 
 void Entities::PlayerShip::registerBindings() {
-    if (this->playerColor == this->scope->gameService->engine->findService<NET_SERVICE>()->color)
+    if (this->playerColor == NET_SERVICE::color)
     {
         std::function<void(void)> f = std::bind(&PlayerShip::moveUp, this);
         this->registerCallback(sf::Keyboard::Z, f);

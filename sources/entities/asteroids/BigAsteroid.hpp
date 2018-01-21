@@ -18,7 +18,7 @@ namespace Entities {
                 }
 
         ~BigAsteroid() override {
-            if (playerColor == network::protocol::PlayerColor::Blue)
+            if (NET_SERVICE::color == network::protocol::PlayerColor::Blue)
             {
                 for (int i = 0; i < 2; ++i) {
                     this->scope->entityManager.add<Entities::MedAsteroid>(LAYER::Layer1, true,
