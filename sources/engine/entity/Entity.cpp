@@ -34,11 +34,29 @@ void ENTITY::registerCollisionBox(const sf::Vector2f &origin, const sf::FloatRec
 
 uint64_t ENTITY_MANAGER::generateId() {
     static uint64_t lastId = 0;
+    uint64_t id = 0;
     for (;;) {
-        if (!this->exists(lastId)) {
-            return lastId;
+        switch (NET_SERVICE::color) {
+            case network::protocol::PlayerColor::Blue:
+                id = lastId | 0x00000000;
+                break;
+            case network::protocol::PlayerColor::Green:
+                id = lastId | 0x10000000;
+                break;
+            case network::protocol::PlayerColor::Red:
+                id = lastId | 0x20000000;
+                break;
+            case network::protocol::PlayerColor::Yellow:
+                id = lastId | 0x30000000;
+                break;
+            default:
+                id = lastId | 0xf0000000;
+                break;
+            }
+        if (!this->exists(id)) {
+            return id;
         }
-        if (lastId > 0x00ffffff)
+        if (lastId > 0x0fffffff)
             lastId = 0;
         lastId++;
     }
