@@ -485,10 +485,11 @@ namespace Engine {
         catch (...) {
             sock.reset(nullptr);
         }
-
+        u_long iMode=1;
+        ioctlsocket(sock->getSocketFd(),FIONBIO,&iMode);
         while (this->running.load()) {
             int len = 0;
-            if ((len = sock->RecvFrom(buf, 1024, MSG_DONTWAIT, server)) >= 0) {
+            if ((len = sock->RecvFrom(buf, 1024, 0, server)) >= 0) {
                 auto* hdr = reinterpret_cast<network::protocol::Header*>(buf);
                 auto* odr = reinterpret_cast<network::protocol::ObjectHeader*>(hdr + 1);
                 auto* tp = new char[odr->size];
