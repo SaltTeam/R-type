@@ -32,7 +32,6 @@ namespace server {
                     continue;
                 auto* hdr = reinterpret_cast<network::protocol::Header*>(buf);
                 auto* odr = reinterpret_cast<network::protocol::ObjectHeader*>(hdr + 1);
-                std::cout << (short) odr->type << " - " << odr->id << std::endl;
                 _ips_mutex.lock();
                 for (int i = 0; i < 4; ++i) {
                     if (_ips[i] == addr.GetStruct().sin_addr.s_addr)
