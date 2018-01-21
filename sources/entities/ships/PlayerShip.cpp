@@ -6,6 +6,8 @@
 #include "entities/asteroids/Asteroid.hpp"
 #include "engine/scope/Scope.hpp"
 #include "engine/service/GameService.hpp"
+#include "engine/Runner.hpp"
+#include "engine/service/NetService.hpp"
 #include "PlayerShip.hpp"
 
 Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
@@ -18,16 +20,19 @@ Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, network::protocol::P
 }
 
 void Entities::PlayerShip::registerBindings() {
-    std::function<void(void)> f = std::bind(&PlayerShip::moveUp, this);
-    this->registerCallback(sf::Keyboard::Z, f);
-    std::function<void(void)> f1 = std::bind(&PlayerShip::moveDown, this);
-    this->registerCallback(sf::Keyboard::S, f1);
-    std::function<void(void)> f2 = std::bind(&PlayerShip::moveLeft, this);
-    this->registerCallback(sf::Keyboard::Q, f2);
-    std::function<void(void)> f3 = std::bind(&PlayerShip::moveRight, this);
-    this->registerCallback(sf::Keyboard::D, f3);
-    std::function<void(void)> f4 = std::bind(&PlayerShip::shoot, this);
-    this->registerCallback(sf::Keyboard::Space, f4);
+    if (this->playerColor == this->scope->gameService->engine->findService<NET_SERVICE>()->color)
+    {
+        std::function<void(void)> f = std::bind(&PlayerShip::moveUp, this);
+        this->registerCallback(sf::Keyboard::Z, f);
+        std::function<void(void)> f1 = std::bind(&PlayerShip::moveDown, this);
+        this->registerCallback(sf::Keyboard::S, f1);
+        std::function<void(void)> f2 = std::bind(&PlayerShip::moveLeft, this);
+        this->registerCallback(sf::Keyboard::Q, f2);
+        std::function<void(void)> f3 = std::bind(&PlayerShip::moveRight, this);
+        this->registerCallback(sf::Keyboard::D, f3);
+        std::function<void(void)> f4 = std::bind(&PlayerShip::shoot, this);
+        this->registerCallback(sf::Keyboard::Space, f4);
+    }
 }
 
 void Entities::PlayerShip::onCollision(ENTITY *other) {
