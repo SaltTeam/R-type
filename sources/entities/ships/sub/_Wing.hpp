@@ -16,9 +16,10 @@ namespace Entities {
                 : PlayerShip(scope, id, playerColor, updateType, refreshTime, isEnabled, x, y, 0.25, 0.25, 200) {
             this->registerTexture("resources/sprites/ships/player/ship5/" + this->getColorString() + ".png");
             this->type = network::protocol::Type::SHIP_WING;
+            this->texture->sprite.setScale(0.4, 0.4);
             this->weapon = new Entities::Laser1(scope, this->team);
             this->canons.push_back({2, -15});
-            this->canons.push_back({114, -15});
+            this->canons.push_back({92, -15});
             if (x == 0 && y == 0)
                 this->setPosition(static_cast<short>(this->playerColor) * 100,
                                   this->scope->gameService->getWindowSize().y - this->texture->sprite.getGlobalBounds().height);
