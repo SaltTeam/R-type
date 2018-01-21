@@ -17,7 +17,7 @@ static std::map<int, std::string> paths = {{0, "resources/sprites/Meteors/meteor
 Entities::Asteroid::Asteroid(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
                              const std::string &texturePath, bool isEnabled,
                              const float &x, const float &y)
-        : MovableEntity(scope, id, playerColor, network::protocol::Update::Master, 250, isEnabled, x, y) {
+        : MovableEntity(scope, id, playerColor, playerColor == network::protocol::PlayerColor::Blue ? network::protocol::Update::Master : network::protocol::Update::Replica, 250, isEnabled, x, y) {
 
     std::random_device rd;
     std::mt19937 mt(rd());
@@ -31,7 +31,7 @@ Entities::Asteroid::Asteroid(SCOPE *scope, uint64_t id, network::protocol::Playe
 
 Entities::Asteroid::Asteroid(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, bool isEnabled,
                              const float &x, const float &y)
-        : MovableEntity(scope, id, playerColor, network::protocol::Update::Master, 250, isEnabled, x, y) {
+        : MovableEntity(scope, id, playerColor, playerColor == network::protocol::PlayerColor::Blue ? network::protocol::Update::Master : network::protocol::Update::Replica, 250, isEnabled, x, y) {
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_real_distribution<float> dist_speed(-0.3, 0.3);
