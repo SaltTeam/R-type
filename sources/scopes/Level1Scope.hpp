@@ -60,7 +60,20 @@ namespace Scopes {
 
 	void update() override {
         int ennemy_ship = 1;
-        //SI ON PEUT LUI FILER LE MEME TEAM ID C EST IZI PIZI
+        int players = 0;
+
+        for (auto &ship : this->entityManager.entities){
+            for (auto &it : ship.second)
+            {
+                if (reinterpret_cast<Entities::Ship *>(it)->getTeam() ==
+                    Entities::Ship::PLAYER)
+                {
+                    players += 1;
+                }
+            }
+        }
+        if (players == 0)
+            this->gameService->pushScope<EndGame>();
         frame += 1;
         if (dist10(rng) % 1007 == 0)
             this->entityManager.add<Entities::TinyAsteroid>(LAYER::Layer2, true, 0, 0);

@@ -65,6 +65,20 @@ namespace Scopes {
         void update() override {
             bool in = true;
             int ennemy_ship = 0;
+            int players = 0;
+
+            for (auto &ship : this->entityManager.entities){
+                for (auto &it : ship.second)
+                {
+                    if (reinterpret_cast<Entities::Ship *>(it)->getTeam() ==
+                        Entities::Ship::PLAYER)
+                    {
+                        players += 1;
+                    }
+                }
+            }
+            if (players == 0)
+                this->gameService->pushScope<EndGame>();
             frame +=1;
             if (dist10(rng) % 1007 == 0)
                 this->entityManager.add<Entities::SmallAsteroid>(LAYER::Layer2, true, 0, 0);
