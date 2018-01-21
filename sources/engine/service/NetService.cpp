@@ -257,7 +257,7 @@ namespace Engine {
                         case network::protocol::Type::LASER3: {
                             auto obj = reinterpret_cast<::Entities::Projectile*>(p);
                             scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color, p->id, network::protocol::Update::Replica,
-                                                                                obj->texture->path, obj->isEnabled,
+                                                                                "resources/sprites/Lasers/laserRed01.png", obj->isEnabled,
                                                                                 obj->position.x, obj->position.y,
                                                                                 obj->speed.x, obj->speed.y, obj->damage,
                                                                                 obj->originTeam, obj->type);
@@ -266,7 +266,7 @@ namespace Engine {
                         case network::protocol::Type::LASER4: {
                             auto obj = reinterpret_cast<::Entities::SinusProjectile*>(p);
                             scope->entityManager.netAdd<::Entities::SinusProjectile>(LAYER::Layer1, p->color, p->id, network::protocol::Update::Replica,
-                                                                                     obj->texture->path, obj->isEnabled,
+                                                                                     "resources/sprites/Lasers/laserRed01.png", obj->isEnabled,
                                                                                      obj->position.x, obj->position.y,
                                                                                      obj->speed.x, obj->speed.y,
                                                                                      obj->damage, obj->originTeam,
