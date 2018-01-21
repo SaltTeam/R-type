@@ -26,6 +26,7 @@ namespace Engine {
             network::protocol::Type type;
             network::protocol::Update updateType;
             uint16_t refreshTime;
+            std::chrono::time_point<std::chrono::system_clock> lastUpdated;
 
         public:
             uint64_t id;
@@ -38,7 +39,7 @@ namespace Engine {
                                 network::protocol::Update updateType, uint16_t refreshTime,
                                 bool isEnabled = true, float const &x = 0, float const &y = 0)
                     : scope(scope), id(id), playerColor(playerColor), isEnabled(isEnabled), position{x, y},
-                      updateType(updateType), refreshTime(refreshTime) {}
+                      updateType(updateType), refreshTime(refreshTime), lastUpdated(std::chrono::system_clock::from_time_t(0)) {}
 
             virtual ~BaseEntity() = default;
 

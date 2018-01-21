@@ -15,10 +15,10 @@ namespace Entities {
     public:
         Asteroid(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, const std::string &texturePath,
                  bool isEnabled,
-                 float const x, float const y);
+                 float x, float y);
 
         Asteroid(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, bool isEnabled,
-                 float const x, float const y);
+                 float x, float y);
 
     protected:
         void update() override;

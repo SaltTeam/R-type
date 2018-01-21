@@ -50,6 +50,9 @@ namespace Engine {
         this->mut_in.lock();
         for (auto& entry : scope->entityManager.entities) {
             for (auto& entity : entry.second) {
+                if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - entity->lastUpdated).count() < entity->refreshTime)
+                    continue;
+                entity->lastUpdated = std::chrono::system_clock::now();
                 if (entity->updateType == network::protocol::Update::Master) {
                     switch (entity->type) {
                         case network::protocol::Type::BOSS_LEFTPART:
