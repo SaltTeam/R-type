@@ -14,7 +14,7 @@ Entities::Star::Star(SCOPE *scope, uint64_t id, network::protocol::PlayerColor p
     std::mt19937 mt(rd());
     std::uniform_real_distribution<float> dist_xpos(-(this->texture->sprite.getGlobalBounds().width / 2),
                                                     this->scope->gameService->getWindowSize().x - (this->texture->sprite.getGlobalBounds().width / 2));
-    std::uniform_real_distribution<float> dist_speed(0.01, 0.1);
+    std::uniform_real_distribution<float> dist_speed(0.01f, 0.1f);
 
     float speed = dist_speed(mt);
     sf::Uint8 light = 255 * (speed * 10);

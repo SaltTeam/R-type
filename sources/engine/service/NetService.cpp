@@ -44,6 +44,8 @@ namespace Engine {
     }
 
     EngineStatus NET_SERVICE::earlyUpdate() {
+        if (!connect.load())
+            return EngineStatus::Continue;
         auto gm = this->engine->findService<GAME_SERVICE>();
         auto scope = gm->currentScope();
         if (scope == nullptr) return EngineStatus::Continue;
@@ -189,6 +191,8 @@ namespace Engine {
     }
 
     EngineStatus NET_SERVICE::lateUpdate() {
+        if (!connect.load())
+            return EngineStatus::Continue;
         auto gm = this->engine->findService<GAME_SERVICE>();
         auto scope = gm->currentScope();
         if (scope == nullptr) return EngineStatus::Continue;

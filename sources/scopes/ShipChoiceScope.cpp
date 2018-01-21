@@ -87,7 +87,7 @@ namespace Scopes {
         ImGui::End();
 
         ImGui::Begin("Selection");
-        ImGui::SetWindowSize(ImVec2(90, 100));
+        ImGui::SetWindowSize(ImVec2(90, 120));
         if (ImGui::Button("Next")) {
             cpt++;
             button = true;
@@ -104,6 +104,10 @@ namespace Scopes {
             this->entityManager.entities.clear();
             this->gameService->pushScope<Scopes::LoginScope>();
             button = true;
+        }
+        if (ImGui::Button("Solo")) {
+            this->entityManager.entities.clear();
+            this->gameService->pushScope<Scopes::Level1Scope>();
         }
         ImGui::End();
 
