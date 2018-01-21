@@ -112,7 +112,7 @@ namespace Scopes
                 this->gameService->pushScope<EndGame>();
             frame += 1;
             if (dist10(rng) % 1007 == 0)
-                this->entityManager.add<Entities::TinyAsteroid>(LAYER::Layer2,
+                this->entityManager.add<Entities::MedAsteroid>(LAYER::Layer2,
                                                                 true, this->gameService->getWindowSize().x / 2, 0);
             if (frame == 100 && nb_ships < 6)
             {
