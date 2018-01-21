@@ -485,11 +485,16 @@ namespace Engine {
         catch (...) {
             sock.reset(nullptr);
         }
+#ifdef WIN32
+        unsigned int flag = 0;
         u_long iMode=1;
         ioctlsocket(sock->getSocketFd(),FIONBIO,&iMode);
+#else
+        unsigned int flag = MSG_DONTWAIT;
+#endif
         while (this->running.load()) {
-            int len = 0;
-            if ((len = sock->RecvFrom(buf, 1024, 0, server)) >= 0) {
+            ssize_t len = 0;
+            if ((len = sock->RecvFrom(buf, 1024, flag, server)) >= 0) {
                 auto* hdr = reinterpret_cast<network::protocol::Header*>(buf);
                 auto* odr = reinterpret_cast<network::protocol::ObjectHeader*>(hdr + 1);
                 auto* tp = new char[odr->size];
