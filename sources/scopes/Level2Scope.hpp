@@ -84,7 +84,7 @@ namespace Scopes {
                 this->gameService->pushScope<EndGame>();
             frame +=1;
             if (dist10(rng) % 1007 == 0)
-                this->entityManager.add<Entities::SmallAsteroid>(LAYER::Layer2, true, 0, 0);
+                this->entityManager.add<Entities::SmallAsteroid>(LAYER::Layer2, true, this->gameService->getWindowSize().x / 2, 0);
             if (frame == 200 && nb_ships < 5) {
                 frame = 0;
                 this->entityManager.add<Entities::TieBomber>(LAYER::Layer3,
