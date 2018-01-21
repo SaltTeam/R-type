@@ -42,6 +42,8 @@ namespace Engine {
                                                  std::string const& passwd,
                                                  std::string const& ipAddr);
 
+            void sendEntityDeletion(network::protocol::Type type, uint64_t id);
+
         private:
             EngineStatus initialize() override;
 
