@@ -16,8 +16,8 @@ namespace Entities {
         virtual bool shoot(std::vector<sf::Vector2f> const &canons, sf::Vector2f const &position);
 
     protected:
-        Weapon(SCOPE *scope, std::string const &projectilePath, float const &cd, int const &damage,
-               float const &xSpeed, float const &ySpeed, Entities::Ship::TEAM originTeam, network::protocol::Type type)
+        Weapon(SCOPE *scope, std::string const &projectilePath, float const cd, int const damage,
+               float const xSpeed, float const ySpeed, Entities::Ship::TEAM originTeam, network::protocol::Type type)
                 : AWeapon(scope, projectilePath, cd, damage, xSpeed, ySpeed, originTeam, type) {};
 
         virtual void spawnLasers(sf::Vector2f const &position);

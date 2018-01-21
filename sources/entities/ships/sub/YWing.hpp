@@ -12,7 +12,7 @@ namespace Entities {
     public:
         YWing(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
               network::protocol::Update updateType = network::protocol::Update::Replica, uint16_t refreshTime = 1000,
-              bool isEnabled = true, const float &x = 0, const float &y = 0)
+              bool isEnabled = true, const float x = 0, const float y = 0)
                 : PlayerShip(scope, id, playerColor, updateType, refreshTime, isEnabled, x, y, 0.15, 0.15, 200) {
 			this->type = network::protocol::Type::SHIP_YWING;
             this->registerTexture("resources/sprites/ships/player/ship2/" + this->getColorString() + ".png");

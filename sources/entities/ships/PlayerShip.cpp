@@ -12,8 +12,8 @@
 
 Entities::PlayerShip::PlayerShip(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor,
                                  network::protocol::Update updateType, uint16_t refreshTime, bool isEnabled,
-                                 float const &x, float const &y, const float &xSpeed, const float &ySpeed,
-                                 int const &health, int const &shield)
+                                 float const x, float const y, const float xSpeed, const float ySpeed,
+                                 int const health, int const shield)
         : Ship(scope, id, playerColor, updateType, refreshTime, isEnabled, Entities::Ship::PLAYER, x, y, xSpeed, ySpeed,
                health, shield) {
     this->registerBindings();

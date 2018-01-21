@@ -8,8 +8,8 @@
 
 Entities::Projectile::Projectile(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, network::protocol::Update updateType,
                                  std::string const &texturePath, bool isEnabled,
-                                 float const &x, float const &y, float const &xSpeed, float const &ySpeed,
-                                 int const &damage, Entities::Ship::TEAM originTeam, network::protocol::Type Type)
+                                 float const x, float const y, float const xSpeed, float const ySpeed,
+                                 int const damage, Entities::Ship::TEAM originTeam, network::protocol::Type Type)
         : MovableEntity(scope, id, playerColor, updateType, 250,
                         isEnabled, x, y, xSpeed, ySpeed), damage(damage), originTeam(originTeam) {
     this->type = Type;

@@ -65,8 +65,8 @@ namespace Entities {
         };
 
     protected:
-        AWeapon(SCOPE *scope, std::string const &projectilePath, float const &cd, int const &damage,
-                float const &xSpeed, float const &ySpeed, Entities::Ship::TEAM originTeam, network::protocol::Type type)
+        AWeapon(SCOPE *scope, std::string const &projectilePath, float const cd, int const damage,
+                float const xSpeed, float const ySpeed, Entities::Ship::TEAM originTeam, network::protocol::Type type)
                 : scope(scope), projectilePath(projectilePath), cd(cd), damage(damage), xSpeed(xSpeed), ySpeed(ySpeed),
                   originTeam(originTeam) {
             this->type = type;

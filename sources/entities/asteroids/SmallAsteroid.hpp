@@ -11,7 +11,7 @@ namespace Entities {
     class SmallAsteroid : public Asteroid {
     public:
         SmallAsteroid(SCOPE *scope, uint64_t id, network::protocol::PlayerColor playerColor, bool isEnabled,
-                      float const &x, float const &y)
+                      float const x, float const y)
                 : Asteroid(scope, id, playerColor, "resources/sprites/Meteors/meteorGrey_small2.png", isEnabled, x,
                            y) {
             this->type = network::protocol::Type::ASTEROID_SMALL;
