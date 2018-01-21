@@ -36,7 +36,7 @@ namespace Entities {
 
         ~RightPart() override {
             delete this->weapon2;
-            if (playerColor == network::protocol::PlayerColor::Blue)
+            if (NET_SERVICE::color == network::protocol::PlayerColor::Blue)
             {
                 for (int i = 0; i < 4; ++i) {
                     this->scope->entityManager.add<Entities::BigAsteroid>(LAYER::Layer1,true,

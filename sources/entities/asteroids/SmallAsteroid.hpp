@@ -18,7 +18,7 @@ namespace Entities {
                 }
 
         ~SmallAsteroid() override {
-            if (playerColor == network::protocol::PlayerColor::Blue)
+            if (NET_SERVICE::color == network::protocol::PlayerColor::Blue)
             {
                 for (int i = 0; i < 2; ++i) {
                     this->scope->entityManager.add<Entities::TinyAsteroid>(LAYER::Layer1, true,
