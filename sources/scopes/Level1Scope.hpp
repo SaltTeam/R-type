@@ -42,6 +42,7 @@ namespace Scopes {
         this->rng.seed(std::random_device()());
         std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 10000);
         dist10 = dist6;
+        createStarfield(this, 70);
 		Scopes::createShip(this);
 		if (this->gameService->engine->findService<NET_SERVICE>()->color == network::protocol::PlayerColor::Blue) {
 			this->entityManager.add<Entities::TieFigther>(LAYER::Layer3, network::protocol::Update::Master, 250);
@@ -95,7 +96,8 @@ namespace Scopes {
             for (auto &ship : this->entityManager.entities){
                 for (auto &it : ship.second)
                 {
-                    if (reinterpret_cast<Entities::Ship *>(it)->getTeam() !=
+                    if (dynamic_cast<Entities::Ship *>(it) != nullptr &&
+                            reinterpret_cast<Entities::Ship *>(it)->getTeam() !=
                         Entities::Ship::PLAYER)
                     {
                         ennemy_ship += 1;
