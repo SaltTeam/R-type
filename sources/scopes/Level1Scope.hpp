@@ -66,7 +66,8 @@ namespace Scopes {
         for (auto &ship : this->entityManager.entities){
             for (auto &it : ship.second)
             {
-                if (reinterpret_cast<Entities::Ship *>(it)->getTeam() ==
+                if (dynamic_cast<Entities::Ship *>(it) != nullptr &&
+                        reinterpret_cast<Entities::Ship *>(it)->getTeam() ==
                     Entities::Ship::PLAYER)
                 {
                     players += 1;
