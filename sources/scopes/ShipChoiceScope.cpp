@@ -90,6 +90,8 @@ namespace Scopes {
         ImGui::SetWindowSize(ImVec2(90, 120));
         if (ImGui::Button("Next")) {
             cpt++;
+            if (cpt > 4)
+                cpt = 0;
             button = true;
         }
         if (ImGui::Button("Prev")) {
