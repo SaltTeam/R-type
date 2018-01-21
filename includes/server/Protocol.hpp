@@ -48,13 +48,13 @@ namespace network {
             SHIP_WING,
             SHIP_ARC,
             SHIP_INTERCEPTOR,
+            SHIP_XWING,
+            SHIP_YWING,
             SHIP_TIEADVANCE,
             SHIP_TIEAVENGER,
             SHIP_TIEBOMBER,
             SHIP_TIEEXPERIMENT,
-            SHIP_TIEFIGHTER,
-            SHIP_XWING,
-            SHIP_YWING
+            SHIP_TIEFIGHTER
         };
 
         enum class Action {

@@ -494,6 +494,7 @@ namespace Engine {
         mysocket::InetAddr server{};
         char buf[1024];
 
+        while (!connect.load() && this->running.load()) {}
         try {
             sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
             sock->setAddress(43000, "0.0.0.0");
