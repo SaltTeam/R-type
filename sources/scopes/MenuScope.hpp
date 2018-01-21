@@ -44,7 +44,7 @@ namespace Scopes {
             }
             if (ImGui::Button("Quit",  ImVec2(100, 50))) {
                 std::cout << "Quit" << std::endl;
-                this->gameService->popScope();
+                this->gameService->clear();
             }
             if (setting) {
                 ImGui::Begin("Settings");

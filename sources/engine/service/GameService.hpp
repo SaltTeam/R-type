@@ -40,6 +40,11 @@ namespace Engine {
                 this->removeScope = true;
             }
 
+            void clear() {
+                while (!scopes.empty())
+                    scopes.pop();
+            }
+
             SCOPE *currentScope() {
                 if (this->scopes.empty())
                     return nullptr;

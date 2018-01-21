@@ -32,10 +32,10 @@ namespace Scopes {
             ImGui::Begin("Game Over");
             ImGui::SetWindowPos(ImVec2(this->gameService->getWindowSize().x/2 - 50, this->gameService->getWindowSize().y/2 - 50));
             if (ImGui::Button("Main Menu")){
-                this->gameService->pushScope<Scopes::MenuScope>();
+                this->gameService->pushScope<Scopes::MenuScope>();;
             }
             if (ImGui::Button("Quit Game")){
-                this->gameService->popScope();
+                this->gameService->clear();
             }
             ImGui::End();
         }
@@ -66,10 +66,11 @@ namespace Scopes {
             ImGui::Begin("Finished");
             ImGui::SetWindowPos(ImVec2(this->gameService->getWindowSize().x/2 - 50, this->gameService->getWindowSize().y/2 - 50));
             if (ImGui::Button("Main Menu")){
+                this->gameService->clear();
                 this->gameService->pushScope<Scopes::MenuScope>();
             }
             if (ImGui::Button("Quit Game")){
-                this->gameService->popScope();
+                this->gameService->clear();
             }
             ImGui::End();
         }
