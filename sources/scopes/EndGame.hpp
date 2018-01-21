@@ -3,6 +3,8 @@
 #include "imgui.h"
 #include "engine/ForwardDeclaration.hpp"
 #include "engine/service/GameService.hpp"
+#include "engine/Runner.hpp"
+#include "engine/service/NetService.hpp"
 #include "MenuScope.hpp"
 #include <engine/ForwardDeclaration.hpp>
 
@@ -32,6 +34,7 @@ namespace Scopes {
             ImGui::Begin("Game Over");
             ImGui::SetWindowPos(ImVec2(this->gameService->getWindowSize().x/2 - 50, this->gameService->getWindowSize().y/2 - 50));
             if (ImGui::Button("Main Menu")){
+                this->gameService->engine->findService<NET_SERVICE>()->reset();
                 this->gameService->pushScope<Scopes::MenuScope>();;
             }
             if (ImGui::Button("Quit Game")){
@@ -66,6 +69,7 @@ namespace Scopes {
             ImGui::Begin("Finished");
             ImGui::SetWindowPos(ImVec2(this->gameService->getWindowSize().x/2 - 50, this->gameService->getWindowSize().y/2 - 50));
             if (ImGui::Button("Main Menu")){
+                this->gameService->engine->findService<NET_SERVICE>()->reset();
                 this->gameService->clear();
                 this->gameService->pushScope<Scopes::MenuScope>();
             }

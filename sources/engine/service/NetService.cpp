@@ -488,8 +488,11 @@ namespace Engine {
 
     EngineStatus NET_SERVICE::shutdown() {
         this->running = false;
-        this->thread->join();
-        delete this->thread;
+        if (thread != nullptr) {
+            this->thread->join();
+            delete this->thread;
+        }
+        this->thread = nullptr;
         return EngineStatus::Continue;
     }
 
@@ -647,5 +650,17 @@ namespace Engine {
         mut_in.lock();
         in.push(obj);
         mut_in.unlock();
+    }
+
+    void NET_SERVICE::reset() {
+        this->running = false;
+        if (thread != nullptr) {
+            this->thread->join();
+            delete this->thread;
+        }
+        this->thread = nullptr;
+        this->running = true;
+        this->connect = false;
+        this->thread = new std::thread(&NET_SERVICE::run, std::ref(*this));
     }
 }
