@@ -44,6 +44,8 @@ namespace Engine {
 
             void sendEntityDeletion(network::protocol::Type type, uint64_t id);
 
+            void reset();
+
         private:
             EngineStatus initialize() override;
 
