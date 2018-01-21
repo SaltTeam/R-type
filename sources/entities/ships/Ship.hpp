@@ -58,7 +58,7 @@ namespace Entities {
 
         virtual void onCollision(ENTITY *other);
 
-        void registerTexture(std::string const &path);
+        void registerTexture(std::string const &path, float scale = 0.5);
 
         IWeapon *weapon;
 

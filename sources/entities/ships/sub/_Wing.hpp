@@ -14,9 +14,8 @@ namespace Entities {
               network::protocol::Update updateType = network::protocol::Update::Replica, uint16_t refreshTime = 5,
               bool isEnabled = true, const float x = 0, const float y = 0)
                 : PlayerShip(scope, id, playerColor, updateType, refreshTime, isEnabled, x, y, 0.25, 0.25, 175) {
-            this->registerTexture("resources/sprites/ships/player/ship5/" + this->getColorString() + ".png");
+            this->registerTexture("resources/sprites/ships/player/ship5/" + this->getColorString() + ".png", 0.4);
             this->type = network::protocol::Type::SHIP_WING;
-            this->texture->sprite.setScale(0.4, 0.4);
             this->weapon = new Entities::Laser1(scope, this->team);
             this->canons.push_back({2, -15});
             this->canons.push_back({92, -15});

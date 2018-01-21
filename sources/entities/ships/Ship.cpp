@@ -22,8 +22,9 @@ Entities::Ship::~Ship() {
         spawnPowerUp();
 }
 
-void Entities::Ship::registerTexture(std::string const &path) {
+void Entities::Ship::registerTexture(std::string const &path, float scale) {
     this->setTexture(path);
+    this->texture->sprite.setScale(scale, scale);
     std::function<void(ENTITY *)> f5 = std::bind(&Ship::onCollision, this, std::placeholders::_1);
     this->registerCollisionBox(this->texture->sprite.getGlobalBounds(), f5);
 }
