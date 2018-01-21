@@ -31,6 +31,7 @@
 #include "entities/projectiles/sub/SinusProjectile.hpp"
 #include "engine/scope/Scope.hpp"
 #include "engine/service/GameService.hpp"
+#include "network/Addr.hpp"
 
 namespace Engine {
     network::protocol::PlayerColor NET_SERVICE::color = network::protocol::PlayerColor::Error;

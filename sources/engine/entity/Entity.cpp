@@ -3,6 +3,8 @@
 
 #include "engine/entity/Collision.hpp"
 #include "engine/service/GameService.hpp"
+#include "engine/scope/Scope.hpp"
+#include "engine/service/NetService.hpp"
 
 void ENTITY::registerCallback(sf::Keyboard::Key key, std::function<void(void)> &f) {
     this->scope->registerCallback(key, this, f);
@@ -39,5 +41,23 @@ uint64_t ENTITY_MANAGER::generateId() {
         if (lastId > 0x00ffffff)
             lastId = 0;
         lastId++;
+    }
+}
+
+void ENTITY_MANAGER::_removeWaitingEntities() {
+    if (this->removedEntities.empty()) return;
+    for (auto &layer: this->entities) {
+        for (auto &entity: layer.second) {
+            for (auto &deleteEntity: this->removedEntities) {
+                if (entity == deleteEntity) {
+                    this->scope->gameService->engine->findService<NET_SERVICE>()->sendEntityDeletion(entity->type, entity->id);
+                    delete entity;
+                    this->entities[layer.first].remove(entity);
+                    this->removedEntities.remove(deleteEntity);
+                    this->_removeWaitingEntities(); // Recursive
+                    return;
+                }
+            }
+        }
     }
 }

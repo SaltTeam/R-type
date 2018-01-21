@@ -82,6 +82,7 @@ add_executable(${EXECUTABLE_NAME}
         repos/imgui/imgui_draw.cpp
         repos/imgui/imgui_demo.cpp
         repos/imgui/imgui-SFML.cpp
+        sources/scopes/EndGame.hpp
         )
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
