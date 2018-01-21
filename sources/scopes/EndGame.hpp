@@ -63,7 +63,7 @@ namespace Scopes {
 
         void update() override {
 
-            ImGui::Begin("Game Finished");
+            ImGui::Begin("Finished");
             ImGui::SetWindowPos(ImVec2(this->gameService->getWindowSize().x/2 - 50, this->gameService->getWindowSize().y/2 - 50));
             if (ImGui::Button("Main Menu")){
                 this->gameService->pushScope<Scopes::MenuScope>();
