@@ -198,49 +198,49 @@ namespace Engine {
                     case network::protocol::Type::ASTEROID_BIG:
                     {
                         auto obj = reinterpret_cast<MOVABLE_ENTITY *>(p);
-                        scope->entityManager.netAdd<::Entities::BigAsteroid>(LAYER::Layer1, p->color, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::BigAsteroid>(LAYER::Layer1, p->color, p->id, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::ASTEROID_MED:
                     {
                         auto obj = reinterpret_cast<MOVABLE_ENTITY *>(p);
-                        scope->entityManager.netAdd<::Entities::MedAsteroid>(LAYER::Layer1, p->color, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::MedAsteroid>(LAYER::Layer1, p->color, p->id, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::ASTEROID_SMALL:
                     {
                         auto obj = reinterpret_cast<MOVABLE_ENTITY *>(p);
-                        scope->entityManager.netAdd<::Entities::SmallAsteroid>(LAYER::Layer1, p->color, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::SmallAsteroid>(LAYER::Layer1, p->color, p->id, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::ASTEROID_TINY:
                     {
                         auto obj = reinterpret_cast<MOVABLE_ENTITY *>(p);
-                        scope->entityManager.netAdd<::Entities::TinyAsteroid>(LAYER::Layer1, p->color, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::TinyAsteroid>(LAYER::Layer1, p->color, p->id, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::POWERUP_DAMAGE:
                     {
                         auto obj = reinterpret_cast<::Entities::DamagePowerUp *>(p);
-                        scope->entityManager.netAdd<::Entities::DamagePowerUp>(LAYER::Layer1, p->color, obj->grade, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::DamagePowerUp>(LAYER::Layer1, p->color, p->id, obj->grade, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::POWERUP_HEAL:
                     {
                         auto obj = reinterpret_cast<::Entities::HealPowerUp *>(p);
-                        scope->entityManager.netAdd<::Entities::HealPowerUp>(LAYER::Layer1, p->color, obj->grade, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::HealPowerUp>(LAYER::Layer1, p->color, p->id, obj->grade, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::POWERUP_SHIELD:
                     {
                         auto obj = reinterpret_cast<::Entities::ShieldPowerUp *>(p);
-                        scope->entityManager.netAdd<::Entities::ShieldPowerUp>(LAYER::Layer1, p->color, obj->grade, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::ShieldPowerUp>(LAYER::Layer1, p->color, p->id, obj->grade, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::POWERUP_SPEED:
                     {
                         auto obj = reinterpret_cast<::Entities::SpeedPowerUp *>(p);
-                        scope->entityManager.netAdd<::Entities::SpeedPowerUp>(LAYER::Layer1, p->color, obj->grade, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::SpeedPowerUp>(LAYER::Layer1, p->color, p->id, obj->grade, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::LASER1:
@@ -248,91 +248,91 @@ namespace Engine {
                     case network::protocol::Type::LASER3:
                     {
                         auto obj = reinterpret_cast<::Entities::Projectile *>(p);
-                        scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color, obj->texture->path, obj->isEnabled, obj->position.x, obj->position.y, obj->speed.x, obj->speed.y, obj->damage, obj->originTeam, obj->type);
+                        scope->entityManager.netAdd<::Entities::Projectile>(LAYER::Layer1, p->color, p->id, obj->texture->path, obj->isEnabled, obj->position.x, obj->position.y, obj->speed.x, obj->speed.y, obj->damage, obj->originTeam, obj->type);
                         break;
                     }
                     case network::protocol::Type::LASER4:
                     {
                         auto obj = reinterpret_cast<::Entities::SinusProjectile *>(p);
-                        scope->entityManager.netAdd<::Entities::SinusProjectile>(LAYER::Layer1, p->color, obj->texture->path, obj->isEnabled, obj->position.x, obj->position.y, obj->speed.x, obj->speed.y, obj->damage, obj->originTeam, obj->type);
+                        scope->entityManager.netAdd<::Entities::SinusProjectile>(LAYER::Layer1, p->color, p->id, obj->texture->path, obj->isEnabled, obj->position.x, obj->position.y, obj->speed.x, obj->speed.y, obj->damage, obj->originTeam, obj->type);
                         break;
                     }
                     case network::protocol::Type::BOSS_LEFTPART:
                     {
                         auto obj = reinterpret_cast<::Entities::LeftPart *>(p);
-                        scope->entityManager.netAdd<::Entities::LeftPart>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::LeftPart>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::BOSS_MIDDLEPART:
                     {
                         auto obj = reinterpret_cast<::Entities::MiddlePart *>(p);
-                        scope->entityManager.netAdd<::Entities::MiddlePart>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::MiddlePart>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::BOSS_RIGHTPART:
                     {
                         auto obj = reinterpret_cast<::Entities::MiddlePart *>(p);
-                        scope->entityManager.netAdd<::Entities::RightPart>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::RightPart>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_WING:
                     {
                         auto obj = reinterpret_cast<::Entities::_Wing *>(p);
-                        scope->entityManager.netAdd<::Entities::_Wing>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::_Wing>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_ARC:
                     {
                         auto obj = reinterpret_cast<::Entities::Arc *>(p);
-                        scope->entityManager.netAdd<::Entities::Arc>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::Arc>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_INTERCEPTOR:
                     {
                         auto obj = reinterpret_cast<::Entities::Interceptor *>(p);
-                        scope->entityManager.netAdd<::Entities::Interceptor>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::Interceptor>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_TIEADVANCE:
                     {
                         auto obj = reinterpret_cast<::Entities::TieAdvance *>(p);
-                        scope->entityManager.netAdd<::Entities::TieAdvance>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::TieAdvance>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_TIEAVENGER:
                     {
                         auto obj = reinterpret_cast<::Entities::TieAvenger *>(p);
-                        scope->entityManager.netAdd<::Entities::TieAvenger>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::TieAvenger>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_TIEBOMBER:
                     {
                         auto obj = reinterpret_cast<::Entities::TieBomber *>(p);
-                        scope->entityManager.netAdd<::Entities::TieBomber>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::TieBomber>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_TIEEXPERIMENT:
                     {
                         auto obj = reinterpret_cast<::Entities::TieExperiment *>(p);
-                        scope->entityManager.netAdd<::Entities::TieExperiment>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::TieExperiment>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_TIEFIGHTER:
                     {
                         auto obj = reinterpret_cast<::Entities::TieFigther *>(p);
-                        scope->entityManager.netAdd<::Entities::TieFigther>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::TieFigther>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_XWING:
                     {
                         auto obj = reinterpret_cast<::Entities::XWing *>(p);
-                        scope->entityManager.netAdd<::Entities::XWing>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::XWing>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                     case network::protocol::Type::SHIP_YWING:
                     {
                         auto obj = reinterpret_cast<::Entities::YWing *>(p);
-                        scope->entityManager.netAdd<::Entities::YWing>(LAYER::Layer1, p->color, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
+                        scope->entityManager.netAdd<::Entities::YWing>(LAYER::Layer1, p->color, p->id, obj->updateType, obj->refreshTime, obj->isEnabled, obj->position.x, obj->position.y);
                         break;
                     }
                 }

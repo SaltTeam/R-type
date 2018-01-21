@@ -111,6 +111,11 @@ namespace Engine {
                 this->entities[layer].push_back(new T(this->scope, generateId(), color, std::forward<Args>(args)...));
             }
 
+            template<typename T, typename... Args>
+            void netAdd(Layer layer, network::protocol::PlayerColor color, uint64_t id, Args &&...args) {
+                this->entities[layer].push_back(new T(this->scope, id, color, std::forward<Args>(args)...));
+            }
+
             ENTITY *find(uint64_t id) {
                 for (auto &layer: this->entities) {
                     /*auto ptr = std::find_if(layer.second.begin(), layer.second.end(),
