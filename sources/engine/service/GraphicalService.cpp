@@ -10,7 +10,7 @@ sf::Time GRAPHICAL_SERVICE::ups = sf::seconds(1.f / 60.f);
 sf::Time GRAPHICAL_SERVICE::deltaTime = GRAPHICAL_SERVICE::ups;
 
 EngineStatus GRAPHICAL_SERVICE::initialize() {
-    this->window = std::make_unique<sf::RenderWindow>(sf::VideoMode(720, 980), "R-type");
+    this->window = std::make_unique<sf::RenderWindow>(sf::VideoMode(1024, 980), "R-type");
     ImGui::SFML::Init(*this->window);
     this->currentTime = this->clock.getElapsedTime();
     this->render = false;
