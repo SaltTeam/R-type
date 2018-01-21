@@ -25,6 +25,7 @@
 #include "ShipChoiceScope.hpp"
 #include "engine/Runner.hpp"
 #include "EndGame.hpp"
+#include "Level3Scope.hpp"
 
 namespace Scopes {
     class Level2Scope : public SCOPE {
@@ -118,7 +119,7 @@ namespace Scopes {
                 {
                     if (end == 0)
                     {
-                        this->gameService->pushScope<Scopes::EndGameFinal>();
+                        this->gameService->pushScope<Scopes::Level3Scope>();
                     }
                     else
                     {
