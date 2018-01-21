@@ -494,7 +494,9 @@ namespace Engine {
         mysocket::InetAddr server{};
         char buf[1024];
 
-        while (!connect.load() && this->running.load()) {}
+        while (!connect.load() && this->running.load()) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
         try {
             sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
             sock->setAddress(43000, "0.0.0.0");
@@ -536,7 +538,9 @@ namespace Engine {
         std::thread t(&NET_SERVICE::runRead, std::ref(*this));
 
         while (!ok && this->running.load()) {
-            while (!connect.load() && this->running.load()) {}
+            while (!connect.load() && this->running.load()) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            }
             try {
                 sock = std::make_unique<mysocket::Socket>(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
                 server.SetAddress(address);
