@@ -115,7 +115,7 @@ namespace Scopes {
                         }
                     }
                 }
-                if (ennemy_ship == 0 && in == false)
+                if (ennemy_ship == 0 && !in)
                 {
                     if (end == 0)
                     {
@@ -123,10 +123,10 @@ namespace Scopes {
                     }
                     else
                     {
-                        this->entityManager.add<Entities::TieAdvance>(LAYER::Layer3, network::protocol::Update::Master, 250, true, 150, 300);
-                        this->entityManager.add<Entities::TieAdvance>(LAYER::Layer3, network::protocol::Update::Master, 250, true, 450, 300);
-                        this->entityManager.add<Entities::TieAdvance>(LAYER::Layer3, network::protocol::Update::Master, 250, true, 100, 300);
                         this->entityManager.add<Entities::TieAdvance>(LAYER::Layer3, network::protocol::Update::Master, 250, true, 400, 300);
+                        this->entityManager.add<Entities::TieAdvance>(LAYER::Layer3, network::protocol::Update::Master, 250, true, 600, 300);
+                        this->entityManager.add<Entities::TieAdvance>(LAYER::Layer3, network::protocol::Update::Master, 250, true, 200, 300);
+                        this->entityManager.add<Entities::TieAdvance>(LAYER::Layer3, network::protocol::Update::Master, 250, true, 800, 300);
                         end = 0;
                     }
                 }
