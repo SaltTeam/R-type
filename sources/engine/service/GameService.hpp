@@ -45,6 +45,12 @@ namespace Engine {
                     scopes.pop();
             }
 
+            void returnMain() {
+                while (scopes.size() != 1){
+                    scopes.pop();
+                }
+            }
+
             SCOPE *currentScope() {
                 if (this->scopes.empty())
                     return nullptr;
